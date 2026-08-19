@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AstroDeepak.Domain.Entities
 {
@@ -15,31 +13,27 @@ namespace AstroDeepak.Domain.Entities
         public string BirthPlace { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
-        public GrahanType GrahanType { get; set; }
-        public string SelectedNavgrah { get; set; }
+
+        // Replaces the old 2-value GrahanType. This now stores exactly ONE
+        // of the 9 Navgrah (planets) the user picks on the NavgrahListPage.
+        public NavgrahType SelectedGrah { get; set; }
+
+        // Used to sort the "recent added" list on the Search page.
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 
-    public enum GrahanType
+    // The 9 Navgrahas of Vedic astrology. "None" = not selected yet.
+    public enum NavgrahType
     {
         None,
-        ChandraGrahan,
-        SuryaGrahan
-    }
-
-
-    public static class NavgrahList
-    {
-        public static List<string> Planets = new()
-    {
-        "Surya (Sun)",
-        "Chandra (Moon)",
-        "Mangal (Mars)",
-        "Budha (Mercury)",
-        "Guru (Jupiter)",
-        "Shukra (Venus)",
-        "Shani (Saturn)",
-        "Rahu",
-        "Ketu"
-    };
+        Surya,
+        Chandra,
+        Mangal,
+        Budh,
+        Guru,
+        Shukra,
+        Shani,
+        Rahu,
+        Ketu
     }
 }

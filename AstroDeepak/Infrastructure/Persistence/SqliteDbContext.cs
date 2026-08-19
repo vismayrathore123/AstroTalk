@@ -1,14 +1,12 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AstroDeepak.Infrastructure.Persistence
 {
     public class SqliteDbContext
     {
         private SQLiteAsyncConnection? _db;
-        public  async Task<SQLiteAsyncConnection> GetConnectionAsync()
+
+        public async Task<SQLiteAsyncConnection> GetConnectionAsync()
         {
             if (_db != null) return _db;
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "astrodeepak.db3");
@@ -16,8 +14,6 @@ namespace AstroDeepak.Infrastructure.Persistence
             _db = new SQLiteAsyncConnection(dbPath);
             await _db.CreateTableAsync<PersonEntity>();
             return _db;
-        
-        
         }
     }
 }

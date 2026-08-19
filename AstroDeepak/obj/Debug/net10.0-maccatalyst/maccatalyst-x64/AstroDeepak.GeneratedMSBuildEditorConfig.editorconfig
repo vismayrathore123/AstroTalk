@@ -37,11 +37,11 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Astro/AstroDeepak/AstroDeepak/PersonPage.xaml]
+[C:/Astro/AstroDeepak/AstroDeepak/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = AstroDeepak.PersonPage.xaml
-build_metadata.AdditionalFiles.TargetPath = PersonPage.xaml
-build_metadata.AdditionalFiles.RelativePath = PersonPage.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AstroDeepak.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 build_metadata.AdditionalFiles.Inflator = SourceGen
 build_metadata.AdditionalFiles.NoWarn = 
 build_metadata.AdditionalFiles.EnableDiagnostics = 

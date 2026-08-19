@@ -1,12 +1,9 @@
 ﻿using SQLite;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace AstroDeepak.Infrastructure.Persistence
 {
-    [System.ComponentModel.DataAnnotations.Schema.Table("Persons")]
+    [Table("Persons")]
     public class PersonEntity
     {
         [PrimaryKey, AutoIncrement]
@@ -19,8 +16,7 @@ namespace AstroDeepak.Infrastructure.Persistence
         public string BirthPlace { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
-        public string GrahanType { get; set; }
-        public string SelectedNavgrah { get; set; }
-
+        public string SelectedGrah { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

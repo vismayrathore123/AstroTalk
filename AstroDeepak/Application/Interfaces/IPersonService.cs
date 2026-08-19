@@ -1,7 +1,4 @@
 ﻿using AstroDeepak.Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AstroDeepak.Application.Interfaces
 {
@@ -11,5 +8,8 @@ namespace AstroDeepak.Application.Interfaces
         Task<PersonDto?> GetByIdAsync(int id);
         Task<int> SaveAsync(PersonDto dto);
         Task<int> DeleteAsync(int id);
+
+        Task<List<PersonDto>> SearchAsync(string term);
+        Task<List<PersonDto>> GetRecentAsync(int count = 10);
     }
 }

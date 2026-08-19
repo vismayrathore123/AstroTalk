@@ -39,6 +39,18 @@ namespace AstroDeepak.Application.Services
             return await _repository.DeleteAsync(person);
         }
 
+        public async Task<List<PersonDto>> SearchAsync(string term)
+        {
+            var people = await _repository.SearchAsync(term ?? string.Empty);
+            return people.Select(ToDto).ToList();
+        }
+
+        public async Task<List<PersonDto>> GetRecentAsync(int count = 10)
+        {
+            var people = await _repository.GetRecentAsync(count);
+            return people.Select(ToDto).ToList();
+        }
+
         private static PersonDto ToDto(Person p) => new()
         {
             Id = p.Id,
@@ -50,35 +62,27 @@ namespace AstroDeepak.Application.Services
             BirthPlace = p.BirthPlace,
             PhoneNo = p.PhoneNo,
             Address = p.Address,
-            GrahanType = p.GrahanType switch
-            {
-                Domain.Entities.GrahanType.ChandraGrahan => "Chandra Grahan",
-                Domain.Entities.GrahanType.SuryaGrahan => "Surya Grahan",
-                _ => string.Empty
-            },
-                SelectedNavgrah = p.SelectedNavgrah
-
+            SelectedGrah = p.SelectedGrah.ToString(),
+            CreatedAt = p.CreatedAt
         };
 
-        private static Person ToEntity(PersonDto d) => new()
+        private static Person ToEntity(PersonDto d)
         {
-            Id = d.Id,
-            Name = d.Name,
-            FatherName = d.FatherName,
-            Gotra = d.Gotra,
-            DOB = d.DOB,
-            Time = d.Time,
-            BirthPlace = d.BirthPlace,
-            PhoneNo = d.PhoneNo,
-            Address = d.Address,
-            GrahanType = d.GrahanType switch
+            Enum.TryParse<NavgrahType>(d.SelectedGrah, true, out var grah);
+            return new Person
             {
-                "Chandra Grahan" => Domain.Entities.GrahanType.ChandraGrahan,
-                "Surya Grahan" => Domain.Entities.GrahanType.SuryaGrahan,
-                _ => Domain.Entities.GrahanType.None
-            },
-            SelectedNavgrah = d.SelectedNavgrah
-
-        };
+                Id = d.Id,
+                Name = d.Name,
+                FatherName = d.FatherName,
+                Gotra = d.Gotra,
+                DOB = d.DOB,
+                Time = d.Time,
+                BirthPlace = d.BirthPlace,
+                PhoneNo = d.PhoneNo,
+                Address = d.Address,
+                SelectedGrah = grah,
+                CreatedAt = d.CreatedAt == default ? DateTime.Now : d.CreatedAt
+            };
+        }
     }
 }
