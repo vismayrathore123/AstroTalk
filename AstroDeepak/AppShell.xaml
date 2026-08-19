@@ -7,11 +7,22 @@
        Shell.NavBarIsVisible="True"
        Shell.BackgroundColor="{StaticResource DeepSpace}"
        Shell.TitleColor="{StaticResource TextPrimary}"
+       Shell.UnselectedColor="{StaticResource TextSecondary}"
+       Shell.TabBarBackgroundColor="{StaticResource CardBackground}"
+       Shell.TabBarTitleColor="{StaticResource Gold}"
+       Shell.TabBarUnselectedColor="{StaticResource TextSecondary}"
        BackgroundColor="{StaticResource DeepSpace}">
 
-    <ShellContent
-        Title="AstroDeepak"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="main" />
+    <TabBar>
+        <ShellContent
+            Title="Open Kundli"
+            Route="search"
+            ContentTemplate="{DataTemplate views:SearchPage}" />
+
+        <ShellContent
+            Title="New Kundli"
+            Route="form"
+            ContentTemplate="{DataTemplate views:PersonFormPage}" />
+    </TabBar>
 
 </Shell>

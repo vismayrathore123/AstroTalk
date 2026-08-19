@@ -19,6 +19,8 @@ namespace AstroDeepak.Views
             {
                 if (int.TryParse(value, out var id) && id > 0)
                     _editingId = id;
+                else
+                    _editingId = 0;
             }
         }
 
@@ -39,8 +41,14 @@ namespace AstroDeepak.Views
             if (_editingId > 0)
             {
                 var dto = await _personService.GetByIdAsync(_editingId);
-                if (dto != null) Populate(dto);
+                if (dto != null)
+                {
+                    Populate(dto);
+                    return;
+                }
             }
+
+            ClearForm();
         }
 
         void Populate(PersonDto dto)
@@ -56,6 +64,19 @@ namespace AstroDeepak.Views
 
             var match = _grahanOptions.FirstOrDefault(g => g.Name == dto.SelectedGrahan);
             GrahanPicker.SelectedItem = match;
+        }
+
+        void ClearForm()
+        {
+            NameEntry.Text = string.Empty;
+            FatherNameEntry.Text = string.Empty;
+            GotraEntry.Text = string.Empty;
+            DobPicker.Date = DateTime.Today;
+            TimeEntry.Text = string.Empty;
+            BirthPlaceEntry.Text = string.Empty;
+            PhoneEntry.Text = string.Empty;
+            AddressEntry.Text = string.Empty;
+            GrahanPicker.SelectedItem = _grahanOptions.FirstOrDefault(g => g.Name == "None");
         }
 
         async void OnSubmitClicked(object sender, EventArgs e)
@@ -85,6 +106,14 @@ namespace AstroDeepak.Views
 
             var navParams = new Dictionary<string, object> { { "PersonDraft", dto } };
             await Shell.Current.GoToAsync("navgrah", navParams);
+        }
+
+        async void OnHamburgerClicked(object sender, EventArgs e)
+        {
+            var action = await DisplayActionSheet("Menu", "Cancel", null, "Add Remedies");
+
+            if (action == "Add Remedies")
+                await Shell.Current.GoToAsync("navgrah?AdminMode=true");
         }
     }
 }

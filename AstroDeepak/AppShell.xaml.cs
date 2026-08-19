@@ -8,8 +8,8 @@ namespace AstroDeepak
         {
             InitializeComponent();
 
-            Routing.RegisterRoute("search", typeof(SearchPage));
-            Routing.RegisterRoute("form", typeof(PersonFormPage));
+            // "search" and "form" are declared directly as tabs above.
+            // Only push-on-top pages need explicit route registration.
             Routing.RegisterRoute("navgrah", typeof(NavgrahListPage));
             Routing.RegisterRoute("remedies", typeof(RemedySelectionPage));
         }

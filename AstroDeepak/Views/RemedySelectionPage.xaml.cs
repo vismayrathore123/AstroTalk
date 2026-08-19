@@ -81,7 +81,7 @@ namespace AstroDeepak.Views
             {
                 await _remedyRepository.SaveNavgrahRemediesAsync(_navgrahName, selectedNames);
                 await DisplayAlert("Saved", $"Remedies updated for {_navgrahName}.", "OK");
-                await Shell.Current.GoToAsync("//main");
+                await Shell.Current.GoToAsync("//search");
                 return;
             }
 

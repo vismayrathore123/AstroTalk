@@ -30,7 +30,6 @@ namespace AstroDeepak
             builder.Services.AddSingleton<IMasterDataRepository, MasterDataRepository>();
             builder.Services.AddSingleton<IRemedyRepository, RemedyRepository>();
 
-            builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<SearchPage>();
             builder.Services.AddTransient<PersonFormPage>();
             builder.Services.AddTransient<NavgrahListPage>();

@@ -4,6 +4,10 @@
              x:Class="AstroDeepak.Views.PersonFormPage"
              Title="Kundli Details">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="☰" Clicked="OnHamburgerClicked" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="14">
 
@@ -11,34 +15,31 @@
                 <VerticalStackLayout Spacing="12">
 
                     <Label Text="NAME" Style="{StaticResource SubtitleLabel}" />
-                    <Entry x:Name="NameEntry" Placeholder="Full name" TextColor="{StaticResource TextPrimary}" />
+                    <Entry x:Name="NameEntry" Placeholder="Full name" />
 
                     <Label Text="FATHER'S NAME" Style="{StaticResource SubtitleLabel}" />
-                    <Entry x:Name="FatherNameEntry" Placeholder="Father's name" TextColor="{StaticResource TextPrimary}" />
+                    <Entry x:Name="FatherNameEntry" Placeholder="Father's name" />
 
                     <Label Text="GOTRA" Style="{StaticResource SubtitleLabel}" />
-                    <Entry x:Name="GotraEntry" Placeholder="Gotra" TextColor="{StaticResource TextPrimary}" />
+                    <Entry x:Name="GotraEntry" Placeholder="Gotra" />
 
                     <Label Text="DATE OF BIRTH" Style="{StaticResource SubtitleLabel}" />
-                    <DatePicker x:Name="DobPicker" TextColor="{StaticResource TextPrimary}" />
+                    <DatePicker x:Name="DobPicker" />
 
                     <Label Text="TIME OF BIRTH" Style="{StaticResource SubtitleLabel}" />
-                    <Entry x:Name="TimeEntry" Placeholder="e.g. 10:30 AM" TextColor="{StaticResource TextPrimary}" />
+                    <Entry x:Name="TimeEntry" Placeholder="e.g. 10:30 AM" />
 
                     <Label Text="BIRTH PLACE" Style="{StaticResource SubtitleLabel}" />
-                    <Entry x:Name="BirthPlaceEntry" Placeholder="Birth place" TextColor="{StaticResource TextPrimary}" />
+                    <Entry x:Name="BirthPlaceEntry" Placeholder="Birth place" />
 
                     <Label Text="PHONE / WHATSAPP" Style="{StaticResource SubtitleLabel}" />
-                    <Entry x:Name="PhoneEntry" Placeholder="10-digit number" Keyboard="Telephone" TextColor="{StaticResource TextPrimary}" />
+                    <Entry x:Name="PhoneEntry" Placeholder="10-digit number" Keyboard="Telephone" />
 
                     <Label Text="ADDRESS" Style="{StaticResource SubtitleLabel}" />
-                    <Editor x:Name="AddressEntry" Placeholder="Address" AutoSize="TextChanges"
-                            TextColor="{StaticResource TextPrimary}" BackgroundColor="Transparent" />
+                    <Editor x:Name="AddressEntry" Placeholder="Address" AutoSize="TextChanges" />
 
-                    <!--<Label Text="GRAHAN" Style="{StaticResource SubtitleLabel}" />-->
+                    <Label Text="GRAHAN" Style="{StaticResource SubtitleLabel}" />
                     <Picker x:Name="GrahanPicker" Title="Select Grahan"
-                            TextColor="{StaticResource TextPrimary}"
-                            TitleColor="{StaticResource TextPrimary}"
                             ItemDisplayBinding="{Binding Name}" />
 
                 </VerticalStackLayout>

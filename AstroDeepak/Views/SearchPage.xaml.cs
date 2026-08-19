@@ -38,12 +38,12 @@ namespace AstroDeepak.Views
         }
 
         async void OnAddNewClicked(object sender, EventArgs e)
-            => await Shell.Current.GoToAsync("form");
+            => await Shell.Current.GoToAsync("//form");
 
         async void OnEditClicked(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.CommandParameter is int id)
-                await Shell.Current.GoToAsync($"form?PersonId={id}");
+                await Shell.Current.GoToAsync($"//form?PersonId={id}");
         }
 
         async void OnDeleteClicked(object sender, EventArgs e)
@@ -59,6 +59,14 @@ namespace AstroDeepak.Views
                 await LoadRecentAsync();
             else
                 ResultsList.ItemsSource = await _personService.SearchAsync(SearchEntry.Text);
+        }
+
+        async void OnHamburgerClicked(object sender, EventArgs e)
+        {
+            var action = await DisplayActionSheet("Menu", "Cancel", null, "Add Remedies");
+
+            if (action == "Add Remedies")
+                await Shell.Current.GoToAsync("navgrah?AdminMode=true");
         }
     }
 }
