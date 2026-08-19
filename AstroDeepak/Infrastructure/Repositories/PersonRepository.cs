@@ -75,6 +75,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             Address = e.Address,
             SelectedGrah = e.SelectedGrah ?? "None",
             SelectedGrahan = e.SelectedGrahan ?? "None",
+            SelectedRemedies = e.SelectedRemedies ?? string.Empty,
             CreatedAt = e.CreatedAt
         };
 
@@ -91,6 +92,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             Address = p.Address,
             SelectedGrah = p.SelectedGrah,
             SelectedGrahan = p.SelectedGrahan,
+            SelectedRemedies = p.SelectedRemedies,
             CreatedAt = p.CreatedAt
         };
     }

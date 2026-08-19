@@ -4,52 +4,50 @@
              x:Class="AstroDeepak.Views.MainPage"
              Shell.NavBarIsVisible="False">
 
-    <Grid Padding="24" RowDefinitions="Auto,*,Auto">
+    <Grid Padding="24" RowDefinitions="Auto,Auto,*,Auto">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="0,30,0,10">
+        <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="0,20,0,10">
             <Label Text="✨ AstroDeepak" Style="{StaticResource TitleLabel}" FontSize="34" />
             <Label Text="Kundli &amp; Navgrah Management" Style="{StaticResource SubtitleLabel}" />
         </VerticalStackLayout>
 
-        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" Spacing="20">
+        <!-- Hamburger + Tabs -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Margin="0,20,0,0" VerticalOptions="Center">
 
-            <!-- "new kundli" box from the diagram -->
-            <Border Style="{StaticResource CardBorder}">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnNewKundliTapped" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*,Auto">
-                    <Label Grid.Column="0" Text="🔍" FontSize="30" VerticalOptions="Center" />
-                    <VerticalStackLayout Grid.Column="1" Margin="14,0" VerticalOptions="Center">
-                        <Label Text="New Kundli" FontSize="19" FontAttributes="Bold" />
-                        <Label Text="Search existing records or view recently added"
-                               Style="{StaticResource SubtitleLabel}" />
-                    </VerticalStackLayout>
-                    <Label Grid.Column="2" Text="›" FontSize="26" VerticalOptions="Center"
-                           TextColor="{StaticResource Gold}" />
-                </Grid>
-            </Border>
+            <Button Grid.Column="0" Text="☰" FontSize="22"
+                    BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}"
+                    WidthRequest="46" HeightRequest="46" Padding="0"
+                    Clicked="OnHamburgerClicked" />
 
-            <!-- "Open" box from the diagram -->
-            <Border Style="{StaticResource CardBorder}">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnOpenTapped" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*,Auto">
-                    <Label Grid.Column="0" Text="📝" FontSize="30" VerticalOptions="Center" />
-                    <VerticalStackLayout Grid.Column="1" Margin="14,0" VerticalOptions="Center">
-                        <Label Text="Open" FontSize="19" FontAttributes="Bold" />
-                        <Label Text="Fill a new birth-detail form and pick a Grah"
-                               Style="{StaticResource SubtitleLabel}" />
-                    </VerticalStackLayout>
-                    <Label Grid.Column="2" Text="›" FontSize="26" VerticalOptions="Center"
-                           TextColor="{StaticResource Gold}" />
-                </Grid>
-            </Border>
+            <HorizontalStackLayout Grid.Column="1" Spacing="28" Margin="10,0,0,0" VerticalOptions="Center">
 
-        </VerticalStackLayout>
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="New Kundli" FontSize="17" FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNewKundliTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView HeightRequest="3" CornerRadius="2" Color="{StaticResource Gold}" />
+                </VerticalStackLayout>
 
-        <Label Grid.Row="2" Text="Made for AstroDeepak" HorizontalOptions="Center"
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Open" FontSize="17" FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnOpenTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <BoxView HeightRequest="3" CornerRadius="2" Color="{StaticResource Gold}" />
+                </VerticalStackLayout>
+
+            </HorizontalStackLayout>
+        </Grid>
+
+        <BoxView Grid.Row="2" VerticalOptions="Start" HeightRequest="1"
+                 Color="{StaticResource GoldSoft}" Margin="0,14,0,0" />
+
+        <Label Grid.Row="3" Text="Made for AstroDeepak" HorizontalOptions="Center"
                Style="{StaticResource SubtitleLabel}" Margin="0,0,0,10" />
     </Grid>
 

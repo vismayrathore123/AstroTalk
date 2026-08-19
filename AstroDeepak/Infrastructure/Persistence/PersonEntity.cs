@@ -18,6 +18,8 @@ namespace AstroDeepak.Infrastructure.Persistence
         public string Address { get; set; }
         public string SelectedGrah { get; set; }
         public string SelectedGrahan { get; set; }
+        public string SelectedRemedies { get; set; }
+
         public DateTime CreatedAt { get; set; }
     }
 }

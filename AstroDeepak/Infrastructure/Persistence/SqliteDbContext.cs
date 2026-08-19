@@ -1,5 +1,4 @@
-﻿using AstroDeepak.Domain.Entities;
-using SQLite;
+﻿using SQLite;
 
 namespace AstroDeepak.Infrastructure.Persistence
 {
@@ -18,6 +17,8 @@ namespace AstroDeepak.Infrastructure.Persistence
             await _db.CreateTableAsync<PersonEntity>();
             await _db.CreateTableAsync<NavgrahMasterEntity>();
             await _db.CreateTableAsync<GrahanMasterEntity>();
+            await _db.CreateTableAsync<RemedyMasterEntity>();
+            await _db.CreateTableAsync<NavgrahRemedyEntity>();
 
             await SeedMasterDataAsync(_db);
 
@@ -48,8 +49,25 @@ namespace AstroDeepak.Infrastructure.Persistence
             {
                 await db.InsertAllAsync(new List<GrahanMasterEntity>
                 {
+                    new() { Name = "None",           Symbol = "",   SortOrder = 0 },
                     new() { Name = "Surya Grahan",   Symbol = "🌞", SortOrder = 1 },
                     new() { Name = "Chandra Grahan", Symbol = "🌘", SortOrder = 2 },
+                });
+            }
+
+            var remedyCount = await db.Table<RemedyMasterEntity>().CountAsync();
+            if (remedyCount == 0)
+            {
+                await db.InsertAllAsync(new List<RemedyMasterEntity>
+                {
+                    new() { Name = "Chant Beej Mantra",     SortOrder = 1 },
+                    new() { Name = "Fast on Related Day",   SortOrder = 2 },
+                    new() { Name = "Wear Gemstone",         SortOrder = 3 },
+                    new() { Name = "Donate on Related Day", SortOrder = 4 },
+                    new() { Name = "Worship Related Deity", SortOrder = 5 },
+                    new() { Name = "Visit Temple",          SortOrder = 6 },
+                    new() { Name = "Recite Stotram",        SortOrder = 7 },
+                    new() { Name = "Feed Animals / Birds",  SortOrder = 8 },
                 });
             }
         }

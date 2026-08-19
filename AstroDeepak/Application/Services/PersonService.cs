@@ -64,6 +64,7 @@ namespace AstroDeepak.Application.Services
             Address = p.Address,
             SelectedGrah = p.SelectedGrah,
             SelectedGrahan = p.SelectedGrahan,
+            SelectedRemedies = p.SelectedRemedies,
             CreatedAt = p.CreatedAt
         };
 
@@ -80,6 +81,7 @@ namespace AstroDeepak.Application.Services
             Address = d.Address,
             SelectedGrah = d.SelectedGrah,
             SelectedGrahan = d.SelectedGrahan,
+            SelectedRemedies = d.SelectedRemedies,
             CreatedAt = d.CreatedAt == default ? DateTime.Now : d.CreatedAt
         };
     }

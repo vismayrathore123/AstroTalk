@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:AstroDeepak.Views"
+             x:Class="AstroDeepak.Views.RemedySelectionPage"
+             Title="Remedies">
+
+    <Grid Padding="20" RowDefinitions="Auto,Auto,*,Auto">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="2" Margin="0,0,0,14">
+            <Label x:Name="HeaderLabel" Text="Remedies" Style="{StaticResource TitleLabel}" FontSize="22" />
+            <Label x:Name="SubHeaderLabel" Text="Select applicable remedies"
+                   Style="{StaticResource SubtitleLabel}" />
+        </VerticalStackLayout>
+
+        <Border Grid.Row="1" Style="{StaticResource CardBorder}" Margin="0,0,0,12" Padding="10">
+            <Grid ColumnDefinitions="*,Auto">
+                <Entry x:Name="NewRemedyEntry" Grid.Column="0" Placeholder="Add a new remedy..." />
+                <Button Grid.Column="1" Text="+ Add" Clicked="OnAddRemedyClicked"
+                        BackgroundColor="Transparent" TextColor="{StaticResource Gold}"
+                        FontAttributes="Bold" />
+            </Grid>
+        </Border>
+
+        <CollectionView Grid.Row="2" x:Name="RemedyList" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="views:RemedyCheckItem">
+                    <Border Style="{StaticResource CardBorder}" Margin="0,0,0,8" Padding="12">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" />
+                            <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center"
+                                   Margin="8,0,0,0" FontSize="15" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="3" Text="Save" Style="{StaticResource PrimaryButton}"
+                Margin="0,12,0,0" Clicked="OnSaveClicked" />
+
+    </Grid>
+
+</ContentPage>

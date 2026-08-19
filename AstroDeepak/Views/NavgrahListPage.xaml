@@ -33,7 +33,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Grid.Row="2" x:Name="ConfirmButton" Text="Confirm &amp; Save"
+        <Button Grid.Row="2" x:Name="ConfirmButton" Text="Add Remedies →"
                 Style="{StaticResource PrimaryButton}" Margin="0,16,0,0"
                 IsEnabled="False" Clicked="OnConfirmClicked" />
 

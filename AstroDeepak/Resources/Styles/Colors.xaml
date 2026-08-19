@@ -2,18 +2,16 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-
-    <!-- Cosmic / astrology theme: deep indigo night-sky + gold accents -->
-    <Color x:Key="DeepSpace">#12082B</Color>
-    <Color x:Key="DeepSpace2">#1E1147</Color>
-    <Color x:Key="CardBackground">#241456</Color>
+    <!-- White + gold/yellow theme -->
+    <Color x:Key="DeepSpace">#FFFFFF</Color>
+    <Color x:Key="DeepSpace2">#F7F7F7</Color>
+    <Color x:Key="CardBackground">#FFFDF0</Color>
     <Color x:Key="Gold">#F2B705</Color>
-    <Color x:Key="GoldSoft">#F2D680</Color>
-    <Color x:Key="Violet">#7C4DFF</Color>
-    <Color x:Key="TextPrimary">#FFFFFF</Color>
-    <Color x:Key="TextSecondary">#B8AFD9</Color>
+    <Color x:Key="GoldSoft">#F5DE94</Color>
+    <Color x:Key="Violet">#E3C161</Color>
+    <Color x:Key="TextPrimary">#1A1A1A</Color>
+    <Color x:Key="TextSecondary">#6B6B6B</Color>
     <Color x:Key="DangerRed">#E5484D</Color>
     <Color x:Key="White">#FFFFFF</Color>
     <Color x:Key="Black">#000000</Color>
-
 </ResourceDictionary>

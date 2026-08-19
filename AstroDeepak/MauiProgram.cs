@@ -28,11 +28,13 @@ namespace AstroDeepak
             builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
             builder.Services.AddSingleton<IPersonService, PersonService>();
             builder.Services.AddSingleton<IMasterDataRepository, MasterDataRepository>();
+            builder.Services.AddSingleton<IRemedyRepository, RemedyRepository>();
 
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<SearchPage>();
             builder.Services.AddTransient<PersonFormPage>();
             builder.Services.AddTransient<NavgrahListPage>();
+            builder.Services.AddTransient<RemedySelectionPage>();
 
             return builder.Build();
         }

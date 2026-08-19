@@ -17,6 +17,7 @@ namespace AstroDeepak.Domain.Entities
         // Now free-text names coming from NavgrahMaster / GrahanMaster tables
         // instead of a fixed enum.
         public string SelectedGrah { get; set; } = "None";
+        public string SelectedRemedies { get; set; } = string.Empty;
 
         public string SelectedGrahan { get; set; } = "None";
         public DateTime CreatedAt { get; set; } = DateTime.Now;

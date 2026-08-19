@@ -16,11 +16,16 @@ namespace AstroDeepak.Views
         private readonly IMasterDataRepository _masterDataRepository;
         private PersonDto? _draft;
         private NavgrahOption? _selected;
+        private bool _isAdminMode;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.TryGetValue("PersonDraft", out var value) && value is PersonDto dto)
                 _draft = dto;
+
+            if (query.TryGetValue("AdminMode", out var adminVal) &&
+                string.Equals(adminVal?.ToString(), "true", StringComparison.OrdinalIgnoreCase))
+                _isAdminMode = true;
         }
 
         public NavgrahListPage(IPersonService personService, IMasterDataRepository masterDataRepository)
@@ -33,6 +38,7 @@ namespace AstroDeepak.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
             var navgrahs = await _masterDataRepository.GetNavgrahsAsync();
             GrahList.ItemsSource = navgrahs
                 .Select(n => new NavgrahOption { Name = n.Name })
@@ -47,14 +53,19 @@ namespace AstroDeepak.Views
 
         async void OnConfirmClicked(object sender, EventArgs e)
         {
-            if (_draft == null || _selected == null) return;
+            if (_selected == null) return;
+            if (!_isAdminMode && _draft == null) return;
 
-            _draft.SelectedGrah = _selected.Name;
-            await _personService.SaveAsync(_draft);
+            var navParams = new Dictionary<string, object>
+            {
+                { "NavgrahName", _selected.Name },
+                { "Mode", _isAdminMode ? "Admin" : "Person" }
+            };
 
-            await DisplayAlert("Saved", $"Kundli saved with {_selected.Name}.", "OK");
+            if (!_isAdminMode)
+                navParams["PersonDraft"] = _draft!;
 
-            await Shell.Current.GoToAsync("//main");
+            await Shell.Current.GoToAsync("remedies", navParams);
         }
     }
 }
