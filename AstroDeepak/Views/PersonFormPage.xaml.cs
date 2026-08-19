@@ -1,15 +1,17 @@
 ﻿using AstroDeepak.Application.DTOs;
 using AstroDeepak.Application.Interfaces;
+using AstroDeepak.Domain.Abstractions;
+using AstroDeepak.Domain.Entities;
 
 namespace AstroDeepak.Views
 {
-    // IQueryAttributable lets Shell hand this page an "Id" when we navigate
-    // to "form?Id=5" from the search/recent list (edit mode).
     [QueryProperty(nameof(Id), "Id")]
     public partial class PersonFormPage : ContentPage
     {
         private readonly IPersonService _personService;
+        private readonly IMasterDataRepository _masterDataRepository;
         private int _editingId = 0;
+        private List<GrahanMaster> _grahanOptions = new();
 
         public string Id
         {
@@ -20,15 +22,20 @@ namespace AstroDeepak.Views
             }
         }
 
-        public PersonFormPage(IPersonService personService)
+        public PersonFormPage(IPersonService personService, IMasterDataRepository masterDataRepository)
         {
             InitializeComponent();
             _personService = personService;
+            _masterDataRepository = masterDataRepository;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
+            _grahanOptions = await _masterDataRepository.GetGrahansAsync();
+            GrahanPicker.ItemsSource = _grahanOptions;
+
             if (_editingId > 0)
             {
                 var dto = await _personService.GetByIdAsync(_editingId);
@@ -46,6 +53,9 @@ namespace AstroDeepak.Views
             BirthPlaceEntry.Text = dto.BirthPlace;
             PhoneEntry.Text = dto.PhoneNo;
             AddressEntry.Text = dto.Address;
+
+            var match = _grahanOptions.FirstOrDefault(g => g.Name == dto.SelectedGrahan);
+            GrahanPicker.SelectedItem = match;
         }
 
         async void OnSubmitClicked(object sender, EventArgs e)
@@ -55,6 +65,8 @@ namespace AstroDeepak.Views
                 await DisplayAlert("Missing name", "Please enter the person's name.", "OK");
                 return;
             }
+
+            var selectedGrahan = GrahanPicker.SelectedItem as GrahanMaster;
 
             var dto = new PersonDto
             {
@@ -67,11 +79,10 @@ namespace AstroDeepak.Views
                 BirthPlace = BirthPlaceEntry.Text,
                 PhoneNo = PhoneEntry.Text,
                 Address = AddressEntry.Text,
+                SelectedGrahan = selectedGrahan?.Name ?? "None",
                 CreatedAt = DateTime.Now
             };
 
-            // Hand the not-yet-saved draft over to the Navgrah picker page.
-            // Shell lets you pass real objects (not just strings) this way.
             var navParams = new Dictionary<string, object> { { "PersonDraft", dto } };
             await Shell.Current.GoToAsync("navgrah", navParams);
         }

@@ -17,6 +17,7 @@ namespace AstroDeepak.Infrastructure.Persistence
         public string PhoneNo { get; set; }
         public string Address { get; set; }
         public string SelectedGrah { get; set; }
+        public string SelectedGrahan { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

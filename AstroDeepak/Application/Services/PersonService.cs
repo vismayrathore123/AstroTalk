@@ -62,27 +62,25 @@ namespace AstroDeepak.Application.Services
             BirthPlace = p.BirthPlace,
             PhoneNo = p.PhoneNo,
             Address = p.Address,
-            SelectedGrah = p.SelectedGrah.ToString(),
+            SelectedGrah = p.SelectedGrah,
+            SelectedGrahan = p.SelectedGrahan,
             CreatedAt = p.CreatedAt
         };
 
-        private static Person ToEntity(PersonDto d)
+        private static Person ToEntity(PersonDto d) => new()
         {
-            Enum.TryParse<NavgrahType>(d.SelectedGrah, true, out var grah);
-            return new Person
-            {
-                Id = d.Id,
-                Name = d.Name,
-                FatherName = d.FatherName,
-                Gotra = d.Gotra,
-                DOB = d.DOB ?? DateTime.MinValue,
-                Time = d.Time,
-                BirthPlace = d.BirthPlace,
-                PhoneNo = d.PhoneNo,
-                Address = d.Address,
-                SelectedGrah = grah,
-                CreatedAt = d.CreatedAt == default ? DateTime.Now : d.CreatedAt
-            };
-        }
+            Id = d.Id,
+            Name = d.Name,
+            FatherName = d.FatherName,
+            Gotra = d.Gotra,
+            DOB = d.DOB ?? DateTime.MinValue,
+            Time = d.Time,
+            BirthPlace = d.BirthPlace,
+            PhoneNo = d.PhoneNo,
+            Address = d.Address,
+            SelectedGrah = d.SelectedGrah,
+            SelectedGrahan = d.SelectedGrahan,
+            CreatedAt = d.CreatedAt == default ? DateTime.Now : d.CreatedAt
+        };
     }
 }

@@ -62,24 +62,21 @@ namespace AstroDeepak.Infrastructure.Repositories
                        .ToList();
         }
 
-        private static Person ToDomain(PersonEntity e)
+        private static Person ToDomain(PersonEntity e) => new()
         {
-            Enum.TryParse<NavgrahType>(e.SelectedGrah, true, out var grah);
-            return new Person
-            {
-                Id = e.Id,
-                Name = e.Name,
-                FatherName = e.FatherName,
-                Gotra = e.Gotra,
-                DOB = e.DOB,
-                Time = e.Time,
-                BirthPlace = e.BirthPlace,
-                PhoneNo = e.PhoneNo,
-                Address = e.Address,
-                SelectedGrah = grah,
-                CreatedAt = e.CreatedAt
-            };
-        }
+            Id = e.Id,
+            Name = e.Name,
+            FatherName = e.FatherName,
+            Gotra = e.Gotra,
+            DOB = e.DOB,
+            Time = e.Time,
+            BirthPlace = e.BirthPlace,
+            PhoneNo = e.PhoneNo,
+            Address = e.Address,
+            SelectedGrah = e.SelectedGrah ?? "None",
+            SelectedGrahan = e.SelectedGrahan ?? "None",
+            CreatedAt = e.CreatedAt
+        };
 
         private static PersonEntity ToEntity(Person p) => new()
         {
@@ -92,7 +89,8 @@ namespace AstroDeepak.Infrastructure.Repositories
             BirthPlace = p.BirthPlace,
             PhoneNo = p.PhoneNo,
             Address = p.Address,
-            SelectedGrah = p.SelectedGrah.ToString(),
+            SelectedGrah = p.SelectedGrah,
+            SelectedGrahan = p.SelectedGrahan,
             CreatedAt = p.CreatedAt
         };
     }

@@ -1,13 +1,12 @@
 ﻿using AstroDeepak.Application.DTOs;
 using AstroDeepak.Application.Interfaces;
-using AstroDeepak.Domain.Entities;
+using AstroDeepak.Domain.Abstractions;
 
 namespace AstroDeepak.Views
 {
-    // Small view-only model, just for rendering the 9 tiles - not a domain entity.
+    // Small view-only model, just for rendering the tiles - not a domain entity.
     public class NavgrahOption
     {
-        public NavgrahType Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Symbol { get; set; } = string.Empty;
     }
@@ -15,6 +14,7 @@ namespace AstroDeepak.Views
     public partial class NavgrahListPage : ContentPage, IQueryAttributable
     {
         private readonly IPersonService _personService;
+        private readonly IMasterDataRepository _masterDataRepository;
         private PersonDto? _draft;
         private NavgrahOption? _selected;
 
@@ -24,30 +24,24 @@ namespace AstroDeepak.Views
                 _draft = dto;
         }
 
-        public NavgrahListPage(IPersonService personService)
+        public NavgrahListPage(IPersonService personService, IMasterDataRepository masterDataRepository)
         {
             InitializeComponent();
             _personService = personService;
-            GrahList.ItemsSource = BuildOptions();
+            _masterDataRepository = masterDataRepository;
         }
 
-        static List<NavgrahOption> BuildOptions() => new()
+        protected override async void OnAppearing()
         {
-            new() { Id = NavgrahType.Surya,   Name = "Surya",   Symbol = "☀️" },
-            new() { Id = NavgrahType.Chandra, Name = "Chandra", Symbol = "🌙" },
-            new() { Id = NavgrahType.Mangal,  Name = "Mangal",  Symbol = "🔴" },
-            new() { Id = NavgrahType.Budh,    Name = "Budh",    Symbol = "💚" },
-            new() { Id = NavgrahType.Guru,    Name = "Guru",    Symbol = "🟡" },
-            new() { Id = NavgrahType.Shukra,  Name = "Shukra",  Symbol = "🤍" },
-            new() { Id = NavgrahType.Shani,   Name = "Shani",   Symbol = "⚫" },
-            new() { Id = NavgrahType.Rahu,    Name = "Rahu",    Symbol = "🐉" },
-            new() { Id = NavgrahType.Ketu,    Name = "Ketu",    Symbol = "🌫️" },
-        };
+            base.OnAppearing();
+            var navgrahs = await _masterDataRepository.GetNavgrahsAsync();
+            GrahList.ItemsSource = navgrahs
+                .Select(n => new NavgrahOption { Name = n.Name, Symbol = n.Symbol })
+                .ToList();
+        }
 
         void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // CollectionView SelectionMode="Single" already guarantees only
-            // one item can be highlighted at a time - we just read it here.
             _selected = e.CurrentSelection.FirstOrDefault() as NavgrahOption;
             ConfirmButton.IsEnabled = _selected != null;
         }
@@ -56,12 +50,11 @@ namespace AstroDeepak.Views
         {
             if (_draft == null || _selected == null) return;
 
-            _draft.SelectedGrah = _selected.Id.ToString();
+            _draft.SelectedGrah = _selected.Name;
             await _personService.SaveAsync(_draft);
 
             await DisplayAlert("Saved", $"Kundli saved with {_selected.Name}.", "OK");
 
-            // Clear the whole navigation stack and go back to the landing page.
             await Shell.Current.GoToAsync("//main");
         }
     }

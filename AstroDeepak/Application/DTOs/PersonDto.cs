@@ -14,12 +14,11 @@ namespace AstroDeepak.Application.DTOs
         public string PhoneNo { get; set; }
         public string Address { get; set; }
 
-        // "None", "Surya", "Chandra" ... one of the 9 Navgrah names.
+        public string SelectedGrahan { get; set; } = "None";
         public string SelectedGrah { get; set; } = "None";
 
         public DateTime CreatedAt { get; set; }
 
-        // Convenience property shown in the search / recent list rows.
         public string Subtitle => $"{BirthPlace}  •  {(DOB.HasValue ? DOB.Value.ToString("dd MMM yyyy") : "DOB not set")}";
     }
 }

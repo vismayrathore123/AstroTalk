@@ -14,26 +14,14 @@ namespace AstroDeepak.Domain.Entities
         public string PhoneNo { get; set; }
         public string Address { get; set; }
 
-        // Replaces the old 2-value GrahanType. This now stores exactly ONE
-        // of the 9 Navgrah (planets) the user picks on the NavgrahListPage.
-        public NavgrahType SelectedGrah { get; set; }
+        // Now free-text names coming from NavgrahMaster / GrahanMaster tables
+        // instead of a fixed enum.
+        public string SelectedGrah { get; set; } = "None";
 
-        // Used to sort the "recent added" list on the Search page.
+        public string SelectedGrahan { get; set; } = "None";
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
     }
 
-    // The 9 Navgrahas of Vedic astrology. "None" = not selected yet.
-    public enum NavgrahType
-    {
-        None,
-        Surya,
-        Chandra,
-        Mangal,
-        Budh,
-        Guru,
-        Shukra,
-        Shani,
-        Rahu,
-        Ketu
-    }
+
 }
