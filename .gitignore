@@ -1,0 +1,147 @@
+
+---
+
+### 📄 .gitignore
+
+Create this file at the root of your solution (same level as the `.sln` file). This is a **comprehensive** .NET + MAUI specific ignore file.
+
+```gitignore
+# Ignore standard .NET build outputs
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.vspscc
+*.vssscc
+*.sln.docstates
+*.sln.ide
+.vs/
+.vscode/
+
+# Ignore Rider IDE files
+.idea/
+*.sln.iml
+
+# NuGet packages
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+.nuget/
+
+# User-specific files
+*.rsuser
+*.tmp
+*.bak
+*.log
+*.cache
+*.pidb
+*.psess
+*.vsp
+*.psess
+*.vspx
+*.sap
+*.sdf
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+orleans.codegen.cs
+
+# MAUI / Mobile specific
+# Android
+*.apk
+*.aab
+*.dex
+*.class
+*.keystore
+*.jks
+*.key
+*.crt
+*.pem
+*.der
+*.csr
+platforms/android/local.properties
+platforms/android/*.iml
+platforms/android/.gradle/
+platforms/android/build/
+platforms/android/bin/
+platforms/android/gen/
+platforms/android/obj/
+
+# iOS / Mac
+*.app
+*.dSYM
+*.ipa
+*.xcarchive
+*.mobileprovision
+*.provisionprofile
+*.p12
+*.cer
+*.plist
+*.entitlements
+platforms/ios/*.xcodeproj/project.xcworkspace/
+platforms/ios/*.xcodeproj/xcuserdata/
+platforms/ios/Pods/
+platforms/ios/build/
+platforms/ios/*.framework/
+platforms/ios/*.xcworkspace/
+platforms/ios/*.xcconfig.user
+platforms/ios/*.xcconfig.local
+
+# Windows
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+*.cer
+*.pfx
+*.thmx
+platforms/windows/AppPackages/
+platforms/windows/Binaries/
+platforms/windows/obj/
+platforms/windows/bin/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.directory
+*.pid
+*.lock
+
+# Logs and Diagnostics
+logs/
+*.log
+*.etl
+*.trace
+*.diagsession
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.coveragejson
+
+# Publish artifacts
+*.publish/
+publish/
+*.deploy
+*.pubxml.user
+
+# Environment / Secrets
+*.secrets
+.env
+*.local.*
+appsettings.Development.json
+appsettings.Production.json
