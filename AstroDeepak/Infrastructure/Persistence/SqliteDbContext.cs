@@ -31,15 +31,15 @@ namespace AstroDeepak.Infrastructure.Persistence
             {
                 await db.InsertAllAsync(new List<NavgrahMasterEntity>
                 {
-                    new() { Name = "Surya",   Symbol = "☀️", SortOrder = 1 },
-                    new() { Name = "Chandra", Symbol = "🌙", SortOrder = 2 },
-                    new() { Name = "Mangal",  Symbol = "🔴", SortOrder = 3 },
-                    new() { Name = "Budh",    Symbol = "💚", SortOrder = 4 },
-                    new() { Name = "Guru",    Symbol = "🟡", SortOrder = 5 },
-                    new() { Name = "Shukra",  Symbol = "🤍", SortOrder = 6 },
-                    new() { Name = "Shani",   Symbol = "⚫", SortOrder = 7 },
-                    new() { Name = "Rahu",    Symbol = "🐉", SortOrder = 8 },
-                    new() { Name = "Ketu",    Symbol = "🌫️", SortOrder = 9 },
+                    new() { Name = "Surya",   SortOrder = 1 },
+                    new() { Name = "Chandra", SortOrder = 2 },
+                    new() { Name = "Mangal",  SortOrder = 3 },
+                    new() { Name = "Budh",    SortOrder = 4 },
+                    new() { Name = "Guru",    SortOrder = 5 },
+                    new() { Name = "Shukra",  SortOrder = 6 },
+                    new() { Name = "Shani",   SortOrder = 7 },
+                    new() { Name = "Rahu",    SortOrder = 8 },
+                    new() { Name = "Ketu",    SortOrder = 9 },
                 });
             }
 

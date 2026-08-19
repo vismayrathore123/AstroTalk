@@ -8,7 +8,6 @@ namespace AstroDeepak.Views
     public class NavgrahOption
     {
         public string Name { get; set; } = string.Empty;
-        public string Symbol { get; set; } = string.Empty;
     }
 
     public partial class NavgrahListPage : ContentPage, IQueryAttributable
@@ -36,7 +35,7 @@ namespace AstroDeepak.Views
             base.OnAppearing();
             var navgrahs = await _masterDataRepository.GetNavgrahsAsync();
             GrahList.ItemsSource = navgrahs
-                .Select(n => new NavgrahOption { Name = n.Name, Symbol = n.Symbol })
+                .Select(n => new NavgrahOption { Name = n.Name })
                 .ToList();
         }
 

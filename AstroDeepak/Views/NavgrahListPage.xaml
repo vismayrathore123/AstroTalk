@@ -22,10 +22,9 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="views:NavgrahOption">
                     <Grid>
-                        <Border Style="{StaticResource CardBorder}" Padding="8" HeightRequest="100">
+                        <Border Style="{StaticResource CardBorder}" Padding="8" HeightRequest="80">
                             <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
-                                <Label Text="{Binding Symbol}" FontSize="30" HorizontalOptions="Center" />
-                                <Label Text="{Binding Name}" FontSize="13" HorizontalOptions="Center"
+                                <Label Text="{Binding Name}" FontSize="14" HorizontalOptions="Center"
                                        HorizontalTextAlignment="Center" FontAttributes="Bold" />
                             </VerticalStackLayout>
                         </Border>

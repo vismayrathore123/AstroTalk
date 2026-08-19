@@ -21,8 +21,8 @@ namespace AstroDeepak.Infrastructure.Repositories
             var db = await _context.GetConnectionAsync();
             var rows = await db.Table<NavgrahMasterEntity>().ToListAsync();
             return rows.OrderBy(r => r.SortOrder)
-                       .Select(r => new NavgrahMaster { Id = r.Id, Name = r.Name, Symbol = r.Symbol, SortOrder = r.SortOrder })
-                       .ToList();
+                      .Select(r => new NavgrahMaster { Id = r.Id, Name = r.Name, SortOrder = r.SortOrder })
+                      .ToList();
         }
 
         public async Task<List<GrahanMaster>> GetGrahansAsync()
