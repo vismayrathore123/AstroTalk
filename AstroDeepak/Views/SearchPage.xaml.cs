@@ -40,10 +40,25 @@ namespace AstroDeepak.Views
         async void OnAddNewClicked(object sender, EventArgs e)
             => await Shell.Current.GoToAsync("form");
 
-        async void OnRecordTapped(object sender, TappedEventArgs e)
+        async void OnEditClicked(object sender, EventArgs e)
         {
-            if (e.Parameter is int id)
-                await Shell.Current.GoToAsync($"form?Id={id}");
+            if (sender is Button btn && btn.CommandParameter is int id)
+                await Shell.Current.GoToAsync($"form?PersonId={id}");
+        }
+
+        async void OnDeleteClicked(object sender, EventArgs e)
+        {
+            if (sender is not Button btn || btn.CommandParameter is not int id) return;
+
+            var confirm = await DisplayAlert("Delete", "Delete this record? This cannot be undone.", "Delete", "Cancel");
+            if (!confirm) return;
+
+            await _personService.DeleteAsync(id);
+
+            if (string.IsNullOrWhiteSpace(SearchEntry.Text))
+                await LoadRecentAsync();
+            else
+                ResultsList.ItemsSource = await _personService.SearchAsync(SearchEntry.Text);
         }
     }
 }

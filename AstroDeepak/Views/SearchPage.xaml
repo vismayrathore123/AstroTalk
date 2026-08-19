@@ -26,17 +26,24 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="dtos:PersonDto">
                     <Border Style="{StaticResource CardBorder}" Margin="0,0,0,10" Padding="14">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnRecordTapped" CommandParameter="{Binding Id}" />
-                        </Border.GestureRecognizers>
-                        <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto">
                             <Label Grid.Column="0" Text="🪐" FontSize="24" VerticalOptions="Center" />
+
                             <VerticalStackLayout Grid.Column="1" Margin="12,0" VerticalOptions="Center">
                                 <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
                                 <Label Text="{Binding Subtitle}" Style="{StaticResource SubtitleLabel}" />
                             </VerticalStackLayout>
+
                             <Label Grid.Column="2" Text="{Binding SelectedGrah}" VerticalOptions="Center"
-                                   TextColor="{StaticResource Gold}" FontSize="12" />
+                                   TextColor="{StaticResource Gold}" FontSize="12" Margin="0,0,10,0" />
+
+                            <Button Grid.Column="3" Text="✏️" FontSize="16"
+                                    BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" Padding="0"
+                                    Clicked="OnEditClicked" CommandParameter="{Binding Id}" />
+
+                            <Button Grid.Column="4" Text="🗑️" FontSize="16"
+                                    BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" Padding="0"
+                                    Clicked="OnDeleteClicked" CommandParameter="{Binding Id}" />
                         </Grid>
                     </Border>
                 </DataTemplate>

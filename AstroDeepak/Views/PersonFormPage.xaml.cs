@@ -5,7 +5,7 @@ using AstroDeepak.Domain.Entities;
 
 namespace AstroDeepak.Views
 {
-    [QueryProperty(nameof(Id), "Id")]
+    [QueryProperty(nameof(PersonId), "PersonId")]
     public partial class PersonFormPage : ContentPage
     {
         private readonly IPersonService _personService;
@@ -13,7 +13,7 @@ namespace AstroDeepak.Views
         private int _editingId = 0;
         private List<GrahanMaster> _grahanOptions = new();
 
-        public string Id
+        public string PersonId
         {
             set
             {
