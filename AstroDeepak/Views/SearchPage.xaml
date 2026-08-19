@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dtos="clr-namespace:AstroDeepak.Application.DTOs"
+             x:Class="AstroDeepak.Views.SearchPage"
+             Title="New Kundli">
+
+    <Grid Padding="18" RowDefinitions="Auto,Auto,*">
+
+        <!-- Search box -->
+        <Border Grid.Row="0" Style="{StaticResource CardBorder}" Padding="14,4">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Label Grid.Column="0" Text="🔍" VerticalOptions="Center" FontSize="18" />
+                <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Search by name..."
+                       TextChanged="OnSearchTextChanged" Margin="10,0" />
+                <Button x:Name="NewButton" Grid.Column="2" Text="+ New" Clicked="OnAddNewClicked"
+                        BackgroundColor="Transparent" TextColor="{StaticResource Gold}"
+                        FontAttributes="Bold" />
+            </Grid>
+        </Border>
+
+        <Label Grid.Row="1" x:Name="SectionLabel" Text="RECENTLY ADDED" Margin="4,16,0,8"
+               Style="{StaticResource SubtitleLabel}" FontAttributes="Bold" />
+
+        <CollectionView Grid.Row="2" x:Name="ResultsList" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="dtos:PersonDto">
+                    <Border Style="{StaticResource CardBorder}" Margin="0,0,0,10" Padding="14">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRecordTapped" CommandParameter="{Binding Id}" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <Label Grid.Column="0" Text="🪐" FontSize="24" VerticalOptions="Center" />
+                            <VerticalStackLayout Grid.Column="1" Margin="12,0" VerticalOptions="Center">
+                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
+                                <Label Text="{Binding Subtitle}" Style="{StaticResource SubtitleLabel}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="{Binding SelectedGrah}" VerticalOptions="Center"
+                                   TextColor="{StaticResource Gold}" FontSize="12" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>

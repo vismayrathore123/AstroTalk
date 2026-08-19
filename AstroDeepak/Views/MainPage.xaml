@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AstroDeepak.Views.MainPage"
+             Shell.NavBarIsVisible="False">
+
+    <Grid Padding="24" RowDefinitions="Auto,*,Auto">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="0,30,0,10">
+            <Label Text="✨ AstroDeepak" Style="{StaticResource TitleLabel}" FontSize="34" />
+            <Label Text="Kundli &amp; Navgrah Management" Style="{StaticResource SubtitleLabel}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" Spacing="20">
+
+            <!-- "new kundli" box from the diagram -->
+            <Border Style="{StaticResource CardBorder}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNewKundliTapped" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Grid.Column="0" Text="🔍" FontSize="30" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Margin="14,0" VerticalOptions="Center">
+                        <Label Text="New Kundli" FontSize="19" FontAttributes="Bold" />
+                        <Label Text="Search existing records or view recently added"
+                               Style="{StaticResource SubtitleLabel}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="26" VerticalOptions="Center"
+                           TextColor="{StaticResource Gold}" />
+                </Grid>
+            </Border>
+
+            <!-- "Open" box from the diagram -->
+            <Border Style="{StaticResource CardBorder}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnOpenTapped" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Grid.Column="0" Text="📝" FontSize="30" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Margin="14,0" VerticalOptions="Center">
+                        <Label Text="Open" FontSize="19" FontAttributes="Bold" />
+                        <Label Text="Fill a new birth-detail form and pick a Grah"
+                               Style="{StaticResource SubtitleLabel}" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="2" Text="›" FontSize="26" VerticalOptions="Center"
+                           TextColor="{StaticResource Gold}" />
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+
+        <Label Grid.Row="2" Text="Made for AstroDeepak" HorizontalOptions="Center"
+               Style="{StaticResource SubtitleLabel}" Margin="0,0,0,10" />
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AstroDeepak.Views.PersonFormPage"
+             Title="Kundli Details">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Border Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="NAME" Style="{StaticResource SubtitleLabel}" />
+                    <Entry x:Name="NameEntry" Placeholder="Full name" />
+
+                    <Label Text="FATHER'S NAME" Style="{StaticResource SubtitleLabel}" />
+                    <Entry x:Name="FatherNameEntry" Placeholder="Father's name" />
+
+                    <Label Text="GOTRA" Style="{StaticResource SubtitleLabel}" />
+                    <Entry x:Name="GotraEntry" Placeholder="Gotra" />
+
+                    <Label Text="DATE OF BIRTH" Style="{StaticResource SubtitleLabel}" />
+                    <DatePicker x:Name="DobPicker" />
+
+                    <Label Text="TIME OF BIRTH" Style="{StaticResource SubtitleLabel}" />
+                    <Entry x:Name="TimeEntry" Placeholder="e.g. 10:30 AM" />
+
+                    <Label Text="BIRTH PLACE" Style="{StaticResource SubtitleLabel}" />
+                    <Entry x:Name="BirthPlaceEntry" Placeholder="Birth place" />
+
+                    <Label Text="PHONE / WHATSAPP" Style="{StaticResource SubtitleLabel}" />
+                    <Entry x:Name="PhoneEntry" Placeholder="10-digit number" Keyboard="Telephone" />
+
+                    <Label Text="ADDRESS" Style="{StaticResource SubtitleLabel}" />
+                    <Editor x:Name="AddressEntry" Placeholder="Address" AutoSize="TextChanges"
+                            TextColor="{StaticResource TextPrimary}" BackgroundColor="Transparent" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Submit  →  Select Grah" Style="{StaticResource PrimaryButton}"
+                    Clicked="OnSubmitClicked" Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

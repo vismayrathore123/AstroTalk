@@ -8,7 +8,7 @@ namespace AstroDeepak.Application.DTOs
         public string Name { get; set; }
         public string FatherName { get; set; }
         public string Gotra { get; set; }
-        public DateTime DOB { get; set; }
+        public DateTime? DOB { get; set; }
         public string Time { get; set; }
         public string BirthPlace { get; set; }
         public string PhoneNo { get; set; }
@@ -20,6 +20,6 @@ namespace AstroDeepak.Application.DTOs
         public DateTime CreatedAt { get; set; }
 
         // Convenience property shown in the search / recent list rows.
-        public string Subtitle => $"{BirthPlace}  •  {DOB:dd MMM yyyy}";
+        public string Subtitle => $"{BirthPlace}  •  {(DOB.HasValue ? DOB.Value.ToString("dd MMM yyyy") : "DOB not set")}";
     }
 }

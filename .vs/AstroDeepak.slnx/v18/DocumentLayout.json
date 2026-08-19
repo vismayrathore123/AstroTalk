@@ -3,6 +3,74 @@
   "WorkspaceRootPath": "C:\\Astro\\AstroDeepak\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\astrodeepak.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\astrodeepak.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\views\\personformpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\views\\personformpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\application\\services\\personservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\application\\services\\personservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\application\\dtos\\persondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\application\\dtos\\persondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\views\\personformpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\views\\personformpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\infrastructure\\repositories\\personrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\infrastructure\\repositories\\personrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\views\\searchpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\views\\searchpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\views\\navgrahlistpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\views\\navgrahlistpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\views\\searchpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\views\\searchpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\views\\navgrahlistpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\views\\navgrahlistpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\views\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\views\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\resources\\styles\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\resources\\styles\\styles.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
@@ -27,28 +95,8 @@
       "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\domain\\abstractions\\ipersonrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\application\\services\\personservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\application\\services\\personservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\application\\interfaces\\ipersonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\application\\interfaces\\ipersonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\application\\dtos\\persondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\application\\dtos\\persondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Astro\\AstroDeepak\\AstroDeepak\\obj\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -63,20 +111,20 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AstroDeepak\\PersonPage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\MainActivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AstroDeepak\\Platforms\\Android\\MainActivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\platforms\\android\\mainactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\platforms\\android\\mainactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\MainApplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AstroDeepak\\Platforms\\Android\\MainApplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\platforms\\android\\mainapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\platforms\\android\\mainapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\AndroidManifest.xml||{4E01A4BC-CFCF-452C-8C08-51352512D197}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AstroDeepak\\Platforms\\Android\\AndroidManifest.xml||{4E01A4BC-CFCF-452C-8C08-51352512D197}"
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|c:\\astro\\astrodeepak\\astrodeepak\\platforms\\android\\androidmanifest.xml||{4E01A4BC-CFCF-452C-8C08-51352512D197}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:astrodeepak\\platforms\\android\\androidmanifest.xml||{4E01A4BC-CFCF-452C-8C08-51352512D197}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml||{6B79B2C4-8503-4A04-8248-ADCEF2B49CB1}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml||{6B79B2C4-8503-4A04-8248-ADCEF2B49CB1}"
+      "AbsoluteMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml||{6B79B2C4-8503-4A04-8248-ADCEF2B49CB1}",
+      "RelativeMoniker": "D:0:0:{58F102A3-3F3E-EEE9-C88C-635A91E44086}|AstroDeepak\\AstroDeepak.csproj|solutionrelative:AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml||{6B79B2C4-8503-4A04-8248-ADCEF2B49CB1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -85,7 +133,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
+          "DockedWidth": 267,
           "SelectedChildIndex": 3,
           "Children": [
             {
@@ -103,175 +151,58 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Styles.xaml",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Resources\\Styles\\Styles.xaml",
-              "RelativeDocumentMoniker": "AstroDeepak\\Resources\\Styles\\Styles.xaml",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Resources\\Styles\\Styles.xaml",
-              "RelativeToolTip": "AstroDeepak\\Resources\\Styles\\Styles.xaml",
-              "ViewState": "AgIAABwAAAAAAAAAAAAwwC4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-08-19T06:49:33.892Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Colors.xaml",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Resources\\Styles\\Colors.xaml",
-              "RelativeDocumentMoniker": "AstroDeepak\\Resources\\Styles\\Colors.xaml",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Resources\\Styles\\Colors.xaml",
-              "RelativeToolTip": "AstroDeepak\\Resources\\Styles\\Colors.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAwwBMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-08-19T06:49:20.708Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PersonEntity.cs",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Persistence\\PersonEntity.cs",
-              "RelativeDocumentMoniker": "AstroDeepak\\Infrastructure\\Persistence\\PersonEntity.cs",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Persistence\\PersonEntity.cs",
-              "RelativeToolTip": "AstroDeepak\\Infrastructure\\Persistence\\PersonEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T09:44:20.445Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SqliteDbContext.cs",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Persistence\\SqliteDbContext.cs",
-              "RelativeDocumentMoniker": "AstroDeepak\\Infrastructure\\Persistence\\SqliteDbContext.cs",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Persistence\\SqliteDbContext.cs",
-              "RelativeToolTip": "AstroDeepak\\Infrastructure\\Persistence\\SqliteDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T09:44:50.769Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Person.cs",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Domain\\Entities\\Person.cs",
-              "RelativeDocumentMoniker": "AstroDeepak\\Domain\\Entities\\Person.cs",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Domain\\Entities\\Person.cs",
-              "RelativeToolTip": "AstroDeepak\\Domain\\Entities\\Person.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAswCcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T09:35:55.786Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IPersonRepository.cs",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Domain\\Abstractions\\IPersonRepository.cs",
-              "RelativeDocumentMoniker": "AstroDeepak\\Domain\\Abstractions\\IPersonRepository.cs",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Domain\\Abstractions\\IPersonRepository.cs",
-              "RelativeToolTip": "AstroDeepak\\Domain\\Abstractions\\IPersonRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T09:42:59.939Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PersonService.cs",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\Services\\PersonService.cs",
-              "RelativeDocumentMoniker": "AstroDeepak\\Application\\Services\\PersonService.cs",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\Services\\PersonService.cs",
-              "RelativeToolTip": "AstroDeepak\\Application\\Services\\PersonService.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAswEEAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T09:43:44.828Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IPersonService.cs",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\Interfaces\\IPersonService.cs",
-              "RelativeDocumentMoniker": "AstroDeepak\\Application\\Interfaces\\IPersonService.cs",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\Interfaces\\IPersonService.cs",
-              "RelativeToolTip": "AstroDeepak\\Application\\Interfaces\\IPersonService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T09:43:29.298Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "PersonDto.cs",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\DTOs\\PersonDto.cs",
-              "RelativeDocumentMoniker": "AstroDeepak\\Application\\DTOs\\PersonDto.cs",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\DTOs\\PersonDto.cs",
-              "RelativeToolTip": "AstroDeepak\\Application\\DTOs\\PersonDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T09:42:31.113Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "PersonPage.xaml.cs",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\PersonPage.xaml.cs",
-              "RelativeDocumentMoniker": "AstroDeepak\\PersonPage.xaml.cs",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\PersonPage.xaml.cs",
-              "RelativeToolTip": "AstroDeepak\\PersonPage.xaml.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAqwDUAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T10:06:38.248Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "PersonPage.xaml",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\PersonPage.xaml",
-              "RelativeDocumentMoniker": "AstroDeepak\\PersonPage.xaml",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\PersonPage.xaml",
-              "RelativeToolTip": "AstroDeepak\\PersonPage.xaml",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAAC4AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-08-18T09:40:04.02Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\App.xaml.cs",
               "RelativeDocumentMoniker": "AstroDeepak\\App.xaml.cs",
               "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\App.xaml.cs",
               "RelativeToolTip": "AstroDeepak\\App.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T10:17:14.095Z"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{99b8fa2f-ab90-4f57-9c32-949f146f1914}"
+              "WhenOpened": "2026-08-18T10:17:14.095Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 7,
+              "Title": "PersonFormPage.xaml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\PersonFormPage.xaml",
+              "RelativeDocumentMoniker": "AstroDeepak\\Views\\PersonFormPage.xaml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\PersonFormPage.xaml",
+              "RelativeToolTip": "AstroDeepak\\Views\\PersonFormPage.xaml",
+              "ViewState": "AgIAABAAAAAAAAAAAAA0wBwAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-19T07:07:43.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PersonFormPage.xaml.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\PersonFormPage.xaml.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Views\\PersonFormPage.xaml.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\PersonFormPage.xaml.cs",
+              "RelativeToolTip": "AstroDeepak\\Views\\PersonFormPage.xaml.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAAwEAAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-19T07:08:06.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\MauiProgram.cs",
               "RelativeDocumentMoniker": "AstroDeepak\\MauiProgram.cs",
               "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\MauiProgram.cs",
               "RelativeToolTip": "AstroDeepak\\MauiProgram.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAQwCsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T10:16:57.425Z"
+              "WhenOpened": "2026-08-18T10:16:57.425Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\App.xaml",
               "RelativeDocumentMoniker": "AstroDeepak\\App.xaml",
@@ -284,7 +215,241 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PersonService.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\Services\\PersonService.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Application\\Services\\PersonService.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\Services\\PersonService.cs",
+              "RelativeToolTip": "AstroDeepak\\Application\\Services\\PersonService.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAUwE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T09:43:44.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PersonDto.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\DTOs\\PersonDto.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Application\\DTOs\\PersonDto.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\DTOs\\PersonDto.cs",
+              "RelativeToolTip": "AstroDeepak\\Application\\DTOs\\PersonDto.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAywBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T09:42:31.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PersonRepository.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Repositories\\PersonRepository.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Infrastructure\\Repositories\\PersonRepository.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Repositories\\PersonRepository.cs",
+              "RelativeToolTip": "AstroDeepak\\Infrastructure\\Repositories\\PersonRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-19T07:30:12.687Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SearchPage.xaml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\SearchPage.xaml",
+              "RelativeDocumentMoniker": "AstroDeepak\\Views\\SearchPage.xaml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\SearchPage.xaml",
+              "RelativeToolTip": "AstroDeepak\\Views\\SearchPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-19T07:08:29.39Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "NavgrahListPage.xaml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\NavgrahListPage.xaml",
+              "RelativeDocumentMoniker": "AstroDeepak\\Views\\NavgrahListPage.xaml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\NavgrahListPage.xaml",
+              "RelativeToolTip": "AstroDeepak\\Views\\NavgrahListPage.xaml",
+              "ViewState": "AgIAACUAAAAAAAAAAAAAABYAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-19T07:06:56.72Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SearchPage.xaml.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\SearchPage.xaml.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Views\\SearchPage.xaml.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\SearchPage.xaml.cs",
+              "RelativeToolTip": "AstroDeepak\\Views\\SearchPage.xaml.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAswCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-19T07:08:43.967Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "NavgrahListPage.xaml.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\NavgrahListPage.xaml.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Views\\NavgrahListPage.xaml.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\NavgrahListPage.xaml.cs",
+              "RelativeToolTip": "AstroDeepak\\Views\\NavgrahListPage.xaml.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAswEQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-19T07:07:26.157Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Views\\MainPage.xaml.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\MainPage.xaml.cs",
+              "RelativeToolTip": "AstroDeepak\\Views\\MainPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-19T07:06:33.518Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\MainPage.xaml",
+              "RelativeDocumentMoniker": "AstroDeepak\\Views\\MainPage.xaml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Views\\MainPage.xaml",
+              "RelativeToolTip": "AstroDeepak\\Views\\MainPage.xaml",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAcwDgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-19T07:06:15.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 15,
+              "Title": "AppShell.xaml.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AppShell.xaml.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\AppShell.xaml.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AppShell.xaml.cs",
+              "RelativeToolTip": "AstroDeepak\\AppShell.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-19T06:57:33.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AppShell.xaml",
+              "RelativeDocumentMoniker": "AstroDeepak\\AppShell.xaml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AppShell.xaml",
+              "RelativeToolTip": "AstroDeepak\\AppShell.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-19T06:57:12.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Styles.xaml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Resources\\Styles\\Styles.xaml",
+              "RelativeDocumentMoniker": "AstroDeepak\\Resources\\Styles\\Styles.xaml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Resources\\Styles\\Styles.xaml",
+              "RelativeToolTip": "AstroDeepak\\Resources\\Styles\\Styles.xaml",
+              "ViewState": "AgIAABwAAAAAAAAAAAAwwC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-19T06:49:33.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Colors.xaml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Resources\\Styles\\Colors.xaml",
+              "RelativeDocumentMoniker": "AstroDeepak\\Resources\\Styles\\Colors.xaml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Resources\\Styles\\Colors.xaml",
+              "RelativeToolTip": "AstroDeepak\\Resources\\Styles\\Colors.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAwwBMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-19T06:49:20.708Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "PersonEntity.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Persistence\\PersonEntity.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Infrastructure\\Persistence\\PersonEntity.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Persistence\\PersonEntity.cs",
+              "RelativeToolTip": "AstroDeepak\\Infrastructure\\Persistence\\PersonEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T09:44:20.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SqliteDbContext.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Persistence\\SqliteDbContext.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Infrastructure\\Persistence\\SqliteDbContext.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Infrastructure\\Persistence\\SqliteDbContext.cs",
+              "RelativeToolTip": "AstroDeepak\\Infrastructure\\Persistence\\SqliteDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T09:44:50.769Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Person.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Domain\\Entities\\Person.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Domain\\Entities\\Person.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Domain\\Entities\\Person.cs",
+              "RelativeToolTip": "AstroDeepak\\Domain\\Entities\\Person.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAswCcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T09:35:55.786Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "IPersonRepository.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Domain\\Abstractions\\IPersonRepository.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Domain\\Abstractions\\IPersonRepository.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Domain\\Abstractions\\IPersonRepository.cs",
+              "RelativeToolTip": "AstroDeepak\\Domain\\Abstractions\\IPersonRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T09:42:59.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IPersonService.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\Interfaces\\IPersonService.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\Application\\Interfaces\\IPersonService.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Application\\Interfaces\\IPersonService.cs",
+              "RelativeToolTip": "AstroDeepak\\Application\\Interfaces\\IPersonService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T09:43:29.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
               "Title": "MainActivity.cs",
               "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\MainActivity.cs",
               "RelativeDocumentMoniker": "AstroDeepak\\Platforms\\Android\\MainActivity.cs",
@@ -292,11 +457,12 @@
               "RelativeToolTip": "AstroDeepak\\Platforms\\Android\\MainActivity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-19T06:05:14.935Z"
+              "WhenOpened": "2026-08-19T08:02:30.874Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 28,
               "Title": "MainApplication.cs",
               "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\MainApplication.cs",
               "RelativeDocumentMoniker": "AstroDeepak\\Platforms\\Android\\MainApplication.cs",
@@ -304,34 +470,24 @@
               "RelativeToolTip": "AstroDeepak\\Platforms\\Android\\MainApplication.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-19T06:05:16.023Z"
+              "WhenOpened": "2026-08-19T08:02:30.881Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 29,
               "Title": "AndroidManifest.xml",
               "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\AndroidManifest.xml",
               "RelativeDocumentMoniker": "AstroDeepak\\Platforms\\Android\\AndroidManifest.xml",
               "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\AndroidManifest.xml",
               "RelativeToolTip": "AstroDeepak\\Platforms\\Android\\AndroidManifest.xml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2026-08-19T06:05:13.791Z"
+              "WhenOpened": "2026-08-19T08:02:30.89Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "colors.xml",
-              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml",
-              "RelativeDocumentMoniker": "AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml",
-              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml",
-              "RelativeToolTip": "AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2026-08-19T06:05:10.099Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 24,
               "Title": "App.g.i.cs",
               "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\obj\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs",
               "RelativeDocumentMoniker": "AstroDeepak\\obj\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs",
@@ -339,7 +495,71 @@
               "RelativeToolTip": "AstroDeepak\\obj\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs",
               "ViewState": "AgIAADAAAAAAAAAAAAASwEQAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-18T12:52:33.182Z"
+              "WhenOpened": "2026-08-18T12:52:33.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{99b8fa2f-ab90-4f57-9c32-949f146f1914}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "PersonPage.xaml.cs",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\PersonPage.xaml.cs",
+              "RelativeDocumentMoniker": "AstroDeepak\\PersonPage.xaml.cs",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\PersonPage.xaml.cs",
+              "RelativeToolTip": "AstroDeepak\\PersonPage.xaml.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAqwDUAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-18T10:06:38.248Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "PersonPage.xaml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\PersonPage.xaml",
+              "RelativeDocumentMoniker": "AstroDeepak\\PersonPage.xaml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\PersonPage.xaml",
+              "RelativeToolTip": "AstroDeepak\\PersonPage.xaml",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAAC4AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-08-18T09:40:04.02Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "colors.xml",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml",
+              "RelativeDocumentMoniker": "AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml",
+              "RelativeToolTip": "AstroDeepak\\Platforms\\Android\\Resources\\values\\colors.xml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2026-08-19T08:02:30.9Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 133,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AstroDeepak.csproj",
+              "DocumentMoniker": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AstroDeepak.csproj",
+              "RelativeDocumentMoniker": "AstroDeepak\\AstroDeepak.csproj",
+              "ToolTip": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AstroDeepak.csproj",
+              "RelativeToolTip": "AstroDeepak\\AstroDeepak.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-08-19T07:51:16.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
             }
           ]
         }

@@ -75,7 +75,7 @@ namespace AstroDeepak.Application.Services
                 Name = d.Name,
                 FatherName = d.FatherName,
                 Gotra = d.Gotra,
-                DOB = d.DOB,
+                DOB = d.DOB ?? DateTime.MinValue,
                 Time = d.Time,
                 BirthPlace = d.BirthPlace,
                 PhoneNo = d.PhoneNo,

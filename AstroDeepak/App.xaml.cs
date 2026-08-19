@@ -1,21 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace AstroDeepak
+﻿namespace AstroDeepak
 {
-    public partial class App : IApplication
-    {
-        private readonly IServiceProvider _serviceProvider;
 
-        public App(IServiceProvider serviceProvider)
+    public partial class App : Microsoft.Maui.Controls.Application
+    {
+        public App()
         {
             InitializeComponent();
-            _serviceProvider = serviceProvider;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var personPage = _serviceProvider.GetRequiredService<PersonPage>(); 
-            return new Window ( new NavigationPage (personPage) );
+            return new Window(new AppShell());
         }
     }
 }
