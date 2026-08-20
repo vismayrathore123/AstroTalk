@@ -21,7 +21,7 @@ namespace AstroDeepak.Application.Services
             return entity == null ? null : ToDto(entity);
         }
 
-        public async Task SaveSelectedRemediesAsync(int personId, int navgrahId, List<string> selectedRemedyNames, bool sentOnWhatsApp)
+        public async Task SaveSelectedRemediesAsync(int personId, int navgrahId, List<string> selectedRemedyNames)
         {
             var existing = await _repository.GetByPersonAndNavgrahAsync(personId, navgrahId);
 
@@ -38,7 +38,6 @@ namespace AstroDeepak.Application.Services
             var entity = existing ?? new UserRemedy { PersonId = personId, NavgrahId = navgrahId };
             entity.CurrentSuggestedRemedy = string.Join(", ", selectedRemedyNames);
             entity.RemediesJson = JsonSerializer.Serialize(history);
-            entity.WhatsApp = sentOnWhatsApp;
 
             await _repository.SaveAsync(entity);
         }
@@ -50,7 +49,6 @@ namespace AstroDeepak.Application.Services
             NavgrahId = r.NavgrahId,
             CurrentSuggestedRemedy = r.CurrentSuggestedRemedy,
             RemediesJson = r.RemediesJson,
-            WhatsApp = r.WhatsApp,
             CreatedAt = r.CreatedAt,
             UpdatedAt = r.UpdatedAt
         };

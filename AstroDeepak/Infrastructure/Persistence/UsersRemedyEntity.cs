@@ -10,14 +10,13 @@ namespace AstroDeepak.Infrastructure.Persistence
         public int Id { get; set; }
 
         [Indexed]
-        public int PersonId { get; set; }   // FK -> Persons.Id
+        public int PersonId { get; set; }
 
         [Indexed]
-        public int NavgrahId { get; set; }  // FK -> NavgrahMaster.Id
+        public int NavgrahId { get; set; }
 
         public string CurrentSuggestedRemedy { get; set; }
         public string RemediesJson { get; set; }
-        public bool WhatsApp { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

@@ -20,7 +20,7 @@ namespace AstroDeepak.Infrastructure.Persistence
             await _db.CreateTableAsync<GrahanMasterEntity>();
             await _db.CreateTableAsync<RemedyMasterEntity>();
             await _db.CreateTableAsync<UsersRemedyEntity>();
-            // NavgrahRemedyEntity table removed - RemedyMaster.NavgrahId replaces it.
+            await _db.CreateTableAsync<UserRemedyStagingEntity>(); // temp table
 
             await SeedMasterDataAsync(_db);
 
@@ -58,9 +58,6 @@ namespace AstroDeepak.Infrastructure.Persistence
                     new() { Name = "Chandra Grahan", SortOrder = 2, CreatedAt = now, UpdatedAt = now },
                 });
             }
-
-            // RemedyMaster is no longer seeded generically - remedies are added
-            // per-Navgrah via Hamburger -> Add Remedies.
         }
     }
 }

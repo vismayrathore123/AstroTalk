@@ -8,11 +8,11 @@ namespace AstroDeepak.Views
     public partial class RemedySelectionPage : ContentPage, IQueryAttributable
     {
         private readonly IRemedyRepository _remedyRepository;
-        private readonly IPersonService _personService;
         private readonly IUserRemedyService _userRemedyService;
+        private readonly IUserRemedyStagingService _stagingService;
 
-        private readonly List<RemedyCheckItem> _allItems = new();       // full set (filter never loses selection)
-        private readonly ObservableCollection<RemedyCheckItem> _items = new(); // what's shown after filtering
+        private readonly List<RemedyCheckItem> _allItems = new();
+        private readonly ObservableCollection<RemedyCheckItem> _items = new();
 
         private PersonDto? _draft;
         private int _navgrahId;
@@ -30,12 +30,12 @@ namespace AstroDeepak.Views
                 _navgrahName = navStr;
         }
 
-        public RemedySelectionPage(IRemedyRepository remedyRepository, IPersonService personService, IUserRemedyService userRemedyService)
+        public RemedySelectionPage(IRemedyRepository remedyRepository, IUserRemedyService userRemedyService, IUserRemedyStagingService stagingService)
         {
             InitializeComponent();
             _remedyRepository = remedyRepository;
-            _personService = personService;
             _userRemedyService = userRemedyService;
+            _stagingService = stagingService;
             RemedyList.ItemsSource = _items;
         }
 
@@ -57,13 +57,27 @@ namespace AstroDeepak.Views
         {
             var remedies = await _remedyRepository.GetRemediesByNavgrahIdAsync(_navgrahId);
 
+            // Pre-select remedies this person already has saved for this Grah, if any.
+            var alreadySelected = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (_draft != null && _draft.Id > 0)
+            {
+                var existing = await _userRemedyService.GetAsync(_draft.Id, _navgrahId);
+                if (existing != null && !string.IsNullOrWhiteSpace(existing.CurrentSuggestedRemedy))
+                {
+                    foreach (var name in existing.CurrentSuggestedRemedy.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+                        alreadySelected.Add(name);
+
+                    SubHeaderLabel.Text = "Editing previously selected remedies for this Kundli";
+                }
+            }
+
             _allItems.Clear();
             foreach (var r in remedies)
             {
                 _allItems.Add(new RemedyCheckItem
                 {
                     Name = r.Name,
-                    IsChecked = false
+                    IsChecked = alreadySelected.Contains(r.Name)
                 });
             }
 
@@ -89,8 +103,8 @@ namespace AstroDeepak.Views
         {
             if (_draft == null) return;
 
-            // Selection is read from _allItems so a match hidden by the search
-            // filter doesn't lose its checked state.
+            // Read selection from _allItems so a match hidden by the search filter
+            // doesn't lose its checked state.
             var selectedNames = _allItems.Where(i => i.IsChecked).Select(i => i.Name).ToList();
             if (selectedNames.Count == 0)
             {
@@ -98,23 +112,26 @@ namespace AstroDeepak.Views
                 return;
             }
 
-            _draft.Grah = _navgrahName;
+            var stagingDto = new UserRemedyStagingDto
+            {
+                PersonId = _draft.Id,
+                Name = _draft.Name,
+                FatherName = _draft.FatherName,
+                Gotra = _draft.Gotra,
+                DOB = _draft.DOB ?? DateTime.Today,
+                Time = _draft.Time,
+                BirthPlace = _draft.BirthPlace,
+                PhoneNo = _draft.PhoneNo,
+                Address = _draft.Address,
+                Grahan = _draft.Grahan,
+                NavgrahId = _navgrahId,
+                NavgrahName = _navgrahName,
+                SelectedRemedies = selectedNames
+            };
 
-            var personId = await _personService.SaveAsync(_draft);
-            _draft.Id = personId; // keep updating the same person on subsequent Grah rounds
+            var stagingId = await _stagingService.SaveAsync(stagingDto);
 
-            await _userRemedyService.SaveSelectedRemediesAsync(
-                personId,
-                _navgrahId,
-                selectedNames,
-                WhatsAppSwitch.IsToggled);
-
-            await DisplayAlert("Saved", "Kundli saved successfully.", "OK");
-
-            // Go back to Grah picker (not Open Kundli) so the user can add
-            // remedies for another Grah for the same person if they want.
-            var navParams = new Dictionary<string, object> { { "PersonDraft", _draft }, { "Mode", "Person" } };
-            await Shell.Current.GoToAsync("navgrah", navParams);
+            await Shell.Current.GoToAsync($"preview?StagingId={stagingId}");
         }
     }
 }

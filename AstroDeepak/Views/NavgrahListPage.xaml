@@ -30,6 +30,8 @@
                             <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
                                 <Label Text="{Binding Name}" FontSize="14" HorizontalOptions="Center"
                                        HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Text="{Binding StatusText}" FontSize="10" HorizontalOptions="Center"
+                                       TextColor="{StaticResource Gold}" />
                             </VerticalStackLayout>
                         </Border>
                     </Grid>

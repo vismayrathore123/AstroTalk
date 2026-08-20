@@ -7,7 +7,7 @@ namespace AstroDeepak.Application.Interfaces
         Task<UserRemedyDto?> GetAsync(int personId, int navgrahId);
 
         // Appends selectedRemedyNames to the existing history for this
-        // (personId, navgrahId) pair, updates CurrentSuggestedRemedy and WhatsApp.
-        Task SaveSelectedRemediesAsync(int personId, int navgrahId, List<string> selectedRemedyNames, bool sentOnWhatsApp);
+        // (personId, navgrahId) pair and updates CurrentSuggestedRemedy.
+        Task SaveSelectedRemediesAsync(int personId, int navgrahId, List<string> selectedRemedyNames);
     }
 }

@@ -7,11 +7,14 @@ namespace AstroDeepak.Views
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        public bool AlreadyAdded { get; set; }
+        public string StatusText => AlreadyAdded ? "✓ Added" : string.Empty;
     }
 
     public partial class NavgrahListPage : ContentPage, IQueryAttributable
     {
         private readonly IMasterDataRepository _masterDataRepository;
+        private readonly IUsersRemedyRepository _usersRemedyRepository;
         private PersonDto? _draft;
         private NavgrahOption? _selected;
         private string _mode = "Person"; // "Person": attach remedies to a Kundli. "Master": manage a Grah's remedy list.
@@ -26,10 +29,11 @@ namespace AstroDeepak.Views
                 : "Person";
         }
 
-        public NavgrahListPage(IMasterDataRepository masterDataRepository)
+        public NavgrahListPage(IMasterDataRepository masterDataRepository, IUsersRemedyRepository usersRemedyRepository)
         {
             InitializeComponent();
             _masterDataRepository = masterDataRepository;
+            _usersRemedyRepository = usersRemedyRepository;
         }
 
         protected override async void OnAppearing()
@@ -41,8 +45,22 @@ namespace AstroDeepak.Views
             _selected = null;
 
             var navgrahs = await _masterDataRepository.GetNavgrahsAsync();
+
+            // If editing an existing person, mark Grahs that already have saved remedies.
+            var alreadyAddedIds = new HashSet<int>();
+            if (_mode == "Person" && _draft != null && _draft.Id > 0)
+            {
+                var existingRemedies = await _usersRemedyRepository.GetByPersonIdAsync(_draft.Id);
+                alreadyAddedIds = existingRemedies.Select(r => r.NavgrahId).ToHashSet();
+            }
+
             GrahList.ItemsSource = navgrahs
-                .Select(n => new NavgrahOption { Id = n.Id, Name = n.Name })
+                .Select(n => new NavgrahOption
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    AlreadyAdded = alreadyAddedIds.Contains(n.Id)
+                })
                 .ToList();
         }
 

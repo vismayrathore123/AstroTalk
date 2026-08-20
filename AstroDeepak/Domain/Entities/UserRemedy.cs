@@ -10,7 +10,6 @@ namespace AstroDeepak.Domain.Entities
 
         public string CurrentSuggestedRemedy { get; set; } = string.Empty;
         public string RemediesJson { get; set; } = "[]";
-        public bool WhatsApp { get; set; } = false;
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
