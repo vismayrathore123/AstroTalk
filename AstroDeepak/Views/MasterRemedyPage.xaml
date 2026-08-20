@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:AstroDeepak.Views"
-             x:Class="AstroDeepak.Views.RemedySelectionPage"
-             Title="Remedies">
+             xmlns:entities="clr-namespace:AstroDeepak.Domain.Entities"
+             x:Class="AstroDeepak.Views.MasterRemedyPage"
+             Title="Master Remedies">
 
-    <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,*,Auto">
+    <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,*">
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Margin="0,0,0,8">
             <Button Text="←" Style="{StaticResource IconButton}" Clicked="OnBackClicked" />
         </HorizontalStackLayout>
 
         <VerticalStackLayout Grid.Row="1" Spacing="2" Margin="0,0,0,14">
-            <Label x:Name="HeaderLabel" Text="Remedies" Style="{StaticResource TitleLabel}" FontSize="22" />
-            <Label x:Name="SubHeaderLabel" Text="Select applicable remedies"
+            <Label Text="Master Remedies" Style="{StaticResource TitleLabel}" FontSize="22" />
+            <Label Text="Add or remove remedies available for selection"
                    Style="{StaticResource SubtitleLabel}" />
         </VerticalStackLayout>
 
@@ -28,20 +28,18 @@
 
         <CollectionView Grid.Row="3" x:Name="RemedyList" SelectionMode="None">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="views:RemedyCheckItem">
+                <DataTemplate x:DataType="entities:RemedyMaster">
                     <Border Style="{StaticResource CardBorder}" Margin="0,0,0,8" Padding="12">
-                        <Grid ColumnDefinitions="Auto,*">
-                            <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}" />
-                            <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center"
-                                   Margin="8,0,0,0" FontSize="15" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center" FontSize="15" />
+                            <Button Grid.Column="1" Text="🗑️" FontSize="16"
+                                    BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" Padding="0"
+                                    Clicked="OnDeleteClicked" CommandParameter="{Binding Id}" />
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <Button Grid.Row="4" Text="Save" Style="{StaticResource PrimaryButton}"
-                Margin="0,12,0,0" Clicked="OnSaveClicked" />
 
     </Grid>
 

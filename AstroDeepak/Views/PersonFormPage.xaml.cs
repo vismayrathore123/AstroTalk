@@ -11,6 +11,7 @@ namespace AstroDeepak.Views
         private readonly IPersonService _personService;
         private readonly IMasterDataRepository _masterDataRepository;
         private int _editingId = 0;
+        private string _existingRemediesJson = "[]";
         private List<GrahanMaster> _grahanOptions = new();
 
         public string PersonId
@@ -61,6 +62,7 @@ namespace AstroDeepak.Views
             BirthPlaceEntry.Text = dto.BirthPlace;
             PhoneEntry.Text = dto.PhoneNo;
             AddressEntry.Text = dto.Address;
+            _existingRemediesJson = string.IsNullOrWhiteSpace(dto.RemediesJson) ? "[]" : dto.RemediesJson;
 
             var match = _grahanOptions.FirstOrDefault(g => g.Name == dto.SelectedGrahan);
             GrahanPicker.SelectedItem = match;
@@ -76,6 +78,7 @@ namespace AstroDeepak.Views
             BirthPlaceEntry.Text = string.Empty;
             PhoneEntry.Text = string.Empty;
             AddressEntry.Text = string.Empty;
+            _existingRemediesJson = "[]";
             GrahanPicker.SelectedItem = _grahanOptions.FirstOrDefault(g => g.Name == "None");
         }
 
@@ -101,6 +104,7 @@ namespace AstroDeepak.Views
                 PhoneNo = PhoneEntry.Text,
                 Address = AddressEntry.Text,
                 SelectedGrahan = selectedGrahan?.Name ?? "None",
+                RemediesJson = _existingRemediesJson,
                 CreatedAt = DateTime.Now
             };
 
@@ -109,11 +113,6 @@ namespace AstroDeepak.Views
         }
 
         async void OnHamburgerClicked(object sender, EventArgs e)
-        {
-            var action = await DisplayActionSheet("Menu", "Cancel", null, "Add Remedies");
-
-            if (action == "Add Remedies")
-                await Shell.Current.GoToAsync("navgrah?AdminMode=true");
-        }
+            => await Shell.Current.GoToAsync("masterremedies");
     }
 }

@@ -67,4 +67,15 @@
         <Setter Property="StrokeShape" Value="RoundRectangle 18" />
         <Setter Property="Padding" Value="18" />
     </Style>
+    <Style x:Key="IconButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource CardBackground}" />
+        <Setter Property="TextColor" Value="{StaticResource Gold}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="CornerRadius" Value="22" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderColor" Value="{StaticResource GoldSoft}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
 </ResourceDictionary>

@@ -63,5 +63,14 @@ namespace AstroDeepak.Infrastructure.Repositories
 
             await db.InsertAsync(new RemedyMasterEntity { Name = name, SortOrder = nextOrder });
         }
+        public async Task DeleteRemedyMasterAsync(int id)
+        {
+            var db = await _context.GetConnectionAsync();
+            var entity = await db.Table<RemedyMasterEntity>()
+                                  .Where(r => r.Id == id)
+                                  .FirstOrDefaultAsync();
+            if (entity != null)
+                await db.DeleteAsync(entity);
+        }
     }
 }

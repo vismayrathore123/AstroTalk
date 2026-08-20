@@ -18,7 +18,7 @@
             var action = await DisplayActionSheet("Menu", "Cancel", null, "Add Remedies");
 
             if (action == "Add Remedies")
-                await Shell.Current.GoToAsync("navgrah?AdminMode=true");
+                await Shell.Current.GoToAsync("masterremedies");
         }
     }
 }

@@ -18,6 +18,7 @@ namespace AstroDeepak.Domain.Entities
         // instead of a fixed enum.
         public string SelectedGrah { get; set; } = "None";
         public string SelectedRemedies { get; set; } = string.Empty;
+        public string RemediesJson { get; set; } = "[]";
 
         public string SelectedGrahan { get; set; } = "None";
         public DateTime CreatedAt { get; set; } = DateTime.Now;

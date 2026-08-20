@@ -17,6 +17,7 @@ namespace AstroDeepak.Application.DTOs
         public string SelectedGrahan { get; set; } = "None";
         public string SelectedGrah { get; set; } = "None";
         public string SelectedRemedies { get; set; } = string.Empty;
+        public string RemediesJson { get; set; } = "[]";
 
         public DateTime CreatedAt { get; set; }
 

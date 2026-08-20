@@ -4,12 +4,12 @@
              x:Class="AstroDeepak.Views.PersonFormPage"
              Title="Kundli Details">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="☰" Clicked="OnHamburgerClicked" />
-    </ContentPage.ToolbarItems>
-
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="14">
+
+            <HorizontalStackLayout HorizontalOptions="End" Margin="0,0,0,4">
+                <Button Text="☰" Style="{StaticResource IconButton}" Clicked="OnHamburgerClicked" />
+            </HorizontalStackLayout>
 
             <Border Style="{StaticResource CardBorder}">
                 <VerticalStackLayout Spacing="12">

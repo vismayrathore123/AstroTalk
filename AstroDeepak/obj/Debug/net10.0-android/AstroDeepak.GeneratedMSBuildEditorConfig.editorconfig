@@ -77,6 +77,16 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
+[C:/Astro/AstroDeepak/AstroDeepak/Views/MasterRemedyPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AstroDeepak.Views.MasterRemedyPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MasterRemedyPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MasterRemedyPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
 [C:/Astro/AstroDeepak/AstroDeepak/Views/NavgrahListPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AstroDeepak.Views.NavgrahListPage.xaml

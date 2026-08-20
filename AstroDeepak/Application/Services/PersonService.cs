@@ -65,6 +65,8 @@ namespace AstroDeepak.Application.Services
             SelectedGrah = p.SelectedGrah,
             SelectedGrahan = p.SelectedGrahan,
             SelectedRemedies = p.SelectedRemedies,
+            RemediesJson = string.IsNullOrWhiteSpace(p.RemediesJson) ? "[]" : p.RemediesJson,
+
             CreatedAt = p.CreatedAt
         };
 
@@ -82,6 +84,8 @@ namespace AstroDeepak.Application.Services
             SelectedGrah = d.SelectedGrah,
             SelectedGrahan = d.SelectedGrahan,
             SelectedRemedies = d.SelectedRemedies,
+            RemediesJson = string.IsNullOrWhiteSpace(d.RemediesJson) ? "[]" : d.RemediesJson,
+
             CreatedAt = d.CreatedAt == default ? DateTime.Now : d.CreatedAt
         };
     }

@@ -12,6 +12,8 @@ namespace AstroDeepak
             // Only push-on-top pages need explicit route registration.
             Routing.RegisterRoute("navgrah", typeof(NavgrahListPage));
             Routing.RegisterRoute("remedies", typeof(RemedySelectionPage));
+            Routing.RegisterRoute("masterremedies", typeof(MasterRemedyPage)); // NEW
+
         }
     }
 }

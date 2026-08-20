@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using AstroDeepak.Application.DTOs;
 using AstroDeepak.Application.Interfaces;
 using AstroDeepak.Domain.Abstractions;
@@ -13,7 +14,6 @@ namespace AstroDeepak.Views
 
         private PersonDto? _draft;
         private string _navgrahName = string.Empty;
-        private string _mode = "Person";
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
@@ -22,9 +22,6 @@ namespace AstroDeepak.Views
 
             if (query.TryGetValue("NavgrahName", out var nav) && nav is string navStr)
                 _navgrahName = navStr;
-
-            if (query.TryGetValue("Mode", out var mode) && mode is string modeStr)
-                _mode = modeStr;
         }
 
         public RemedySelectionPage(IRemedyRepository remedyRepository, IPersonService personService)
@@ -40,17 +37,17 @@ namespace AstroDeepak.Views
             base.OnAppearing();
 
             HeaderLabel.Text = $"Remedies for {_navgrahName}";
-            SubHeaderLabel.Text = _mode == "Admin"
-                ? "Select remedies that apply to this Grah"
-                : "Select remedies for this Kundli";
+            SubHeaderLabel.Text = "Select remedies for this Kundli";
 
             await LoadRemediesAsync();
         }
 
+        async void OnBackClicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
+
         async Task LoadRemediesAsync()
         {
             var allRemedies = await _remedyRepository.GetAllRemediesAsync();
-            var preselected = await _remedyRepository.GetRemediesForNavgrahAsync(_navgrahName);
 
             _items.Clear();
             foreach (var r in allRemedies)
@@ -58,7 +55,7 @@ namespace AstroDeepak.Views
                 _items.Add(new RemedyCheckItem
                 {
                     Name = r.Name,
-                    IsChecked = preselected.Contains(r.Name)
+                    IsChecked = false
                 });
             }
         }
@@ -75,24 +72,35 @@ namespace AstroDeepak.Views
 
         async void OnSaveClicked(object sender, EventArgs e)
         {
-            var selectedNames = _items.Where(i => i.IsChecked).Select(i => i.Name).ToList();
+            if (_draft == null) return;
 
-            if (_mode == "Admin")
+            var selectedNames = _items.Where(i => i.IsChecked).Select(i => i.Name).ToList();
+            if (selectedNames.Count == 0)
             {
-                await _remedyRepository.SaveNavgrahRemediesAsync(_navgrahName, selectedNames);
-                await DisplayAlert("Saved", $"Remedies updated for {_navgrahName}.", "OK");
-                await Shell.Current.GoToAsync("//search");
+                await DisplayAlert("No remedies selected", "Please select at least one remedy.", "OK");
                 return;
             }
 
-            if (_draft == null) return;
+            // Load whatever history already exists for this person, and append a new entry.
+            // Duplicates across entries are fine - nothing is deduped.
+            var history = string.IsNullOrWhiteSpace(_draft.RemediesJson)
+                ? new List<RemedyHistoryEntry>()
+                : (JsonSerializer.Deserialize<List<RemedyHistoryEntry>>(_draft.RemediesJson) ?? new List<RemedyHistoryEntry>());
+
+            history.Add(new RemedyHistoryEntry
+            {
+                CreatedAt = DateTime.Now,
+                Remedies = selectedNames
+            });
 
             _draft.SelectedGrah = _navgrahName;
-            _draft.SelectedRemedies = string.Join(", ", selectedNames);
+            _draft.SelectedRemedies = string.Join(", ", selectedNames); // quick flat display value
+            _draft.RemediesJson = JsonSerializer.Serialize(history);
+
             await _personService.SaveAsync(_draft);
 
             await DisplayAlert("Saved", "Kundli saved successfully.", "OK");
-            await Shell.Current.GoToAsync("navgrah");
+            await Shell.Current.GoToAsync("//search");
         }
     }
 }

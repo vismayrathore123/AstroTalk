@@ -5,15 +5,19 @@
              x:Class="AstroDeepak.Views.NavgrahListPage"
              Title="Select Navgrah">
 
-    <Grid Padding="20" RowDefinitions="Auto,*,Auto">
+    <Grid Padding="20" RowDefinitions="Auto,Auto,*,Auto">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="2" Margin="0,0,0,14">
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Margin="0,0,0,8">
+            <Button Text="←" Style="{StaticResource IconButton}" Clicked="OnBackClicked" />
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="2" Margin="0,0,0,14">
             <Label Text="Choose ONE Grah" Style="{StaticResource TitleLabel}" FontSize="22" />
             <Label Text="Tap a planet below - only a single selection is allowed"
                    Style="{StaticResource SubtitleLabel}" />
         </VerticalStackLayout>
 
-        <CollectionView Grid.Row="1" x:Name="GrahList"
+        <CollectionView Grid.Row="2" x:Name="GrahList"
                          SelectionMode="Single"
                          SelectionChanged="OnSelectionChanged">
             <CollectionView.ItemsLayout>
@@ -33,7 +37,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Grid.Row="2" x:Name="ConfirmButton" Text="Add Remedies →"
+        <Button Grid.Row="3" x:Name="ConfirmButton" Text="Add Remedies →"
                 Style="{StaticResource PrimaryButton}" Margin="0,16,0,0"
                 IsEnabled="False" Clicked="OnConfirmClicked" />
 

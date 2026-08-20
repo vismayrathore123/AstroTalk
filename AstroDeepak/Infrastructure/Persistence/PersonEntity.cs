@@ -19,6 +19,7 @@ namespace AstroDeepak.Infrastructure.Persistence
         public string SelectedGrah { get; set; }
         public string SelectedGrahan { get; set; }
         public string SelectedRemedies { get; set; }
+        public string RemediesJson { get; set; }
 
         public DateTime CreatedAt { get; set; }
     }

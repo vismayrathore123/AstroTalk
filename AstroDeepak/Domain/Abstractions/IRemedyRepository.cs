@@ -11,5 +11,7 @@ namespace AstroDeepak.Domain.Abstractions
         Task<List<string>> GetRemediesForNavgrahAsync(string navgrahName);
         Task SaveNavgrahRemediesAsync(string navgrahName, List<string> remedyNames);
         Task AddRemedyMasterAsync(string name);
+        Task DeleteRemedyMasterAsync(int id);
+
     }
 }
