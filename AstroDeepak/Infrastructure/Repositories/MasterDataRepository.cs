@@ -1,9 +1,6 @@
 ﻿using AstroDeepak.Domain.Abstractions;
 using AstroDeepak.Domain.Entities;
 using AstroDeepak.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AstroDeepak.Infrastructure.Repositories
 {
@@ -21,7 +18,14 @@ namespace AstroDeepak.Infrastructure.Repositories
             var db = await _context.GetConnectionAsync();
             var rows = await db.Table<NavgrahMasterEntity>().ToListAsync();
             return rows.OrderBy(r => r.SortOrder)
-                      .Select(r => new NavgrahMaster { Id = r.Id, Name = r.Name, SortOrder = r.SortOrder })
+                      .Select(r => new NavgrahMaster
+                      {
+                          Id = r.Id,
+                          Name = r.Name,
+                          SortOrder = r.SortOrder,
+                          CreatedAt = r.CreatedAt,
+                          UpdatedAt = r.UpdatedAt
+                      })
                       .ToList();
         }
 
@@ -30,7 +34,14 @@ namespace AstroDeepak.Infrastructure.Repositories
             var db = await _context.GetConnectionAsync();
             var rows = await db.Table<GrahanMasterEntity>().ToListAsync();
             return rows.OrderBy(r => r.SortOrder)
-                       .Select(r => new GrahanMaster { Id = r.Id, Name = r.Name, Symbol = r.Symbol, SortOrder = r.SortOrder })
+                       .Select(r => new GrahanMaster
+                       {
+                           Id = r.Id,
+                           Name = r.Name,
+                           SortOrder = r.SortOrder,
+                           CreatedAt = r.CreatedAt,
+                           UpdatedAt = r.UpdatedAt
+                       })
                        .ToList();
         }
     }

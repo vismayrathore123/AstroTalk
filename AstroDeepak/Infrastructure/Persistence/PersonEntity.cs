@@ -16,11 +16,11 @@ namespace AstroDeepak.Infrastructure.Persistence
         public string BirthPlace { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
-        public string SelectedGrah { get; set; }
-        public string SelectedGrahan { get; set; }
-        public string SelectedRemedies { get; set; }
-        public string RemediesJson { get; set; }
+
+        public string Grah { get; set; }
+        public string Grahan { get; set; }
 
         public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace AstroDeepak.Application.Services
             return person == null ? null : ToDto(person);
         }
 
+        // Returns the saved person's Id.
         public async Task<int> SaveAsync(PersonDto dto)
         {
             var entity = ToEntity(dto);
@@ -62,12 +63,10 @@ namespace AstroDeepak.Application.Services
             BirthPlace = p.BirthPlace,
             PhoneNo = p.PhoneNo,
             Address = p.Address,
-            SelectedGrah = p.SelectedGrah,
-            SelectedGrahan = p.SelectedGrahan,
-            SelectedRemedies = p.SelectedRemedies,
-            RemediesJson = string.IsNullOrWhiteSpace(p.RemediesJson) ? "[]" : p.RemediesJson,
-
-            CreatedAt = p.CreatedAt
+            Grah = p.Grah,
+            Grahan = p.Grahan,
+            CreatedAt = p.CreatedAt,
+            UpdatedAt = p.UpdatedAt
         };
 
         private static Person ToEntity(PersonDto d) => new()
@@ -81,12 +80,9 @@ namespace AstroDeepak.Application.Services
             BirthPlace = d.BirthPlace,
             PhoneNo = d.PhoneNo,
             Address = d.Address,
-            SelectedGrah = d.SelectedGrah,
-            SelectedGrahan = d.SelectedGrahan,
-            SelectedRemedies = d.SelectedRemedies,
-            RemediesJson = string.IsNullOrWhiteSpace(d.RemediesJson) ? "[]" : d.RemediesJson,
-
-            CreatedAt = d.CreatedAt == default ? DateTime.Now : d.CreatedAt
+            Grah = d.Grah,
+            Grahan = d.Grahan
+            // CreatedAt/UpdatedAt are set by the repository based on insert vs update.
         };
     }
 }

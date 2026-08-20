@@ -12,13 +12,17 @@ namespace AstroDeepak.Infrastructure.Persistence
 
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "astrodeepak.db3");
             System.Diagnostics.Debug.WriteLine($"DATABASE PATH: {dbPath}");
-            _db = new SQLiteAsyncConnection(dbPath);
+
+            // storeDateTimeAsTicks: false -> DateTime columns are stored as TEXT (ISO8601)
+            // instead of INTEGER ticks. This is what was making DOB/CreatedAt show as bigint.
+            _db = new SQLiteAsyncConnection(dbPath, storeDateTimeAsTicks: false);
 
             await _db.CreateTableAsync<PersonEntity>();
             await _db.CreateTableAsync<NavgrahMasterEntity>();
             await _db.CreateTableAsync<GrahanMasterEntity>();
             await _db.CreateTableAsync<RemedyMasterEntity>();
             await _db.CreateTableAsync<NavgrahRemedyEntity>();
+            await _db.CreateTableAsync<UsersRemedyEntity>();
 
             await SeedMasterDataAsync(_db);
 
@@ -27,20 +31,22 @@ namespace AstroDeepak.Infrastructure.Persistence
 
         private static async Task SeedMasterDataAsync(SQLiteAsyncConnection db)
         {
+            var now = DateTime.Now;
+
             var navgrahCount = await db.Table<NavgrahMasterEntity>().CountAsync();
             if (navgrahCount == 0)
             {
                 await db.InsertAllAsync(new List<NavgrahMasterEntity>
                 {
-                    new() { Name = "Surya",   SortOrder = 1 },
-                    new() { Name = "Chandra", SortOrder = 2 },
-                    new() { Name = "Mangal",  SortOrder = 3 },
-                    new() { Name = "Budh",    SortOrder = 4 },
-                    new() { Name = "Guru",    SortOrder = 5 },
-                    new() { Name = "Shukra",  SortOrder = 6 },
-                    new() { Name = "Shani",   SortOrder = 7 },
-                    new() { Name = "Rahu",    SortOrder = 8 },
-                    new() { Name = "Ketu",    SortOrder = 9 },
+                    new() { Name = "Surya",   SortOrder = 1, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Chandra", SortOrder = 2, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Mangal",  SortOrder = 3, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Budh",    SortOrder = 4, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Guru",    SortOrder = 5, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Shukra",  SortOrder = 6, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Shani",   SortOrder = 7, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Rahu",    SortOrder = 8, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Ketu",    SortOrder = 9, CreatedAt = now, UpdatedAt = now },
                 });
             }
 
@@ -49,9 +55,9 @@ namespace AstroDeepak.Infrastructure.Persistence
             {
                 await db.InsertAllAsync(new List<GrahanMasterEntity>
                 {
-                    new() { Name = "None",           Symbol = "",   SortOrder = 0 },
-                    new() { Name = "Surya Grahan",   Symbol = "🌞", SortOrder = 1 },
-                    new() { Name = "Chandra Grahan", Symbol = "🌘", SortOrder = 2 },
+                    new() { Name = "None",           SortOrder = 0, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Surya Grahan",   SortOrder = 1, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Chandra Grahan", SortOrder = 2, CreatedAt = now, UpdatedAt = now },
                 });
             }
 
@@ -60,14 +66,14 @@ namespace AstroDeepak.Infrastructure.Persistence
             {
                 await db.InsertAllAsync(new List<RemedyMasterEntity>
                 {
-                    new() { Name = "Chant Beej Mantra",     SortOrder = 1 },
-                    new() { Name = "Fast on Related Day",   SortOrder = 2 },
-                    new() { Name = "Wear Gemstone",         SortOrder = 3 },
-                    new() { Name = "Donate on Related Day", SortOrder = 4 },
-                    new() { Name = "Worship Related Deity", SortOrder = 5 },
-                    new() { Name = "Visit Temple",          SortOrder = 6 },
-                    new() { Name = "Recite Stotram",        SortOrder = 7 },
-                    new() { Name = "Feed Animals / Birds",  SortOrder = 8 },
+                    new() { Name = "Chant Beej Mantra",     SortOrder = 1, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Fast on Related Day",   SortOrder = 2, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Wear Gemstone",         SortOrder = 3, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Donate on Related Day", SortOrder = 4, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Worship Related Deity", SortOrder = 5, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Visit Temple",          SortOrder = 6, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Recite Stotram",        SortOrder = 7, CreatedAt = now, UpdatedAt = now },
+                    new() { Name = "Feed Animals / Birds",  SortOrder = 8, CreatedAt = now, UpdatedAt = now },
                 });
             }
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Text.Json;
 using AstroDeepak.Application.DTOs;
 using AstroDeepak.Application.Interfaces;
 using AstroDeepak.Domain.Abstractions;
@@ -10,9 +9,11 @@ namespace AstroDeepak.Views
     {
         private readonly IRemedyRepository _remedyRepository;
         private readonly IPersonService _personService;
+        private readonly IUserRemedyService _userRemedyService;
         private readonly ObservableCollection<RemedyCheckItem> _items = new();
 
         private PersonDto? _draft;
+        private int _navgrahId;
         private string _navgrahName = string.Empty;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -20,15 +21,19 @@ namespace AstroDeepak.Views
             if (query.TryGetValue("PersonDraft", out var value) && value is PersonDto dto)
                 _draft = dto;
 
+            if (query.TryGetValue("NavgrahId", out var navId) && navId is int navIdInt)
+                _navgrahId = navIdInt;
+
             if (query.TryGetValue("NavgrahName", out var nav) && nav is string navStr)
                 _navgrahName = navStr;
         }
 
-        public RemedySelectionPage(IRemedyRepository remedyRepository, IPersonService personService)
+        public RemedySelectionPage(IRemedyRepository remedyRepository, IPersonService personService, IUserRemedyService userRemedyService)
         {
             InitializeComponent();
             _remedyRepository = remedyRepository;
             _personService = personService;
+            _userRemedyService = userRemedyService;
             RemedyList.ItemsSource = _items;
         }
 
@@ -81,23 +86,16 @@ namespace AstroDeepak.Views
                 return;
             }
 
-            // Load whatever history already exists for this person, and append a new entry.
-            // Duplicates across entries are fine - nothing is deduped.
-            var history = string.IsNullOrWhiteSpace(_draft.RemediesJson)
-                ? new List<RemedyHistoryEntry>()
-                : (JsonSerializer.Deserialize<List<RemedyHistoryEntry>>(_draft.RemediesJson) ?? new List<RemedyHistoryEntry>());
+            _draft.Grah = _navgrahName;
 
-            history.Add(new RemedyHistoryEntry
-            {
-                CreatedAt = DateTime.Now,
-                Remedies = selectedNames
-            });
+            // Save the person first so a brand-new record gets a real Id.
+            var personId = await _personService.SaveAsync(_draft);
 
-            _draft.SelectedGrah = _navgrahName;
-            _draft.SelectedRemedies = string.Join(", ", selectedNames); // quick flat display value
-            _draft.RemediesJson = JsonSerializer.Serialize(history);
-
-            await _personService.SaveAsync(_draft);
+            await _userRemedyService.SaveSelectedRemediesAsync(
+                personId,
+                _navgrahId,
+                selectedNames,
+                WhatsAppSwitch.IsToggled);
 
             await DisplayAlert("Saved", "Kundli saved successfully.", "OK");
             await Shell.Current.GoToAsync("//search");

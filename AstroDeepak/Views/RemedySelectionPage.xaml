@@ -5,7 +5,7 @@
              x:Class="AstroDeepak.Views.RemedySelectionPage"
              Title="Remedies">
 
-    <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,*,Auto">
+    <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,*,Auto,Auto">
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Margin="0,0,0,8">
             <Button Text="←" Style="{StaticResource IconButton}" Clicked="OnBackClicked" />
@@ -40,7 +40,12 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Grid.Row="4" Text="Save" Style="{StaticResource PrimaryButton}"
+        <HorizontalStackLayout Grid.Row="4" Spacing="10" Margin="0,10,0,0">
+            <Label Text="Sent on WhatsApp?" VerticalOptions="Center" Style="{StaticResource SubtitleLabel}" />
+            <Switch x:Name="WhatsAppSwitch" />
+        </HorizontalStackLayout>
+
+        <Button Grid.Row="5" Text="Save" Style="{StaticResource PrimaryButton}"
                 Margin="0,12,0,0" Clicked="OnSaveClicked" />
 
     </Grid>

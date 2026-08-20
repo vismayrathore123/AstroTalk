@@ -14,16 +14,11 @@ namespace AstroDeepak.Domain.Entities
         public string PhoneNo { get; set; }
         public string Address { get; set; }
 
-        // Now free-text names coming from NavgrahMaster / GrahanMaster tables
-        // instead of a fixed enum.
-        public string SelectedGrah { get; set; } = "None";
-        public string SelectedRemedies { get; set; } = string.Empty;
-        public string RemediesJson { get; set; } = "[]";
+        // Renamed: SelectedGrah -> Grah, SelectedGrahan -> Grahan
+        public string Grah { get; set; } = "None";
+        public string Grahan { get; set; } = "None";
 
-        public string SelectedGrahan { get; set; } = "None";
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
     }
-
-
 }

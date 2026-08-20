@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using AstroDeepak.Application.Services;
+using AstroDeepak.Application.Interfaces;
 using AstroDeepak.Infrastructure.Persistence;
 using AstroDeepak.Infrastructure.Repositories;
 using AstroDeepak.Domain.Abstractions;
-using AstroDeepak.Application.Interfaces;
 using AstroDeepak.Views;
 
 namespace AstroDeepak
@@ -29,6 +29,8 @@ namespace AstroDeepak
             builder.Services.AddSingleton<IPersonService, PersonService>();
             builder.Services.AddSingleton<IMasterDataRepository, MasterDataRepository>();
             builder.Services.AddSingleton<IRemedyRepository, RemedyRepository>();
+            builder.Services.AddSingleton<IUsersRemedyRepository, UsersRemedyRepository>();
+            builder.Services.AddSingleton<IUserRemedyService, UserRemedyService>();
 
             builder.Services.AddTransient<SearchPage>();
             builder.Services.AddTransient<PersonFormPage>();

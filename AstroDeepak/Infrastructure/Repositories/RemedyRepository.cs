@@ -18,10 +18,18 @@ namespace AstroDeepak.Infrastructure.Repositories
             var db = await _context.GetConnectionAsync();
             var rows = await db.Table<RemedyMasterEntity>().ToListAsync();
             return rows.OrderBy(r => r.SortOrder)
-                       .Select(r => new RemedyMaster { Id = r.Id, Name = r.Name, SortOrder = r.SortOrder })
+                       .Select(r => new RemedyMaster
+                       {
+                           Id = r.Id,
+                           Name = r.Name,
+                           SortOrder = r.SortOrder,
+                           CreatedAt = r.CreatedAt,
+                           UpdatedAt = r.UpdatedAt
+                       })
                        .ToList();
         }
 
+        // NavgrahRemedy table/logic - unchanged, kept as-is.
         public async Task<List<string>> GetRemediesForNavgrahAsync(string navgrahName)
         {
             var db = await _context.GetConnectionAsync();
@@ -60,9 +68,17 @@ namespace AstroDeepak.Infrastructure.Repositories
                 return;
 
             var nextOrder = existing.Count == 0 ? 1 : existing.Max(r => r.SortOrder) + 1;
+            var now = DateTime.Now;
 
-            await db.InsertAsync(new RemedyMasterEntity { Name = name, SortOrder = nextOrder });
+            await db.InsertAsync(new RemedyMasterEntity
+            {
+                Name = name,
+                SortOrder = nextOrder,
+                CreatedAt = now,
+                UpdatedAt = now
+            });
         }
+
         public async Task DeleteRemedyMasterAsync(int id)
         {
             var db = await _context.GetConnectionAsync();

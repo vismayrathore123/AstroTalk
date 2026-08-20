@@ -1,7 +1,5 @@
 ﻿using SQLite;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AstroDeepak.Infrastructure.Persistence
 {
@@ -12,5 +10,7 @@ namespace AstroDeepak.Infrastructure.Persistence
         public int Id { get; set; }
         public string Name { get; set; }
         public int SortOrder { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

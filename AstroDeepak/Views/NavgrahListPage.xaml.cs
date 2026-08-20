@@ -5,6 +5,7 @@ namespace AstroDeepak.Views
 {
     public class NavgrahOption
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
 
@@ -32,7 +33,7 @@ namespace AstroDeepak.Views
 
             var navgrahs = await _masterDataRepository.GetNavgrahsAsync();
             GrahList.ItemsSource = navgrahs
-                .Select(n => new NavgrahOption { Name = n.Name })
+                .Select(n => new NavgrahOption { Id = n.Id, Name = n.Name })
                 .ToList();
         }
 
@@ -51,6 +52,7 @@ namespace AstroDeepak.Views
 
             var navParams = new Dictionary<string, object>
             {
+                { "NavgrahId", _selected.Id },
                 { "NavgrahName", _selected.Name },
                 { "PersonDraft", _draft }
             };

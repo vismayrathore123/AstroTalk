@@ -14,12 +14,11 @@ namespace AstroDeepak.Application.DTOs
         public string PhoneNo { get; set; }
         public string Address { get; set; }
 
-        public string SelectedGrahan { get; set; } = "None";
-        public string SelectedGrah { get; set; } = "None";
-        public string SelectedRemedies { get; set; } = string.Empty;
-        public string RemediesJson { get; set; } = "[]";
+        public string Grah { get; set; } = "None";
+        public string Grahan { get; set; } = "None";
 
         public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public string Subtitle => $"{BirthPlace}  •  {(DOB.HasValue ? DOB.Value.ToString("dd MMM yyyy") : "DOB not set")}";
     }

@@ -27,11 +27,29 @@ namespace AstroDeepak.Infrastructure.Repositories
             return entity == null ? null : ToDomain(entity);
         }
 
+        // Returns the Id of the inserted/updated row (used by callers that need
+        // the real PersonId right after saving, e.g. to attach UsersRemedies).
         public async Task<int> SaveAsync(Person person)
         {
             var db = await _context.GetConnectionAsync();
             var entity = ToEntity(person);
-            return entity.Id != 0 ? await db.UpdateAsync(entity) : await db.InsertAsync(entity);
+            var now = DateTime.Now;
+
+            if (entity.Id != 0)
+            {
+                var existing = await db.Table<PersonEntity>().Where(p => p.Id == entity.Id).FirstOrDefaultAsync();
+                entity.CreatedAt = existing?.CreatedAt ?? now;
+                entity.UpdatedAt = now;
+                await db.UpdateAsync(entity);
+            }
+            else
+            {
+                entity.CreatedAt = now;
+                entity.UpdatedAt = now;
+                await db.InsertAsync(entity); // sqlite-net populates entity.Id after insert
+            }
+
+            return entity.Id;
         }
 
         public async Task<int> DeleteAsync(Person person)
@@ -73,11 +91,10 @@ namespace AstroDeepak.Infrastructure.Repositories
             BirthPlace = e.BirthPlace,
             PhoneNo = e.PhoneNo,
             Address = e.Address,
-            SelectedGrah = e.SelectedGrah ?? "None",
-            SelectedGrahan = e.SelectedGrahan ?? "None",
-            RemediesJson = e.RemediesJson ?? "[]",
-            SelectedRemedies = e.SelectedRemedies ?? string.Empty,
-            CreatedAt = e.CreatedAt
+            Grah = e.Grah ?? "None",
+            Grahan = e.Grahan ?? "None",
+            CreatedAt = e.CreatedAt,
+            UpdatedAt = e.UpdatedAt
         };
 
         private static PersonEntity ToEntity(Person p) => new()
@@ -91,11 +108,10 @@ namespace AstroDeepak.Infrastructure.Repositories
             BirthPlace = p.BirthPlace,
             PhoneNo = p.PhoneNo,
             Address = p.Address,
-            SelectedGrah = p.SelectedGrah,
-            SelectedGrahan = p.SelectedGrahan,
-            SelectedRemedies = p.SelectedRemedies,
-            RemediesJson = p.RemediesJson,
-            CreatedAt = p.CreatedAt
+            Grah = p.Grah,
+            Grahan = p.Grahan,
+            CreatedAt = p.CreatedAt,
+            UpdatedAt = p.UpdatedAt
         };
     }
 }
