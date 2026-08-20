@@ -13,16 +13,14 @@ namespace AstroDeepak.Infrastructure.Persistence
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "astrodeepak.db3");
             System.Diagnostics.Debug.WriteLine($"DATABASE PATH: {dbPath}");
 
-            // storeDateTimeAsTicks: false -> DateTime columns are stored as TEXT (ISO8601)
-            // instead of INTEGER ticks. This is what was making DOB/CreatedAt show as bigint.
             _db = new SQLiteAsyncConnection(dbPath, storeDateTimeAsTicks: false);
 
             await _db.CreateTableAsync<PersonEntity>();
             await _db.CreateTableAsync<NavgrahMasterEntity>();
             await _db.CreateTableAsync<GrahanMasterEntity>();
             await _db.CreateTableAsync<RemedyMasterEntity>();
-            await _db.CreateTableAsync<NavgrahRemedyEntity>();
             await _db.CreateTableAsync<UsersRemedyEntity>();
+            // NavgrahRemedyEntity table removed - RemedyMaster.NavgrahId replaces it.
 
             await SeedMasterDataAsync(_db);
 
@@ -61,21 +59,8 @@ namespace AstroDeepak.Infrastructure.Persistence
                 });
             }
 
-            var remedyCount = await db.Table<RemedyMasterEntity>().CountAsync();
-            if (remedyCount == 0)
-            {
-                await db.InsertAllAsync(new List<RemedyMasterEntity>
-                {
-                    new() { Name = "Chant Beej Mantra",     SortOrder = 1, CreatedAt = now, UpdatedAt = now },
-                    new() { Name = "Fast on Related Day",   SortOrder = 2, CreatedAt = now, UpdatedAt = now },
-                    new() { Name = "Wear Gemstone",         SortOrder = 3, CreatedAt = now, UpdatedAt = now },
-                    new() { Name = "Donate on Related Day", SortOrder = 4, CreatedAt = now, UpdatedAt = now },
-                    new() { Name = "Worship Related Deity", SortOrder = 5, CreatedAt = now, UpdatedAt = now },
-                    new() { Name = "Visit Temple",          SortOrder = 6, CreatedAt = now, UpdatedAt = now },
-                    new() { Name = "Recite Stotram",        SortOrder = 7, CreatedAt = now, UpdatedAt = now },
-                    new() { Name = "Feed Animals / Birds",  SortOrder = 8, CreatedAt = now, UpdatedAt = now },
-                });
-            }
+            // RemedyMaster is no longer seeded generically - remedies are added
+            // per-Navgrah via Hamburger -> Add Remedies.
         }
     }
 }

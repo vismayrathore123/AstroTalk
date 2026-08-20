@@ -59,6 +59,18 @@ namespace AstroDeepak.Views
         }
 
         async void OnHamburgerClicked(object sender, EventArgs e)
-            => await Shell.Current.GoToAsync("masterremedies");
+        {
+            var action = await DisplayActionSheet("Menu", "Cancel", null, "Add Remedies", "Contact Us");
+
+            if (action == "Add Remedies")
+            {
+                var navParams = new Dictionary<string, object> { { "Mode", "Master" } };
+                await Shell.Current.GoToAsync("navgrah", navParams);
+            }
+            else if (action == "Contact Us")
+            {
+                await DisplayAlert("Contact Us", "Contact us feature coming soon.", "OK");
+            }
+        }
     }
 }

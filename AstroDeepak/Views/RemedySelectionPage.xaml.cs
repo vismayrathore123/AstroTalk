@@ -10,7 +10,9 @@ namespace AstroDeepak.Views
         private readonly IRemedyRepository _remedyRepository;
         private readonly IPersonService _personService;
         private readonly IUserRemedyService _userRemedyService;
-        private readonly ObservableCollection<RemedyCheckItem> _items = new();
+
+        private readonly List<RemedyCheckItem> _allItems = new();       // full set (filter never loses selection)
+        private readonly ObservableCollection<RemedyCheckItem> _items = new(); // what's shown after filtering
 
         private PersonDto? _draft;
         private int _navgrahId;
@@ -43,6 +45,7 @@ namespace AstroDeepak.Views
 
             HeaderLabel.Text = $"Remedies for {_navgrahName}";
             SubHeaderLabel.Text = "Select remedies for this Kundli";
+            SearchEntry.Text = string.Empty;
 
             await LoadRemediesAsync();
         }
@@ -52,34 +55,43 @@ namespace AstroDeepak.Views
 
         async Task LoadRemediesAsync()
         {
-            var allRemedies = await _remedyRepository.GetAllRemediesAsync();
+            var remedies = await _remedyRepository.GetRemediesByNavgrahIdAsync(_navgrahId);
 
-            _items.Clear();
-            foreach (var r in allRemedies)
+            _allItems.Clear();
+            foreach (var r in remedies)
             {
-                _items.Add(new RemedyCheckItem
+                _allItems.Add(new RemedyCheckItem
                 {
                     Name = r.Name,
                     IsChecked = false
                 });
             }
+
+            ApplyFilter(SearchEntry.Text);
         }
 
-        async void OnAddRemedyClicked(object sender, EventArgs e)
+        void ApplyFilter(string? term)
         {
-            var name = NewRemedyEntry.Text?.Trim();
-            if (string.IsNullOrWhiteSpace(name)) return;
+            _items.Clear();
 
-            await _remedyRepository.AddRemedyMasterAsync(name);
-            NewRemedyEntry.Text = string.Empty;
-            await LoadRemediesAsync();
+            var filtered = string.IsNullOrWhiteSpace(term)
+                ? _allItems
+                : _allItems.Where(i => i.Name.Contains(term, StringComparison.OrdinalIgnoreCase));
+
+            foreach (var item in filtered)
+                _items.Add(item);
         }
+
+        void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+            => ApplyFilter(e.NewTextValue);
 
         async void OnSaveClicked(object sender, EventArgs e)
         {
             if (_draft == null) return;
 
-            var selectedNames = _items.Where(i => i.IsChecked).Select(i => i.Name).ToList();
+            // Selection is read from _allItems so a match hidden by the search
+            // filter doesn't lose its checked state.
+            var selectedNames = _allItems.Where(i => i.IsChecked).Select(i => i.Name).ToList();
             if (selectedNames.Count == 0)
             {
                 await DisplayAlert("No remedies selected", "Please select at least one remedy.", "OK");
@@ -88,8 +100,8 @@ namespace AstroDeepak.Views
 
             _draft.Grah = _navgrahName;
 
-            // Save the person first so a brand-new record gets a real Id.
             var personId = await _personService.SaveAsync(_draft);
+            _draft.Id = personId; // keep updating the same person on subsequent Grah rounds
 
             await _userRemedyService.SaveSelectedRemediesAsync(
                 personId,
@@ -98,7 +110,11 @@ namespace AstroDeepak.Views
                 WhatsAppSwitch.IsToggled);
 
             await DisplayAlert("Saved", "Kundli saved successfully.", "OK");
-            await Shell.Current.GoToAsync("//search");
+
+            // Go back to Grah picker (not Open Kundli) so the user can add
+            // remedies for another Grah for the same person if they want.
+            var navParams = new Dictionary<string, object> { { "PersonDraft", _draft }, { "Mode", "Person" } };
+            await Shell.Current.GoToAsync("navgrah", navParams);
         }
     }
 }

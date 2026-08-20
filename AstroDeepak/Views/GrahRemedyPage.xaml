@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:entities="clr-namespace:AstroDeepak.Domain.Entities"
-             x:Class="AstroDeepak.Views.MasterRemedyPage"
-             Title="Master Remedies">
+             x:Class="AstroDeepak.Views.GrahRemedyPage"
+             Title="Remedies">
 
     <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,*">
 
@@ -12,8 +12,8 @@
         </HorizontalStackLayout>
 
         <VerticalStackLayout Grid.Row="1" Spacing="2" Margin="0,0,0,14">
-            <Label Text="Master Remedies" Style="{StaticResource TitleLabel}" FontSize="22" />
-            <Label Text="Add or remove remedies available for selection"
+            <Label x:Name="HeaderLabel" Text="Remedies" Style="{StaticResource TitleLabel}" FontSize="22" />
+            <Label Text="Add, edit, or remove remedies for this Grah"
                    Style="{StaticResource SubtitleLabel}" />
         </VerticalStackLayout>
 
@@ -30,9 +30,12 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="entities:RemedyMaster">
                     <Border Style="{StaticResource CardBorder}" Margin="0,0,0,8" Padding="12">
-                        <Grid ColumnDefinitions="*,Auto">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
                             <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center" FontSize="15" />
-                            <Button Grid.Column="1" Text="🗑️" FontSize="16"
+                            <Button Grid.Column="1" Text="✏️" FontSize="16"
+                                    BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" Padding="0"
+                                    Clicked="OnEditClicked" CommandParameter="{Binding .}" />
+                            <Button Grid.Column="2" Text="🗑️" FontSize="16"
                                     BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" Padding="0"
                                     Clicked="OnDeleteClicked" CommandParameter="{Binding Id}" />
                         </Grid>

@@ -36,7 +36,7 @@ namespace AstroDeepak
             builder.Services.AddTransient<PersonFormPage>();
             builder.Services.AddTransient<NavgrahListPage>();
             builder.Services.AddTransient<RemedySelectionPage>();
-            builder.Services.AddTransient<MasterRemedyPage>();
+            builder.Services.AddTransient<GrahRemedyPage>(); // replaces MasterRemedyPage
             return builder.Build();
         }
     }

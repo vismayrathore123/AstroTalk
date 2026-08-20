@@ -18,11 +18,10 @@
         </VerticalStackLayout>
 
         <Border Grid.Row="2" Style="{StaticResource CardBorder}" Margin="0,0,0,12" Padding="10">
-            <Grid ColumnDefinitions="*,Auto">
-                <Entry x:Name="NewRemedyEntry" Grid.Column="0" Placeholder="Add a new remedy..." />
-                <Button Grid.Column="1" Text="+ Add" Clicked="OnAddRemedyClicked"
-                        BackgroundColor="Transparent" TextColor="{StaticResource Gold}"
-                        FontAttributes="Bold" />
+            <Grid ColumnDefinitions="Auto,*">
+                <Label Grid.Column="0" Text="🔍" VerticalOptions="Center" FontSize="18" Margin="0,0,8,0" />
+                <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Search remedies..."
+                       TextChanged="OnSearchTextChanged" />
             </Grid>
         </Border>
 

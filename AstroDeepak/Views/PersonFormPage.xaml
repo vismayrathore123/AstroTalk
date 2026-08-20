@@ -27,7 +27,10 @@
                     <DatePicker x:Name="DobPicker" />
 
                     <Label Text="TIME OF BIRTH" Style="{StaticResource SubtitleLabel}" />
-                    <Entry x:Name="TimeEntry" Placeholder="e.g. 10:30 AM" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <Entry x:Name="TimeEntry" Grid.Column="0" Placeholder="e.g. 10:30" Keyboard="Numeric" />
+                        <Picker x:Name="AmPmPicker" Grid.Column="1" WidthRequest="100" Title="AM/PM" />
+                    </Grid>
 
                     <Label Text="BIRTH PLACE" Style="{StaticResource SubtitleLabel}" />
                     <Entry x:Name="BirthPlaceEntry" Placeholder="Birth place" />

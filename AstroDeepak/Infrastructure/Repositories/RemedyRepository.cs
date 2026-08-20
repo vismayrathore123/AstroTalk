@@ -13,57 +13,32 @@ namespace AstroDeepak.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<RemedyMaster>> GetAllRemediesAsync()
+        public async Task<List<RemedyMaster>> GetRemediesByNavgrahIdAsync(int navgrahId)
         {
             var db = await _context.GetConnectionAsync();
-            var rows = await db.Table<RemedyMasterEntity>().ToListAsync();
+            var rows = await db.Table<RemedyMasterEntity>()
+                                .Where(r => r.NavgrahId == navgrahId)
+                                .ToListAsync();
             return rows.OrderBy(r => r.SortOrder)
                        .Select(r => new RemedyMaster
                        {
                            Id = r.Id,
                            Name = r.Name,
                            SortOrder = r.SortOrder,
+                           NavgrahId = r.NavgrahId,
                            CreatedAt = r.CreatedAt,
                            UpdatedAt = r.UpdatedAt
                        })
                        .ToList();
         }
 
-        // NavgrahRemedy table/logic - unchanged, kept as-is.
-        public async Task<List<string>> GetRemediesForNavgrahAsync(string navgrahName)
-        {
-            var db = await _context.GetConnectionAsync();
-            var rows = await db.Table<NavgrahRemedyEntity>()
-                                .Where(r => r.NavgrahName == navgrahName)
-                                .ToListAsync();
-            return rows.Select(r => r.RemedyName).ToList();
-        }
-
-        public async Task SaveNavgrahRemediesAsync(string navgrahName, List<string> remedyNames)
+        public async Task AddRemedyMasterAsync(string name, int navgrahId)
         {
             var db = await _context.GetConnectionAsync();
 
-            var existing = await db.Table<NavgrahRemedyEntity>()
-                                    .Where(r => r.NavgrahName == navgrahName)
+            var existing = await db.Table<RemedyMasterEntity>()
+                                    .Where(r => r.NavgrahId == navgrahId)
                                     .ToListAsync();
-            foreach (var row in existing)
-                await db.DeleteAsync(row);
-
-            var toInsert = remedyNames.Select(name => new NavgrahRemedyEntity
-            {
-                NavgrahName = navgrahName,
-                RemedyName = name
-            }).ToList();
-
-            if (toInsert.Count > 0)
-                await db.InsertAllAsync(toInsert);
-        }
-
-        public async Task AddRemedyMasterAsync(string name)
-        {
-            var db = await _context.GetConnectionAsync();
-
-            var existing = await db.Table<RemedyMasterEntity>().ToListAsync();
             if (existing.Any(r => string.Equals(r.Name, name, StringComparison.OrdinalIgnoreCase)))
                 return;
 
@@ -74,9 +49,21 @@ namespace AstroDeepak.Infrastructure.Repositories
             {
                 Name = name,
                 SortOrder = nextOrder,
+                NavgrahId = navgrahId,
                 CreatedAt = now,
                 UpdatedAt = now
             });
+        }
+
+        public async Task UpdateRemedyMasterAsync(int id, string name)
+        {
+            var db = await _context.GetConnectionAsync();
+            var entity = await db.Table<RemedyMasterEntity>().Where(r => r.Id == id).FirstOrDefaultAsync();
+            if (entity == null) return;
+
+            entity.Name = name;
+            entity.UpdatedAt = DateTime.Now;
+            await db.UpdateAsync(entity);
         }
 
         public async Task DeleteRemedyMasterAsync(int id)
