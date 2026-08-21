@@ -17,6 +17,7 @@ namespace AstroDeepak.Infrastructure.Persistence
         public DateTime DOB { get; set; }
         public string Time { get; set; }
         public string BirthPlace { get; set; }
+        public string CountryCode { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
         public string Grahan { get; set; }
@@ -24,7 +25,6 @@ namespace AstroDeepak.Infrastructure.Persistence
         public int NavgrahId { get; set; }
         public string NavgrahName { get; set; }
 
-        // JSON array of selected remedy names, e.g. ["Chant Beej Mantra","Visit Temple"]
         public string SelectedRemediesJson { get; set; }
 
         public DateTime CreatedAt { get; set; }

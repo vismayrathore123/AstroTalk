@@ -33,11 +33,19 @@
                         <Label x:Name="RemediesLabel" FontSize="16" />
                     </VerticalStackLayout>
 
+                    <VerticalStackLayout>
+                        <Label Text="WHATSAPP NUMBER" Style="{StaticResource SubtitleLabel}" />
+                        <Label x:Name="PhoneLabel" FontSize="16" />
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
             </Border>
 
-            <Button Text="Confirm &amp; Save" Style="{StaticResource PrimaryButton}"
+            <Button Text="Confirm" Style="{StaticResource SecondaryButton}"
                     Clicked="OnConfirmClicked" Margin="0,10,0,0" />
+
+            <Button Text="Confirm &amp; WhatsApp" Style="{StaticResource PrimaryButton}"
+                    Clicked="OnConfirmAndWhatsAppClicked" />
 
             <Button Text="Edit" Style="{StaticResource SecondaryButton}"
                     Clicked="OnEditClicked" />

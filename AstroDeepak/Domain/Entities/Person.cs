@@ -17,7 +17,7 @@ namespace AstroDeepak.Domain.Entities
         // Renamed: SelectedGrah -> Grah, SelectedGrahan -> Grahan
         public string Grah { get; set; } = "None";
         public string Grahan { get; set; } = "None";
-
+        public string CountryCode { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
     }

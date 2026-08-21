@@ -36,7 +36,10 @@
                     <Entry x:Name="BirthPlaceEntry" Placeholder="Birth place" />
 
                     <Label Text="PHONE / WHATSAPP" Style="{StaticResource SubtitleLabel}" />
-                    <Entry x:Name="PhoneEntry" Placeholder="10-digit number" Keyboard="Telephone" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Picker x:Name="CountryCodePicker" Grid.Column="0" WidthRequest="150" Title="Country" />
+                        <Entry x:Name="PhoneEntry" Grid.Column="1" Placeholder="10-digit number" Keyboard="Telephone" />
+                    </Grid>
 
                     <Label Text="ADDRESS" Style="{StaticResource SubtitleLabel}" />
                     <Editor x:Name="AddressEntry" Placeholder="Address" AutoSize="TextChanges" />

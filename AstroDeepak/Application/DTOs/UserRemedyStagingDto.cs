@@ -17,7 +17,7 @@ namespace AstroDeepak.Application.DTOs
         public string PhoneNo { get; set; }
         public string Address { get; set; }
         public string Grahan { get; set; }
-
+        public string CountryCode { get; set; }
         public int NavgrahId { get; set; }
         public string NavgrahName { get; set; }
 

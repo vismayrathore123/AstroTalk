@@ -5,6 +5,7 @@ using AstroDeepak.Infrastructure.Persistence;
 using AstroDeepak.Infrastructure.Repositories;
 using AstroDeepak.Domain.Abstractions;
 using AstroDeepak.Views;
+using QuestPDF.Infrastructure;
 
 namespace AstroDeepak
 {
@@ -12,6 +13,8 @@ namespace AstroDeepak
     {
         public static MauiApp CreateMauiApp()
         {
+            QuestPDF.Settings.License = LicenseType.Community; // required once at startup
+
             var builder = MauiApp.CreateBuilder();
             builder.UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -33,13 +36,13 @@ namespace AstroDeepak
             builder.Services.AddSingleton<IUserRemedyService, UserRemedyService>();
             builder.Services.AddSingleton<IUserRemedyStagingRepository, UserRemedyStagingRepository>();
             builder.Services.AddSingleton<IUserRemedyStagingService, UserRemedyStagingService>();
+            builder.Services.AddSingleton<IPdfExportService, PdfExportService>();
 
             builder.Services.AddTransient<SearchPage>();
             builder.Services.AddTransient<PersonFormPage>();
             builder.Services.AddTransient<NavgrahListPage>();
             builder.Services.AddTransient<PreviewPage>();
             builder.Services.AddTransient<GrahRemedyPage>();
-            // RemedySelectionPage registration removed - page deleted.
             return builder.Build();
         }
     }

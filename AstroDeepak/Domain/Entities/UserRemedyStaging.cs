@@ -6,8 +6,6 @@ namespace AstroDeepak.Domain.Entities
     public class UserRemedyStaging
     {
         public int Id { get; set; }
-
-        // 0 when this is a brand-new person, real Id when editing an existing one.
         public int PersonId { get; set; }
 
         public string Name { get; set; }
@@ -16,6 +14,7 @@ namespace AstroDeepak.Domain.Entities
         public DateTime DOB { get; set; }
         public string Time { get; set; }
         public string BirthPlace { get; set; }
+        public string CountryCode { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
         public string Grahan { get; set; }

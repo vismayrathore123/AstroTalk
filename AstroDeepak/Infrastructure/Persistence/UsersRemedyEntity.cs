@@ -17,6 +17,7 @@ namespace AstroDeepak.Infrastructure.Persistence
 
         public string CurrentSuggestedRemedy { get; set; }
         public string RemediesJson { get; set; }
+        public bool WhatsApp { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

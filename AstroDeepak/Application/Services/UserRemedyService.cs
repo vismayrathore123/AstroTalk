@@ -38,8 +38,18 @@ namespace AstroDeepak.Application.Services
             var entity = existing ?? new UserRemedy { PersonId = personId, NavgrahId = navgrahId };
             entity.CurrentSuggestedRemedy = string.Join(", ", selectedRemedyNames);
             entity.RemediesJson = JsonSerializer.Serialize(history);
+            // WhatsApp flag untouched here - set separately via MarkWhatsAppStatusAsync.
 
             await _repository.SaveAsync(entity);
+        }
+
+        public async Task MarkWhatsAppStatusAsync(int personId, int navgrahId, bool sent)
+        {
+            var existing = await _repository.GetByPersonAndNavgrahAsync(personId, navgrahId);
+            if (existing == null) return;
+
+            existing.WhatsApp = sent;
+            await _repository.SaveAsync(existing);
         }
 
         private static UserRemedyDto ToDto(UserRemedy r) => new()
@@ -49,6 +59,7 @@ namespace AstroDeepak.Application.Services
             NavgrahId = r.NavgrahId,
             CurrentSuggestedRemedy = r.CurrentSuggestedRemedy,
             RemediesJson = r.RemediesJson,
+            WhatsApp = r.WhatsApp,
             CreatedAt = r.CreatedAt,
             UpdatedAt = r.UpdatedAt
         };

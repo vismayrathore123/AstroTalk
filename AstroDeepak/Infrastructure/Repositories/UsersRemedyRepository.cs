@@ -68,6 +68,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             NavgrahId = e.NavgrahId,
             CurrentSuggestedRemedy = e.CurrentSuggestedRemedy ?? string.Empty,
             RemediesJson = string.IsNullOrWhiteSpace(e.RemediesJson) ? "[]" : e.RemediesJson,
+            WhatsApp = e.WhatsApp,
             CreatedAt = e.CreatedAt,
             UpdatedAt = e.UpdatedAt
         };
@@ -79,6 +80,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             NavgrahId = r.NavgrahId,
             CurrentSuggestedRemedy = r.CurrentSuggestedRemedy,
             RemediesJson = r.RemediesJson,
+            WhatsApp = r.WhatsApp,
             CreatedAt = r.CreatedAt,
             UpdatedAt = r.UpdatedAt
         };

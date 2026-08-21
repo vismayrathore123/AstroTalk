@@ -11,6 +11,7 @@ namespace AstroDeepak.Application.DTOs
         public DateTime? DOB { get; set; }
         public string Time { get; set; }
         public string BirthPlace { get; set; }
+        public string CountryCode { get; set; } = string.Empty;
         public string PhoneNo { get; set; }
         public string Address { get; set; }
 

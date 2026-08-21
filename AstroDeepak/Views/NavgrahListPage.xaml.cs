@@ -346,6 +346,7 @@ namespace AstroDeepak.Views
                 DOB = _draft.DOB ?? DateTime.Today,
                 Time = _draft.Time,
                 BirthPlace = _draft.BirthPlace,
+                CountryCode = _draft.CountryCode,
                 PhoneNo = _draft.PhoneNo,
                 Address = _draft.Address,
                 Grahan = _draft.Grahan,
@@ -355,7 +356,6 @@ namespace AstroDeepak.Views
             };
 
             var stagingId = await _stagingService.SaveAsync(stagingDto);
-
             await Shell.Current.GoToAsync($"preview?StagingId={stagingId}");
         }
     }

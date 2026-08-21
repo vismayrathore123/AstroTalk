@@ -14,6 +14,7 @@ namespace AstroDeepak.Infrastructure.Persistence
         public DateTime DOB { get; set; }
         public string Time { get; set; }
         public string BirthPlace { get; set; }
+        public string CountryCode { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
 

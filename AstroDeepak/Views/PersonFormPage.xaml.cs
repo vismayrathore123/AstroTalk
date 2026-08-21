@@ -31,6 +31,9 @@ namespace AstroDeepak.Views
             _personService = personService;
             _masterDataRepository = masterDataRepository;
             AmPmPicker.ItemsSource = AmPmOptions;
+
+            CountryCodePicker.ItemsSource = CountryCodes.All;
+            CountryCodePicker.ItemDisplayBinding = new Binding(nameof(CountryCodeOption.Display));
         }
 
         protected override async void OnAppearing()
@@ -67,6 +70,12 @@ namespace AstroDeepak.Views
                 : "AM";
 
             BirthPlaceEntry.Text = dto.BirthPlace;
+
+            // Match on stored dial code; leave unselected if blank/unmatched - no forced default.
+            CountryCodePicker.SelectedItem = string.IsNullOrWhiteSpace(dto.CountryCode)
+                ? null
+                : CountryCodes.All.FirstOrDefault(c => c.DialCode == dto.CountryCode);
+
             PhoneEntry.Text = dto.PhoneNo;
             AddressEntry.Text = dto.Address;
 
@@ -83,6 +92,7 @@ namespace AstroDeepak.Views
             TimeEntry.Text = string.Empty;
             AmPmPicker.SelectedItem = "AM";
             BirthPlaceEntry.Text = string.Empty;
+            CountryCodePicker.SelectedItem = null;
             PhoneEntry.Text = string.Empty;
             AddressEntry.Text = string.Empty;
             GrahanPicker.SelectedItem = _grahanOptions.FirstOrDefault(g => g.Name == "None");
@@ -96,9 +106,16 @@ namespace AstroDeepak.Views
                 return;
             }
 
+            if (!string.IsNullOrWhiteSpace(PhoneEntry.Text) && CountryCodePicker.SelectedItem == null)
+            {
+                await DisplayAlert("Missing country code", "Please select a country code for the phone number.", "OK");
+                return;
+            }
+
             var selectedGrahan = GrahanPicker.SelectedItem as GrahanMaster;
             var amPm = AmPmPicker.SelectedItem as string ?? "AM";
             var timeText = string.IsNullOrWhiteSpace(TimeEntry.Text) ? string.Empty : $"{TimeEntry.Text.Trim()} {amPm}";
+            var selectedCountry = CountryCodePicker.SelectedItem as CountryCodeOption;
 
             var dto = new PersonDto
             {
@@ -109,6 +126,7 @@ namespace AstroDeepak.Views
                 DOB = DobPicker.Date,
                 Time = timeText,
                 BirthPlace = BirthPlaceEntry.Text,
+                CountryCode = selectedCountry?.DialCode ?? string.Empty,
                 PhoneNo = PhoneEntry.Text,
                 Address = AddressEntry.Text,
                 Grahan = selectedGrahan?.Name ?? "None"
