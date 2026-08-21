@@ -4,31 +4,63 @@
              x:Class="AstroDeepak.Views.NavgrahListPage"
              Title="Select Navgrah">
 
-    <Grid Padding="20" RowDefinitions="Auto,*,Auto">
+    <Grid>
 
-        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Margin="0,0,0,8">
-            <Button Text="←" Style="{StaticResource IconButton}" Clicked="OnBackClicked" />
-        </HorizontalStackLayout>
+        <Grid Padding="20" RowDefinitions="Auto,Auto,*,Auto">
 
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="14" Padding="0,0,0,20">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+                <Button Grid.Column="0" Text="←" Style="{StaticResource IconButton}" Clicked="OnBackClicked" />
+                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
+                    <Button x:Name="HamburgerButton" Text="☰" Style="{StaticResource IconButton}" Clicked="OnHamburgerClicked" />
+                </HorizontalStackLayout>
+            </Grid>
 
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="Choose ONE Grah" Style="{StaticResource TitleLabel}" FontSize="22" />
-                    <Label Text="Tap a planet below - only a single selection is allowed"
-                           Style="{StaticResource SubtitleLabel}" />
-                </VerticalStackLayout>
-
-                <!-- Rows of Grah tiles are built here in code-behind.
-                     Each row carries its own accordion slot for remedies. -->
-                <VerticalStackLayout x:Name="GrahGridHost" Spacing="12" />
-
+            <VerticalStackLayout Grid.Row="1" Spacing="2" Margin="0,8,0,0">
+                <Label Text="Choose ONE Grah" Style="{StaticResource TitleLabel}" FontSize="22" />
+                <Label Text="Tap a planet below - only a single selection is allowed"
+                       Style="{StaticResource SubtitleLabel}" />
             </VerticalStackLayout>
-        </ScrollView>
 
-        <Button Grid.Row="2" x:Name="ConfirmButton" Text="Add Remedies →"
-                Style="{StaticResource PrimaryButton}" Margin="0,16,0,0"
-                IsEnabled="False" Clicked="OnConfirmClicked" />
+            <ScrollView Grid.Row="2">
+                <VerticalStackLayout Spacing="14" Padding="0,10,0,20">
+                    <VerticalStackLayout x:Name="GrahGridHost" Spacing="12" />
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <Button Grid.Row="3" x:Name="ConfirmButton" Text="Add Remedies →"
+                    Style="{StaticResource PrimaryButton}" Margin="0,16,0,0"
+                    IsEnabled="False" Clicked="OnConfirmClicked" />
+
+        </Grid>
+
+        <BoxView x:Name="MenuOverlayBackground" IsVisible="False" BackgroundColor="Transparent" InputTransparent="False">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnMenuOverlayTapped" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <Border x:Name="MenuDropdown" IsVisible="False"
+                HorizontalOptions="End" VerticalOptions="Start"
+                Margin="0,54,18,0" Padding="0"
+                StrokeShape="RoundRectangle 10" Stroke="{StaticResource GoldSoft}" StrokeThickness="1"
+                BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="Black" Opacity="0.15" Radius="12" Offset="0,4" />
+            </Border.Shadow>
+            <VerticalStackLayout Spacing="0" WidthRequest="170">
+                <Label Text="Add Remedies" Padding="16,12" FontSize="15" TextColor="Black">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAddRemediesTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView HeightRequest="1" Color="#E5E5E5" />
+                <Label Text="Contact Us" Padding="16,12" FontSize="15" TextColor="Black">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnContactUsTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </Border>
 
     </Grid>
 

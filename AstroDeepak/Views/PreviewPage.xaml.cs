@@ -212,5 +212,35 @@ namespace AstroDeepak.Views
                 return false;
             }
         }
+        void OnHamburgerClicked(object sender, EventArgs e)
+        {
+            bool opening = !MenuDropdown.IsVisible;
+            MenuDropdown.IsVisible = opening;
+            MenuOverlayBackground.IsVisible = opening;
+            HamburgerButton.Text = opening ? "✕" : "☰";
+        }
+
+        void OnMenuOverlayTapped(object sender, EventArgs e)
+            => CloseMenu();
+
+        async void OnAddRemediesTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            var navParams = new Dictionary<string, object> { { "Mode", "Master" } };
+            await Shell.Current.GoToAsync("navgrah", navParams);
+        }
+
+        async void OnContactUsTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await DisplayAlert("Contact Us", "Contact us feature coming soon.", "OK");
+        }
+
+        void CloseMenu()
+        {
+            MenuDropdown.IsVisible = false;
+            MenuOverlayBackground.IsVisible = false;
+            HamburgerButton.Text = "☰";
+        }
     }
 }
