@@ -1,4 +1,5 @@
 ﻿using AstroDeepak.Application.DTOs;
+using AstroDeepak.Application.Interfaces;
 using AstroDeepak.Domain.Abstractions;
 
 namespace AstroDeepak.Views
@@ -8,16 +9,29 @@ namespace AstroDeepak.Views
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public bool AlreadyAdded { get; set; }
-        public string StatusText => AlreadyAdded ? "✓ Added" : string.Empty;
     }
 
     public partial class NavgrahListPage : ContentPage, IQueryAttributable
     {
         private readonly IMasterDataRepository _masterDataRepository;
         private readonly IUsersRemedyRepository _usersRemedyRepository;
+        private readonly IRemedyRepository _remedyRepository;
+        private readonly IUserRemedyService _userRemedyService;
+        private readonly IUserRemedyStagingService _stagingService;
+
+        private const int ColumnsPerRow = 3;
+
+        // Each Grah's tile Border (for highlight) and its row's accordion slot (for expand/collapse).
+        private readonly Dictionary<NavgrahOption, Border> _grahTiles = new();
+        private readonly Dictionary<NavgrahOption, VerticalStackLayout> _rowSlots = new();
+
+        // Remedies currently loaded for the expanded Grah - Save reads selections from here.
+        private readonly List<RemedyCheckItem> _currentRemedyItems = new();
+        private VerticalStackLayout? _currentRemedyListHost;
+
         private PersonDto? _draft;
         private NavgrahOption? _selected;
-        private string _mode = "Person"; // "Person": attach remedies to a Kundli. "Master": manage a Grah's remedy list.
+        private string _mode = "Person"; // "Person": inline accordion remedy picker. "Master": navigate to GrahRemedyPage (unchanged).
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
@@ -29,24 +43,36 @@ namespace AstroDeepak.Views
                 : "Person";
         }
 
-        public NavgrahListPage(IMasterDataRepository masterDataRepository, IUsersRemedyRepository usersRemedyRepository)
+        public NavgrahListPage(
+            IMasterDataRepository masterDataRepository,
+            IUsersRemedyRepository usersRemedyRepository,
+            IRemedyRepository remedyRepository,
+            IUserRemedyService userRemedyService,
+            IUserRemedyStagingService stagingService)
         {
             InitializeComponent();
             _masterDataRepository = masterDataRepository;
             _usersRemedyRepository = usersRemedyRepository;
+            _remedyRepository = remedyRepository;
+            _userRemedyService = userRemedyService;
+            _stagingService = stagingService;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            ConfirmButton.Text = _mode == "Master" ? "Manage Remedies →" : "Add Remedies →";
+            ConfirmButton.Text = _mode == "Master" ? "Manage Remedies →" : "Save";
             ConfirmButton.IsEnabled = false;
             _selected = null;
+            _grahTiles.Clear();
+            _rowSlots.Clear();
+            _currentRemedyItems.Clear();
+            _currentRemedyListHost = null;
+            GrahGridHost.Children.Clear();
 
             var navgrahs = await _masterDataRepository.GetNavgrahsAsync();
 
-            // If editing an existing person, mark Grahs that already have saved remedies.
             var alreadyAddedIds = new HashSet<int>();
             if (_mode == "Person" && _draft != null && _draft.Id > 0)
             {
@@ -54,7 +80,7 @@ namespace AstroDeepak.Views
                 alreadyAddedIds = existingRemedies.Select(r => r.NavgrahId).ToHashSet();
             }
 
-            GrahList.ItemsSource = navgrahs
+            var options = navgrahs
                 .Select(n => new NavgrahOption
                 {
                     Id = n.Id,
@@ -62,12 +88,225 @@ namespace AstroDeepak.Views
                     AlreadyAdded = alreadyAddedIds.Contains(n.Id)
                 })
                 .ToList();
+
+            BuildGrahGrid(options);
         }
 
-        void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        void BuildGrahGrid(List<NavgrahOption> options)
         {
-            _selected = e.CurrentSelection.FirstOrDefault() as NavgrahOption;
-            ConfirmButton.IsEnabled = _selected != null;
+            for (int rowStart = 0; rowStart < options.Count; rowStart += ColumnsPerRow)
+            {
+                var rowItems = options.Skip(rowStart).Take(ColumnsPerRow).ToList();
+
+                var tilesGrid = new Grid
+                {
+                    ColumnSpacing = 12,
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition(GridLength.Star),
+                        new ColumnDefinition(GridLength.Star),
+                        new ColumnDefinition(GridLength.Star)
+                    }
+                };
+
+                // Shared accordion slot for this row - remedies for any Grah in this
+                // row are shown here, directly under the row, then hidden again.
+                var rowSlot = new VerticalStackLayout { Spacing = 10, IsVisible = false, Margin = new Thickness(0, 10, 0, 0) };
+
+                for (int col = 0; col < rowItems.Count; col++)
+                {
+                    var option = rowItems[col];
+                    var border = CreateGrahTile(option);
+                    Grid.SetColumn(border, col);
+                    tilesGrid.Children.Add(border);
+
+                    _rowSlots[option] = rowSlot;
+                }
+
+                var rowContainer = new VerticalStackLayout { Spacing = 0, Children = { tilesGrid, rowSlot } };
+                GrahGridHost.Children.Add(rowContainer);
+            }
+        }
+
+        Border CreateGrahTile(NavgrahOption option)
+        {
+            var nameLabel = new Label
+            {
+                Text = option.Name,
+                FontSize = 14,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.Center,
+                HorizontalTextAlignment = TextAlignment.Center
+            };
+
+            var statusLabel = new Label
+            {
+                Text = option.AlreadyAdded ? "✓ Added" : string.Empty,
+                FontSize = 10,
+                TextColor = (Color)Microsoft.Maui.Controls.Application.Current!.Resources["Gold"],
+                HorizontalOptions = LayoutOptions.Center
+            };
+
+            var border = new Border
+            {
+                Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["CardBorder"],
+                Padding = 8,
+                HeightRequest = 80,
+                Content = new VerticalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children = { nameLabel, statusLabel }
+                }
+            };
+
+            var tap = new TapGestureRecognizer();
+            tap.Tapped += (s, e) => OnGrahTileTapped(option);
+            border.GestureRecognizers.Add(tap);
+
+            _grahTiles[option] = border;
+            return border;
+        }
+
+        async void OnGrahTileTapped(NavgrahOption option)
+        {
+            bool reopeningSame = _selected == option && _rowSlots.TryGetValue(option, out var openSlot) && openSlot.IsVisible;
+
+            _selected = option;
+            ConfirmButton.IsEnabled = true;
+
+            // Highlight the tapped tile, reset the rest.
+            foreach (var kvp in _grahTiles)
+            {
+                bool isSelected = kvp.Key == option;
+                kvp.Value.Stroke = isSelected
+                    ? (Color)Microsoft.Maui.Controls.Application.Current!.Resources["Gold"]
+                    : (Color)Microsoft.Maui.Controls.Application.Current!.Resources["Violet"];
+                kvp.Value.StrokeThickness = isSelected ? 2 : 1;
+            }
+
+            // Collapse every row's accordion slot first (only one open at a time).
+            foreach (var slot in _rowSlots.Values.Distinct())
+            {
+                slot.IsVisible = false;
+                slot.Children.Clear();
+            }
+            _currentRemedyItems.Clear();
+            _currentRemedyListHost = null;
+
+            if (_mode != "Person") return; // Master mode: no accordion, just navigates on Confirm.
+
+            if (reopeningSame) return; // tapped the already-open tile again -> stay collapsed
+
+            if (!_rowSlots.TryGetValue(option, out var slotToOpen)) return;
+
+            await OpenRemedyAccordionAsync(option, slotToOpen);
+        }
+
+        async Task OpenRemedyAccordionAsync(NavgrahOption option, VerticalStackLayout slot)
+        {
+            var headerLabel = new Label
+            {
+                Text = $"Remedies for {option.Name}",
+                Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["TitleLabel"],
+                FontSize = 18
+            };
+
+            var searchEntry = new Entry { Placeholder = "Search remedies..." };
+            var searchIcon = new Label { Text = "🔍", VerticalOptions = LayoutOptions.Center, FontSize = 18, Margin = new Thickness(0, 0, 8, 0) };
+            var searchGrid = new Grid
+            {
+                ColumnDefinitions = { new ColumnDefinition(GridLength.Auto), new ColumnDefinition(GridLength.Star) },
+                Children = { searchIcon, searchEntry }
+            };
+            Grid.SetColumn(searchEntry, 1);
+
+            var searchBorder = new Border
+            {
+                Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["CardBorder"],
+                Padding = 10,
+                Content = searchGrid
+            };
+
+            var remedyListHost = new VerticalStackLayout { Spacing = 8 };
+
+            slot.Children.Add(headerLabel);
+            slot.Children.Add(searchBorder);
+            slot.Children.Add(remedyListHost);
+            slot.IsVisible = true;
+
+            _currentRemedyListHost = remedyListHost;
+
+            var remedies = await _remedyRepository.GetRemediesByNavgrahIdAsync(option.Id);
+
+            var alreadySelected = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (_draft != null && _draft.Id > 0)
+            {
+                var existing = await _userRemedyService.GetAsync(_draft.Id, option.Id);
+                if (existing != null && !string.IsNullOrWhiteSpace(existing.CurrentSuggestedRemedy))
+                {
+                    foreach (var name in existing.CurrentSuggestedRemedy.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+                        alreadySelected.Add(name);
+                }
+            }
+
+            _currentRemedyItems.Clear();
+            foreach (var r in remedies)
+            {
+                _currentRemedyItems.Add(new RemedyCheckItem
+                {
+                    Name = r.Name,
+                    IsChecked = alreadySelected.Contains(r.Name)
+                });
+            }
+
+            RenderRemedyItems(_currentRemedyItems);
+
+            searchEntry.TextChanged += (s, e) =>
+            {
+                var term = e.NewTextValue;
+                var filtered = string.IsNullOrWhiteSpace(term)
+                    ? _currentRemedyItems
+                    : _currentRemedyItems.Where(i => i.Name.Contains(term, StringComparison.OrdinalIgnoreCase));
+                RenderRemedyItems(filtered);
+            };
+        }
+
+        void RenderRemedyItems(IEnumerable<RemedyCheckItem> items)
+        {
+            if (_currentRemedyListHost == null) return;
+            _currentRemedyListHost.Children.Clear();
+
+            foreach (var item in items)
+            {
+                var checkBox = new CheckBox();
+                checkBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsChecked), source: item));
+
+                var nameLabel = new Label
+                {
+                    Text = item.Name,
+                    FontSize = 15,
+                    VerticalOptions = LayoutOptions.Center,
+                    Margin = new Thickness(8, 0, 0, 0)
+                };
+
+                var row = new Grid
+                {
+                    ColumnDefinitions = { new ColumnDefinition(GridLength.Auto), new ColumnDefinition(GridLength.Star) },
+                    Children = { checkBox, nameLabel }
+                };
+                Grid.SetColumn(nameLabel, 1);
+
+                var border = new Border
+                {
+                    Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["CardBorder"],
+                    Padding = 12,
+                    Content = row
+                };
+
+                _currentRemedyListHost.Children.Add(border);
+            }
         }
 
         async void OnBackClicked(object sender, EventArgs e)
@@ -79,6 +318,7 @@ namespace AstroDeepak.Views
 
             if (_mode == "Master")
             {
+                // Unchanged: still navigates to the full Add/Edit/Delete master page.
                 var masterNavParams = new Dictionary<string, object>
                 {
                     { "NavgrahId", _selected.Id },
@@ -90,14 +330,33 @@ namespace AstroDeepak.Views
 
             if (_draft == null) return;
 
-            var navParams = new Dictionary<string, object>
+            var selectedNames = _currentRemedyItems.Where(i => i.IsChecked).Select(i => i.Name).ToList();
+            if (selectedNames.Count == 0)
             {
-                { "NavgrahId", _selected.Id },
-                { "NavgrahName", _selected.Name },
-                { "PersonDraft", _draft }
+                await DisplayAlert("No remedies selected", "Please select at least one remedy.", "OK");
+                return;
+            }
+
+            var stagingDto = new UserRemedyStagingDto
+            {
+                PersonId = _draft.Id,
+                Name = _draft.Name,
+                FatherName = _draft.FatherName,
+                Gotra = _draft.Gotra,
+                DOB = _draft.DOB ?? DateTime.Today,
+                Time = _draft.Time,
+                BirthPlace = _draft.BirthPlace,
+                PhoneNo = _draft.PhoneNo,
+                Address = _draft.Address,
+                Grahan = _draft.Grahan,
+                NavgrahId = _selected.Id,
+                NavgrahName = _selected.Name,
+                SelectedRemedies = selectedNames
             };
 
-            await Shell.Current.GoToAsync("remedies", navParams);
+            var stagingId = await _stagingService.SaveAsync(stagingDto);
+
+            await Shell.Current.GoToAsync($"preview?StagingId={stagingId}");
         }
     }
 }

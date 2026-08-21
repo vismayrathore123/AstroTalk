@@ -31,15 +31,15 @@ namespace AstroDeepak
             builder.Services.AddSingleton<IRemedyRepository, RemedyRepository>();
             builder.Services.AddSingleton<IUsersRemedyRepository, UsersRemedyRepository>();
             builder.Services.AddSingleton<IUserRemedyService, UserRemedyService>();
-            builder.Services.AddSingleton<IUserRemedyStagingRepository, UserRemedyStagingRepository>(); // NEW
-            builder.Services.AddSingleton<IUserRemedyStagingService, UserRemedyStagingService>();       // NEW
+            builder.Services.AddSingleton<IUserRemedyStagingRepository, UserRemedyStagingRepository>();
+            builder.Services.AddSingleton<IUserRemedyStagingService, UserRemedyStagingService>();
 
             builder.Services.AddTransient<SearchPage>();
             builder.Services.AddTransient<PersonFormPage>();
             builder.Services.AddTransient<NavgrahListPage>();
-            builder.Services.AddTransient<RemedySelectionPage>();
-            builder.Services.AddTransient<PreviewPage>(); // NEW
+            builder.Services.AddTransient<PreviewPage>();
             builder.Services.AddTransient<GrahRemedyPage>();
+            // RemedySelectionPage registration removed - page deleted.
             return builder.Build();
         }
     }

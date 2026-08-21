@@ -1,45 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:AstroDeepak.Views"
              x:Class="AstroDeepak.Views.NavgrahListPage"
              Title="Select Navgrah">
 
-    <Grid Padding="20" RowDefinitions="Auto,Auto,*,Auto">
+    <Grid Padding="20" RowDefinitions="Auto,*,Auto">
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Margin="0,0,0,8">
             <Button Text="←" Style="{StaticResource IconButton}" Clicked="OnBackClicked" />
         </HorizontalStackLayout>
 
-        <VerticalStackLayout Grid.Row="1" Spacing="2" Margin="0,0,0,14">
-            <Label Text="Choose ONE Grah" Style="{StaticResource TitleLabel}" FontSize="22" />
-            <Label Text="Tap a planet below - only a single selection is allowed"
-                   Style="{StaticResource SubtitleLabel}" />
-        </VerticalStackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="14" Padding="0,0,0,20">
 
-        <CollectionView Grid.Row="2" x:Name="GrahList"
-                         SelectionMode="Single"
-                         SelectionChanged="OnSelectionChanged">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="12" HorizontalItemSpacing="12" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="views:NavgrahOption">
-                    <Grid>
-                        <Border Style="{StaticResource CardBorder}" Padding="8" HeightRequest="80">
-                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
-                                <Label Text="{Binding Name}" FontSize="14" HorizontalOptions="Center"
-                                       HorizontalTextAlignment="Center" FontAttributes="Bold" />
-                                <Label Text="{Binding StatusText}" FontSize="10" HorizontalOptions="Center"
-                                       TextColor="{StaticResource Gold}" />
-                            </VerticalStackLayout>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Choose ONE Grah" Style="{StaticResource TitleLabel}" FontSize="22" />
+                    <Label Text="Tap a planet below - only a single selection is allowed"
+                           Style="{StaticResource SubtitleLabel}" />
+                </VerticalStackLayout>
 
-        <Button Grid.Row="3" x:Name="ConfirmButton" Text="Add Remedies →"
+                <!-- Rows of Grah tiles are built here in code-behind.
+                     Each row carries its own accordion slot for remedies. -->
+                <VerticalStackLayout x:Name="GrahGridHost" Spacing="12" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="2" x:Name="ConfirmButton" Text="Add Remedies →"
                 Style="{StaticResource PrimaryButton}" Margin="0,16,0,0"
                 IsEnabled="False" Clicked="OnConfirmClicked" />
 

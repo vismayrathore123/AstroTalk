@@ -15,14 +15,14 @@
 
     <TabBar>
         <ShellContent
-            Title="New Kundli"
-            Route="form"
-            ContentTemplate="{DataTemplate views:PersonFormPage}" />
-
-        <ShellContent
             Title="Open Kundli"
             Route="search"
             ContentTemplate="{DataTemplate views:SearchPage}" />
+
+        <ShellContent
+            Title="New Kundli"
+            Route="form"
+            ContentTemplate="{DataTemplate views:PersonFormPage}" />
     </TabBar>
 
 </Shell>

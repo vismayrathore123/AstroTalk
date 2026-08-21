@@ -9,9 +9,10 @@ namespace AstroDeepak
             InitializeComponent();
 
             Routing.RegisterRoute("navgrah", typeof(NavgrahListPage));
-            Routing.RegisterRoute("remedies", typeof(RemedySelectionPage));
-            Routing.RegisterRoute("preview", typeof(PreviewPage));       // NEW
+            Routing.RegisterRoute("preview", typeof(PreviewPage));
             Routing.RegisterRoute("masterremedies", typeof(GrahRemedyPage));
+            // "remedies" route removed - RemedySelectionPage no longer exists;
+            // remedy selection is now inline on NavgrahListPage.
         }
     }
 }

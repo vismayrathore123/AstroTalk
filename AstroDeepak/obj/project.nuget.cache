@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qN16UDymHbo=",
+  "dgSpecHash": "chEsnSDngKs=",
   "success": true,
   "projectFilePath": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AstroDeepak.csproj",
   "expectedPackageFiles": [
@@ -28,7 +28,7 @@
     "C:\\Users\\User\\.nuget\\packages\\microsoft.maui.graphics\\10.0.20\\microsoft.maui.graphics.10.0.20.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.maui.graphics.win2d.winui.desktop\\10.0.20\\microsoft.maui.graphics.win2d.winui.desktop.10.0.20.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.maui.resizetizer\\10.0.20\\microsoft.maui.resizetizer.10.0.20.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.11\\microsoft.net.illink.tasks.10.0.11.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.10\\microsoft.net.illink.tasks.10.0.10.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.web.webview2\\1.0.3179.45\\microsoft.web.webview2.1.0.3179.45.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.windows.sdk.buildtools\\10.0.22621.756\\microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsappsdk\\1.7.250909003\\microsoft.windowsappsdk.1.7.250909003.nupkg.sha512",
@@ -129,7 +129,26 @@
     "C:\\Users\\User\\.nuget\\packages\\xamarin.kotlinx.coroutines.core.jvm\\1.10.2.1\\xamarin.kotlinx.coroutines.core.jvm.1.10.2.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\xamarin.kotlinx.serialization.core\\1.9.0.1\\xamarin.kotlinx.serialization.core.1.9.0.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\xamarin.kotlinx.serialization.core.jvm\\1.9.0.1\\xamarin.kotlinx.serialization.core.jvm.1.9.0.1.nupkg.sha512",
-    "C:\\Users\\User\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512"
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.app.ref\\10.0.10\\microsoft.netcore.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\10.0.10\\microsoft.windowsdesktop.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\10.0.10\\microsoft.aspnetcore.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.app.ref\\10.0.10\\microsoft.netcore.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\10.0.10\\microsoft.windowsdesktop.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\10.0.10\\microsoft.aspnetcore.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\10.0.10\\microsoft.netcore.app.host.win-x64.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.app.ref\\10.0.10\\microsoft.netcore.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\10.0.10\\microsoft.windowsdesktop.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\10.0.10\\microsoft.aspnetcore.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.ios.ref.net10.0_26.5\\26.5.10315\\microsoft.ios.ref.net10.0_26.5.26.5.10315.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.ios.runtime.ios.net10.0_26.5\\26.5.10315\\microsoft.ios.runtime.ios.net10.0_26.5.26.5.10315.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.ios.runtime.iossimulator-x64.net10.0_26.5\\26.5.10315\\microsoft.ios.runtime.iossimulator-x64.net10.0_26.5.26.5.10315.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.app.ref\\10.0.10\\microsoft.netcore.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\10.0.10\\microsoft.windowsdesktop.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\10.0.10\\microsoft.aspnetcore.app.ref.10.0.10.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.maccatalyst.ref.net10.0_26.5\\26.5.10315\\microsoft.maccatalyst.ref.net10.0_26.5.26.5.10315.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.maccatalyst.runtime.maccatalyst.net10.0_26.5\\26.5.10315\\microsoft.maccatalyst.runtime.maccatalyst.net10.0_26.5.26.5.10315.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.maccatalyst.runtime.maccatalyst-x64.net10.0_26.5\\26.5.10315\\microsoft.maccatalyst.runtime.maccatalyst-x64.net10.0_26.5.26.5.10315.nupkg.sha512"
   ],
   "logs": []
 }
