@@ -12,6 +12,7 @@ namespace AstroDeepak.Views
         private readonly IPersonService _personService;
         private readonly IUserRemedyService _userRemedyService;
         private readonly IPdfExportService _pdfExportService;
+        private readonly IAppLogger _logger;
 
         private int _stagingId;
         private UserRemedyStagingDto? _staging;
@@ -29,13 +30,15 @@ namespace AstroDeepak.Views
             IUserRemedyStagingService stagingService,
             IPersonService personService,
             IUserRemedyService userRemedyService,
-            IPdfExportService pdfExportService)
+            IPdfExportService pdfExportService,
+            IAppLogger logger)
         {
             InitializeComponent();
             _stagingService = stagingService;
             _personService = personService;
             _userRemedyService = userRemedyService;
             _pdfExportService = pdfExportService;
+            _logger = logger;
         }
 
         protected override async void OnAppearing()
@@ -45,6 +48,7 @@ namespace AstroDeepak.Views
             _staging = await _stagingService.GetByIdAsync(_stagingId);
             if (_staging == null)
             {
+                _logger.LogWarning($"PreviewPage opened with missing staging record. StagingId={_stagingId}");
                 await DisplayAlert("Not found", "This draft is no longer available.", "OK");
                 await Shell.Current.GoToAsync("//search");
                 return;
@@ -98,30 +102,99 @@ namespace AstroDeepak.Views
                 Grah = _staging.NavgrahName
             };
 
-            var personId = await _personService.SaveAsync(personDto);
+            int personId;
+            try
+            {
+                personId = await _personService.SaveAsync(personDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed saving person from PreviewPage", ex);
+                await DisplayAlert("Error", "Could not save this record. Please try again.", "OK");
+                return;
+            }
 
-            await _userRemedyService.SaveSelectedRemediesAsync(
-                personId,
-                _staging.NavgrahId,
-                _staging.SelectedRemedies);
+            try
+            {
+                await _userRemedyService.SaveSelectedRemediesAsync(
+                    personId,
+                    _staging.NavgrahId,
+                    _staging.SelectedRemedies);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed saving remedies for PersonId={personId}", ex);
+                await DisplayAlert("Error", "Record saved, but the remedies could not be stored. Please retry from Edit.", "OK");
+            }
 
+            string? savedFilePath = null;
             bool whatsAppSent = false;
-            if (sendWhatsApp)
-                whatsAppSent = await TrySendWhatsAppAsync(_staging);
 
-            await _userRemedyService.MarkWhatsAppStatusAsync(personId, _staging.NavgrahId, whatsAppSent);
+            try
+            {
+                if (sendWhatsApp)
+                {
+                    whatsAppSent = await TrySendWhatsAppAsync(_staging);
+                }
+                else
+                {
+                    // "Confirm" (no WhatsApp) -> straight into Downloads, no dialog.
+                    savedFilePath = await _pdfExportService.SaveRemedyReviewPdfToDownloadsAsync(_staging);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed generating/saving/sending the PDF", ex);
+            }
+
+            try
+            {
+                await _userRemedyService.MarkWhatsAppStatusAsync(personId, _staging.NavgrahId, whatsAppSent);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed updating WhatsApp status for PersonId={personId}", ex);
+            }
 
             await _stagingService.DeleteAsync(_staging.Id);
 
-            await DisplayAlert("Saved", whatsAppSent
-                ? "Kundli saved. WhatsApp share sheet was opened with the PDF - complete the send from there."
-                : "Kundli saved successfully.", "OK");
+            var confirmationMessage = sendWhatsApp
+                ? (whatsAppSent
+                    ? "Kundli saved. WhatsApp was opened for this person's number with the PDF ready to attach - finish sending it from there."
+                    : "Kundli saved, but WhatsApp could not be opened.")
+                : (savedFilePath != null
+                    ? $"Kundli saved. PDF saved to:\n{savedFilePath}"
+                    : "Kundli saved, but the PDF could not be written to Downloads.");
 
-            await Shell.Current.GoToAsync("//search");
+            await DisplayAlert("Saved", confirmationMessage, "OK");
+
+            var addAnother = await DisplayAlert(
+                "Add another remedy?",
+                "Do you want to add remedies for another Grah for this same person now?",
+                "Add Another Grah",
+                "Done");
+
+            if (addAnother)
+            {
+                personDto.Id = personId;
+                var navParams = new Dictionary<string, object> { { "PersonDraft", personDto }, { "Mode", "Person" } };
+                await Shell.Current.GoToAsync("navgrah", navParams);
+            }
+            else
+            {
+                await Shell.Current.GoToAsync("//search");
+            }
         }
 
         async Task<bool> TrySendWhatsAppAsync(UserRemedyStagingDto staging)
         {
+            // Platform reality check: no public Android or iOS API lets an app open one
+            // specific WhatsApp chat with a file already attached with zero taps. The
+            // wa.me link below opens the correct conversation for this person's saved
+            // number; the OS share sheet that follows is where the user picks WhatsApp
+            // again to actually attach the generated PDF. That one extra tap can't be
+            // removed without WhatsApp itself exposing a "send to number with file" API,
+            // which it doesn't.
             try
             {
                 var pdfPath = await _pdfExportService.GenerateRemedyReviewPdfAsync(staging);
@@ -133,9 +206,9 @@ namespace AstroDeepak.Views
                     {
                         await Launcher.Default.OpenAsync(new Uri($"https://wa.me/{digitsOnly}"));
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // WhatsApp may not be installed - the share sheet below still lets the user pick another app.
+                        _logger.LogWarning($"Could not open wa.me link for {digitsOnly}: {ex.Message}");
                     }
                 }
 
@@ -145,10 +218,12 @@ namespace AstroDeepak.Views
                     File = new ShareFile(pdfPath)
                 });
 
+                _logger.LogInfo($"WhatsApp flow completed for PersonId={staging.PersonId}, Number={staging.CountryCode}{staging.PhoneNo}");
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError($"WhatsApp send flow failed for PersonId={staging.PersonId}", ex);
                 return false;
             }
         }

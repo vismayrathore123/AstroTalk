@@ -3,6 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>LSRequiresIPhoneOS</key>
+	   <key>UIFileSharingEnabled</key><true/>
+   <key>LSSupportsOpeningDocumentsInPlace</key><true/>
 	<true/>
 	<key>UIDeviceFamily</key>
 	<array>

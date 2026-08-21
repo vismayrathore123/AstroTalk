@@ -10,7 +10,14 @@ namespace AstroDeepak.Views
     {
         private readonly IPersonService _personService;
         private readonly IMasterDataRepository _masterDataRepository;
+        private readonly IAppLogger _logger;
+
+        // 0 = brand-new person that hasn't been saved yet.
+        // Set to a real value the moment Submit succeeds, so that if the user goes
+        // "back" from the Grah-selection page, OnAppearing reloads the saved row
+        // instead of wiping the form via ClearForm().
         private int _editingId = 0;
+
         private List<GrahanMaster> _grahanOptions = new();
         private static readonly List<string> AmPmOptions = new() { "AM", "PM" };
 
@@ -25,11 +32,12 @@ namespace AstroDeepak.Views
             }
         }
 
-        public PersonFormPage(IPersonService personService, IMasterDataRepository masterDataRepository)
+        public PersonFormPage(IPersonService personService, IMasterDataRepository masterDataRepository, IAppLogger logger)
         {
             InitializeComponent();
             _personService = personService;
             _masterDataRepository = masterDataRepository;
+            _logger = logger;
             AmPmPicker.ItemsSource = AmPmOptions;
 
             CountryCodePicker.ItemsSource = CountryCodes.All;
@@ -51,6 +59,11 @@ namespace AstroDeepak.Views
                     Populate(dto);
                     return;
                 }
+
+                // The id we were remembering no longer exists in the DB (e.g. it was
+                // deleted elsewhere) - fall back to a clean form instead of crashing.
+                _logger.LogWarning($"PersonFormPage: PersonId={_editingId} no longer found, showing blank form.");
+                _editingId = 0;
             }
 
             ClearForm();
@@ -71,10 +84,12 @@ namespace AstroDeepak.Views
 
             BirthPlaceEntry.Text = dto.BirthPlace;
 
-            // Match on stored dial code; leave unselected if blank/unmatched - no forced default.
+            // Match on stored dial code; default to India if nothing was ever saved
+            // (covers both brand-new drafts and older records saved before CountryCode
+            // was tracked).
             CountryCodePicker.SelectedItem = string.IsNullOrWhiteSpace(dto.CountryCode)
-                ? null
-                : CountryCodes.All.FirstOrDefault(c => c.DialCode == dto.CountryCode);
+                ? DefaultCountry()
+                : CountryCodes.All.FirstOrDefault(c => c.DialCode == dto.CountryCode) ?? DefaultCountry();
 
             PhoneEntry.Text = dto.PhoneNo;
             AddressEntry.Text = dto.Address;
@@ -92,11 +107,14 @@ namespace AstroDeepak.Views
             TimeEntry.Text = string.Empty;
             AmPmPicker.SelectedItem = "AM";
             BirthPlaceEntry.Text = string.Empty;
-            CountryCodePicker.SelectedItem = null;
+            CountryCodePicker.SelectedItem = DefaultCountry(); // India by default
             PhoneEntry.Text = string.Empty;
             AddressEntry.Text = string.Empty;
             GrahanPicker.SelectedItem = _grahanOptions.FirstOrDefault(g => g.Name == "None");
         }
+
+        static CountryCodeOption? DefaultCountry()
+            => CountryCodes.All.FirstOrDefault(c => c.CountryName == "India");
 
         async void OnSubmitClicked(object sender, EventArgs e)
         {
@@ -132,8 +150,26 @@ namespace AstroDeepak.Views
                 Grahan = selectedGrahan?.Name ?? "None"
             };
 
-            var navParams = new Dictionary<string, object> { { "PersonDraft", dto }, { "Mode", "Person" } };
-            await Shell.Current.GoToAsync("navgrah", navParams);
+            try
+            {
+                // Persist immediately (insert if new, update if editing). This is the
+                // "correct table" for this data - the existing Persons table - there is
+                // no need for a separate draft table. Saving now means: (1) the record
+                // exists in the DB straight away, and (2) if the user backs out of the
+                // Grah-selection screen, OnAppearing above reloads real saved data
+                // instead of clearing the form.
+                var savedId = await _personService.SaveAsync(dto);
+                _editingId = savedId;
+                dto.Id = savedId;
+
+                var navParams = new Dictionary<string, object> { { "PersonDraft", dto }, { "Mode", "Person" } };
+                await Shell.Current.GoToAsync("navgrah", navParams);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Failed to save person from PersonFormPage", ex);
+                await DisplayAlert("Error", "Could not save this Kundli. Please try again.", "OK");
+            }
         }
 
         async void OnHamburgerClicked(object sender, EventArgs e)

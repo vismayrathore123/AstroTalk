@@ -9,12 +9,60 @@ namespace AstroDeepak.Application.Services
 {
     public class PdfExportService : IPdfExportService
     {
+        private readonly IDownloadsPathProvider _downloadsPathProvider;
+        private readonly IAppLogger _logger;
+
+        public PdfExportService(IDownloadsPathProvider downloadsPathProvider, IAppLogger logger)
+        {
+            _downloadsPathProvider = downloadsPathProvider;
+            _logger = logger;
+        }
+
         public Task<string> GenerateRemedyReviewPdfAsync(UserRemedyStagingDto staging)
         {
-            var fileName = $"Kundli_{staging.Name?.Replace(" ", "_")}_{staging.NavgrahName}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+            var fileName = BuildFileName(staging);
             var filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
 
-            Document.Create(container =>
+            try
+            {
+                BuildDocument(staging).GeneratePdf(filePath);
+                _logger.LogInfo($"PDF generated in cache for share/WhatsApp flow. Path={filePath}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed generating cache PDF for PersonId={staging.PersonId}", ex);
+                throw;
+            }
+
+            return Task.FromResult(filePath);
+        }
+
+        public async Task<string> SaveRemedyReviewPdfToDownloadsAsync(UserRemedyStagingDto staging)
+        {
+            var downloadsFolder = await _downloadsPathProvider.GetDownloadsFolderAsync();
+            var fileName = BuildFileName(staging);
+            var filePath = Path.Combine(downloadsFolder, fileName);
+
+            try
+            {
+                BuildDocument(staging).GeneratePdf(filePath);
+                _logger.LogInfo($"PDF saved directly to Downloads (no dialog). Path={filePath}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed saving PDF to downloads folder '{downloadsFolder}' for PersonId={staging.PersonId}", ex);
+                throw;
+            }
+
+            return filePath;
+        }
+
+        private static string BuildFileName(UserRemedyStagingDto staging)
+            => $"Kundli_{staging.Name?.Replace(" ", "_")}_{staging.NavgrahName}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+
+        private static IDocument BuildDocument(UserRemedyStagingDto staging)
+        {
+            return Document.Create(container =>
             {
                 container.Page(page =>
                 {
@@ -48,9 +96,7 @@ namespace AstroDeepak.Application.Services
                         t.Span(DateTime.Now.ToString("dd MMM yyyy, hh:mm tt")).FontSize(9);
                     });
                 });
-            }).GeneratePdf(filePath);
-
-            return Task.FromResult(filePath);
+            });
         }
     }
 }

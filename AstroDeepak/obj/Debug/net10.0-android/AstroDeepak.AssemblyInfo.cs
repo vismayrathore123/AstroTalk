@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AstroDeepak")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+e69491798a4f2fc82c734fe1e7c8a33cadf0ef42")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+ce384b2d30be4861427577381f988e9148b1b6b9")]
 [assembly: System.Reflection.AssemblyProductAttribute("AstroDeepak")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AstroDeepak")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
