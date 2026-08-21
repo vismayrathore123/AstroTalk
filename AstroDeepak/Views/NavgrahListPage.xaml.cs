@@ -21,17 +21,24 @@ namespace AstroDeepak.Views
 
         private const int ColumnsPerRow = 3;
 
-        // Each Grah's tile Border (for highlight) and its row's accordion slot (for expand/collapse).
         private readonly Dictionary<NavgrahOption, Border> _grahTiles = new();
+        private readonly Dictionary<NavgrahOption, Label> _statusLabels = new();
         private readonly Dictionary<NavgrahOption, VerticalStackLayout> _rowSlots = new();
 
-        // Remedies currently loaded for the expanded Grah - Save reads selections from here.
+        // Remedies checked for whichever Grah's accordion is currently open.
         private readonly List<RemedyCheckItem> _currentRemedyItems = new();
         private VerticalStackLayout? _currentRemedyListHost;
 
+        // Every Grah's chosen remedies for THIS session, keyed by NavgrahId. This is
+        // what makes checkboxes stay ticked when you switch tiles or come back from
+        // Preview via Edit, and it's what lets you pick remedies for more than one
+        // Grah before finally hitting Save.
+        private readonly Dictionary<int, List<string>> _selectionsByGrah = new();
+        private NavgrahOption? _openOption;
+
         private PersonDto? _draft;
-        private NavgrahOption? _selected;
-        private string _mode = "Person"; // "Person": inline accordion remedy picker. "Master": navigate to GrahRemedyPage (unchanged).
+        private NavgrahOption? _selected; // Master mode only (single Grah, unchanged)
+        private string _mode = "Person";
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
@@ -63,13 +70,18 @@ namespace AstroDeepak.Views
             base.OnAppearing();
 
             ConfirmButton.Text = _mode == "Master" ? "Manage Remedies →" : "Save";
-            ConfirmButton.IsEnabled = false;
             _selected = null;
+            _openOption = null;
             _grahTiles.Clear();
+            _statusLabels.Clear();
             _rowSlots.Clear();
             _currentRemedyItems.Clear();
             _currentRemedyListHost = null;
             GrahGridHost.Children.Clear();
+
+            // NOTE: _selectionsByGrah is intentionally NOT cleared here. It's the
+            // in-session memory of what's been checked, and it must survive Edit ->
+            // back navigation from PreviewPage.
 
             var navgrahs = await _masterDataRepository.GetNavgrahsAsync();
 
@@ -90,6 +102,11 @@ namespace AstroDeepak.Views
                 .ToList();
 
             BuildGrahGrid(options);
+            RefreshTileHighlights();
+
+            ConfirmButton.IsEnabled = _mode == "Master"
+                ? false
+                : _selectionsByGrah.Values.Any(list => list.Count > 0);
         }
 
         void BuildGrahGrid(List<NavgrahOption> options)
@@ -109,8 +126,6 @@ namespace AstroDeepak.Views
                     }
                 };
 
-                // Shared accordion slot for this row - remedies for any Grah in this
-                // row are shown here, directly under the row, then hidden again.
                 var rowSlot = new VerticalStackLayout { Spacing = 10, IsVisible = false, Margin = new Thickness(0, 10, 0, 0) };
 
                 for (int col = 0; col < rowItems.Count; col++)
@@ -166,27 +181,61 @@ namespace AstroDeepak.Views
             border.GestureRecognizers.Add(tap);
 
             _grahTiles[option] = border;
+            _statusLabels[option] = statusLabel;
             return border;
+        }
+
+        void RefreshTileHighlights()
+        {
+            foreach (var kvp in _grahTiles)
+            {
+                var option = kvp.Key;
+                bool hasPending = _selectionsByGrah.TryGetValue(option.Id, out var list) && list.Count > 0;
+                bool isOpen = _openOption == option || (_mode != "Person" && _selected == option);
+                bool highlight = hasPending || isOpen;
+
+                kvp.Value.Stroke = highlight
+                    ? (Color)Microsoft.Maui.Controls.Application.Current!.Resources["Gold"]
+                    : (Color)Microsoft.Maui.Controls.Application.Current!.Resources["Violet"];
+                kvp.Value.StrokeThickness = highlight ? 2 : 1;
+
+                if (_statusLabels.TryGetValue(option, out var statusLabel))
+                {
+                    statusLabel.Text = hasPending
+                        ? "• Selected"
+                        : (option.AlreadyAdded ? "✓ Added" : string.Empty);
+                }
+            }
+        }
+
+        // Saves whatever is currently ticked in the open accordion into
+        // _selectionsByGrah, so it isn't lost when you switch to another Grah tile.
+        void CommitCurrentSelectionToMemory()
+        {
+            if (_openOption == null) return;
+
+            var chosen = _currentRemedyItems.Where(i => i.IsChecked).Select(i => i.Name).ToList();
+            if (chosen.Count > 0)
+                _selectionsByGrah[_openOption.Id] = chosen;
+            else
+                _selectionsByGrah.Remove(_openOption.Id);
         }
 
         async void OnGrahTileTapped(NavgrahOption option)
         {
-            bool reopeningSame = _selected == option && _rowSlots.TryGetValue(option, out var openSlot) && openSlot.IsVisible;
-
-            _selected = option;
-            ConfirmButton.IsEnabled = true;
-
-            // Highlight the tapped tile, reset the rest.
-            foreach (var kvp in _grahTiles)
+            if (_mode != "Person")
             {
-                bool isSelected = kvp.Key == option;
-                kvp.Value.Stroke = isSelected
-                    ? (Color)Microsoft.Maui.Controls.Application.Current!.Resources["Gold"]
-                    : (Color)Microsoft.Maui.Controls.Application.Current!.Resources["Violet"];
-                kvp.Value.StrokeThickness = isSelected ? 2 : 1;
+                // Master mode: unchanged single-select, just navigates on Confirm.
+                _selected = option;
+                RefreshTileHighlights();
+                ConfirmButton.IsEnabled = true;
+                return;
             }
 
-            // Collapse every row's accordion slot first (only one open at a time).
+            CommitCurrentSelectionToMemory();
+
+            bool reopeningSame = _openOption == option;
+
             foreach (var slot in _rowSlots.Values.Distinct())
             {
                 slot.IsVisible = false;
@@ -195,10 +244,11 @@ namespace AstroDeepak.Views
             _currentRemedyItems.Clear();
             _currentRemedyListHost = null;
 
-            if (_mode != "Person") return; // Master mode: no accordion, just navigates on Confirm.
+            _openOption = reopeningSame ? null : option;
+            RefreshTileHighlights();
+            ConfirmButton.IsEnabled = _selectionsByGrah.Values.Any(list => list.Count > 0);
 
-            if (reopeningSame) return; // tapped the already-open tile again -> stay collapsed
-
+            if (_openOption == null) return;
             if (!_rowSlots.TryGetValue(option, out var slotToOpen)) return;
 
             await OpenRemedyAccordionAsync(option, slotToOpen);
@@ -240,14 +290,25 @@ namespace AstroDeepak.Views
 
             var remedies = await _remedyRepository.GetRemediesByNavgrahIdAsync(option.Id);
 
-            var alreadySelected = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            if (_draft != null && _draft.Id > 0)
+            // Prefer anything already picked earlier in THIS session (fixes the
+            // "checkboxes forget themselves" bug). Only fall back to the database
+            // for Grahs that were confirmed in an earlier, separate session.
+            HashSet<string> checkedNames;
+            if (_selectionsByGrah.TryGetValue(option.Id, out var pending))
             {
-                var existing = await _userRemedyService.GetAsync(_draft.Id, option.Id);
-                if (existing != null && !string.IsNullOrWhiteSpace(existing.CurrentSuggestedRemedy))
+                checkedNames = new HashSet<string>(pending, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                checkedNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (_draft != null && _draft.Id > 0)
                 {
-                    foreach (var name in existing.CurrentSuggestedRemedy.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
-                        alreadySelected.Add(name);
+                    var existing = await _userRemedyService.GetAsync(_draft.Id, option.Id);
+                    if (existing != null && !string.IsNullOrWhiteSpace(existing.CurrentSuggestedRemedy))
+                    {
+                        foreach (var name in existing.CurrentSuggestedRemedy.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+                            checkedNames.Add(name);
+                    }
                 }
             }
 
@@ -257,7 +318,7 @@ namespace AstroDeepak.Views
                 _currentRemedyItems.Add(new RemedyCheckItem
                 {
                     Name = r.Name,
-                    IsChecked = alreadySelected.Contains(r.Name)
+                    IsChecked = checkedNames.Contains(r.Name)
                 });
             }
 
@@ -282,6 +343,13 @@ namespace AstroDeepak.Views
             {
                 var checkBox = new CheckBox();
                 checkBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsChecked), source: item));
+                checkBox.CheckedChanged += (s, e) =>
+                {
+                    // Live-enable Save the moment anything gets ticked, without
+                    // waiting for the user to switch tiles first.
+                    ConfirmButton.IsEnabled = _selectionsByGrah.Values.Any(l => l.Count > 0)
+                        || _currentRemedyItems.Any(i => i.IsChecked);
+                };
 
                 var nameLabel = new Label
                 {
@@ -314,11 +382,10 @@ namespace AstroDeepak.Views
 
         async void OnConfirmClicked(object sender, EventArgs e)
         {
-            if (_selected == null) return;
-
             if (_mode == "Master")
             {
-                // Unchanged: still navigates to the full Add/Edit/Delete master page.
+                if (_selected == null) return;
+
                 var masterNavParams = new Dictionary<string, object>
                 {
                     { "NavgrahId", _selected.Id },
@@ -330,10 +397,26 @@ namespace AstroDeepak.Views
 
             if (_draft == null) return;
 
-            var selectedNames = _currentRemedyItems.Where(i => i.IsChecked).Select(i => i.Name).ToList();
-            if (selectedNames.Count == 0)
+            CommitCurrentSelectionToMemory();
+
+            var selections = new List<GrahRemedySelectionDto>();
+            foreach (var kvp in _selectionsByGrah)
             {
-                await DisplayAlert("No remedies selected", "Please select at least one remedy.", "OK");
+                if (kvp.Value.Count == 0) continue;
+                var option = _grahTiles.Keys.FirstOrDefault(o => o.Id == kvp.Key);
+                if (option == null) continue;
+
+                selections.Add(new GrahRemedySelectionDto
+                {
+                    NavgrahId = option.Id,
+                    NavgrahName = option.Name,
+                    Remedies = kvp.Value
+                });
+            }
+
+            if (selections.Count == 0)
+            {
+                await DisplayAlert("No remedies selected", "Please select at least one remedy for at least one Grah.", "OK");
                 return;
             }
 
@@ -350,9 +433,7 @@ namespace AstroDeepak.Views
                 PhoneNo = _draft.PhoneNo,
                 Address = _draft.Address,
                 Grahan = _draft.Grahan,
-                NavgrahId = _selected.Id,
-                NavgrahName = _selected.Name,
-                SelectedRemedies = selectedNames
+                Selections = selections
             };
 
             var stagingId = await _stagingService.SaveAsync(stagingDto);

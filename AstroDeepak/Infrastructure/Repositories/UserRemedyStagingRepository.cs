@@ -56,11 +56,10 @@ namespace AstroDeepak.Infrastructure.Repositories
             PhoneNo = e.PhoneNo,
             Address = e.Address,
             Grahan = e.Grahan,
-            NavgrahId = e.NavgrahId,
-            NavgrahName = e.NavgrahName,
-            SelectedRemedies = string.IsNullOrWhiteSpace(e.SelectedRemediesJson)
-                ? new List<string>()
-                : (JsonSerializer.Deserialize<List<string>>(e.SelectedRemediesJson) ?? new List<string>()),
+            CountryCode = e.CountryCode,
+            Selections = string.IsNullOrWhiteSpace(e.SelectionsJson)
+                ? new List<GrahRemedySelection>()
+                : (JsonSerializer.Deserialize<List<GrahRemedySelection>>(e.SelectionsJson) ?? new List<GrahRemedySelection>()),
             CreatedAt = e.CreatedAt
         };
 
@@ -77,9 +76,8 @@ namespace AstroDeepak.Infrastructure.Repositories
             PhoneNo = s.PhoneNo,
             Address = s.Address,
             Grahan = s.Grahan,
-            NavgrahId = s.NavgrahId,
-            NavgrahName = s.NavgrahName,
-            SelectedRemediesJson = JsonSerializer.Serialize(s.SelectedRemedies),
+            CountryCode = s.CountryCode,
+            SelectionsJson = JsonSerializer.Serialize(s.Selections),
             CreatedAt = s.CreatedAt
         };
     }

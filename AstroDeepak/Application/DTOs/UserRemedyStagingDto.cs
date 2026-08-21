@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace AstroDeepak.Application.DTOs
 {
+    public class GrahRemedySelectionDto
+    {
+        public int NavgrahId { get; set; }
+        public string NavgrahName { get; set; } = string.Empty;
+        public List<string> Remedies { get; set; } = new();
+    }
+
     public class UserRemedyStagingDto
     {
         public int Id { get; set; }
@@ -18,9 +25,7 @@ namespace AstroDeepak.Application.DTOs
         public string Address { get; set; }
         public string Grahan { get; set; }
         public string CountryCode { get; set; }
-        public int NavgrahId { get; set; }
-        public string NavgrahName { get; set; }
 
-        public List<string> SelectedRemedies { get; set; } = new();
+        public List<GrahRemedySelectionDto> Selections { get; set; } = new();
     }
 }

@@ -19,11 +19,7 @@ namespace AstroDeepak.Views
 
         public string StagingId
         {
-            set
-            {
-                if (int.TryParse(value, out var id))
-                    _stagingId = id;
-            }
+            set { if (int.TryParse(value, out var id)) _stagingId = id; }
         }
 
         public PreviewPage(
@@ -57,11 +53,25 @@ namespace AstroDeepak.Views
             NameLabel.Text = _staging.Name;
             FatherNameLabel.Text = string.IsNullOrWhiteSpace(_staging.FatherName) ? "-" : _staging.FatherName;
             DobLabel.Text = _staging.DOB.ToString("dd MMM yyyy");
-            GrahHeaderLabel.Text = $"REMEDIES FOR {_staging.NavgrahName?.ToUpperInvariant()}";
-            RemediesLabel.Text = string.Join(", ", _staging.SelectedRemedies);
             PhoneLabel.Text = string.IsNullOrWhiteSpace(_staging.PhoneNo)
                 ? "Not provided"
                 : $"{_staging.CountryCode} {_staging.PhoneNo}";
+
+            SelectionsHost.Children.Clear();
+            foreach (var selection in _staging.Selections)
+            {
+                var header = new Label
+                {
+                    Text = $"REMEDIES FOR {selection.NavgrahName?.ToUpperInvariant()}",
+                    Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["SubtitleLabel"]
+                };
+                var remediesLabel = new Label
+                {
+                    Text = string.Join(", ", selection.Remedies),
+                    FontSize = 16
+                };
+                SelectionsHost.Children.Add(new VerticalStackLayout { Spacing = 2, Children = { header, remediesLabel } });
+            }
         }
 
         async void OnEditClicked(object sender, EventArgs e)
@@ -99,7 +109,7 @@ namespace AstroDeepak.Views
                 PhoneNo = _staging.PhoneNo,
                 Address = _staging.Address,
                 Grahan = _staging.Grahan,
-                Grah = _staging.NavgrahName
+                Grah = string.Join(", ", _staging.Selections.Select(s => s.NavgrahName))
             };
 
             int personId;
@@ -116,10 +126,15 @@ namespace AstroDeepak.Views
 
             try
             {
-                await _userRemedyService.SaveSelectedRemediesAsync(
-                    personId,
-                    _staging.NavgrahId,
-                    _staging.SelectedRemedies);
+                // All Grahs picked in this session are saved together here - no more
+                // looping back through "add another Grah".
+                foreach (var selection in _staging.Selections)
+                {
+                    await _userRemedyService.SaveSelectedRemediesAsync(
+                        personId,
+                        selection.NavgrahId,
+                        selection.Remedies);
+                }
             }
             catch (Exception ex)
             {
@@ -133,14 +148,9 @@ namespace AstroDeepak.Views
             try
             {
                 if (sendWhatsApp)
-                {
                     whatsAppSent = await TrySendWhatsAppAsync(_staging);
-                }
                 else
-                {
-                    // "Confirm" (no WhatsApp) -> straight into Downloads, no dialog.
                     savedFilePath = await _pdfExportService.SaveRemedyReviewPdfToDownloadsAsync(_staging);
-                }
             }
             catch (Exception ex)
             {
@@ -149,7 +159,8 @@ namespace AstroDeepak.Views
 
             try
             {
-                await _userRemedyService.MarkWhatsAppStatusAsync(personId, _staging.NavgrahId, whatsAppSent);
+                foreach (var selection in _staging.Selections)
+                    await _userRemedyService.MarkWhatsAppStatusAsync(personId, selection.NavgrahId, whatsAppSent);
             }
             catch (Exception ex)
             {
@@ -168,33 +179,13 @@ namespace AstroDeepak.Views
 
             await DisplayAlert("Saved", confirmationMessage, "OK");
 
-            var addAnother = await DisplayAlert(
-                "Add another remedy?",
-                "Do you want to add remedies for another Grah for this same person now?",
-                "Add Another Grah",
-                "Done");
-
-            if (addAnother)
-            {
-                personDto.Id = personId;
-                var navParams = new Dictionary<string, object> { { "PersonDraft", personDto }, { "Mode", "Person" } };
-                await Shell.Current.GoToAsync("navgrah", navParams);
-            }
-            else
-            {
-                await Shell.Current.GoToAsync("//search");
-            }
+            // No more "Add another Grah?" prompt - every Grah selected on the previous
+            // screen is already saved above, so we just go back to the list.
+            await Shell.Current.GoToAsync("//search");
         }
 
         async Task<bool> TrySendWhatsAppAsync(UserRemedyStagingDto staging)
         {
-            // Platform reality check: no public Android or iOS API lets an app open one
-            // specific WhatsApp chat with a file already attached with zero taps. The
-            // wa.me link below opens the correct conversation for this person's saved
-            // number; the OS share sheet that follows is where the user picks WhatsApp
-            // again to actually attach the generated PDF. That one extra tap can't be
-            // removed without WhatsApp itself exposing a "send to number with file" API,
-            // which it doesn't.
             try
             {
                 var pdfPath = await _pdfExportService.GenerateRemedyReviewPdfAsync(staging);
@@ -202,14 +193,8 @@ namespace AstroDeepak.Views
                 var digitsOnly = new string((staging.CountryCode + staging.PhoneNo).Where(char.IsDigit).ToArray());
                 if (!string.IsNullOrWhiteSpace(digitsOnly))
                 {
-                    try
-                    {
-                        await Launcher.Default.OpenAsync(new Uri($"https://wa.me/{digitsOnly}"));
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogWarning($"Could not open wa.me link for {digitsOnly}: {ex.Message}");
-                    }
+                    try { await Launcher.Default.OpenAsync(new Uri($"https://wa.me/{digitsOnly}")); }
+                    catch (Exception ex) { _logger.LogWarning($"Could not open wa.me link for {digitsOnly}: {ex.Message}"); }
                 }
 
                 await Share.Default.RequestAsync(new ShareFileRequest

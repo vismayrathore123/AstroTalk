@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace AstroDeepak.Domain.Entities
 {
+    public class GrahRemedySelection
+    {
+        public int NavgrahId { get; set; }
+        public string NavgrahName { get; set; } = string.Empty;
+        public List<string> Remedies { get; set; } = new();
+    }
+
     public class UserRemedyStaging
     {
         public int Id { get; set; }
@@ -19,10 +26,9 @@ namespace AstroDeepak.Domain.Entities
         public string Address { get; set; }
         public string Grahan { get; set; }
 
-        public int NavgrahId { get; set; }
-        public string NavgrahName { get; set; }
-
-        public List<string> SelectedRemedies { get; set; } = new();
+        // One staging row now carries every Grah + remedies picked in this session,
+        // instead of a single Grah at a time.
+        public List<GrahRemedySelection> Selections { get; set; } = new();
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
     }

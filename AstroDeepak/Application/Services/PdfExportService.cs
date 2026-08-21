@@ -58,7 +58,7 @@ namespace AstroDeepak.Application.Services
         }
 
         private static string BuildFileName(UserRemedyStagingDto staging)
-            => $"Kundli_{staging.Name?.Replace(" ", "_")}_{staging.NavgrahName}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+    => $"Kundli_{staging.Name?.Replace(" ", "_")}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
 
         private static IDocument BuildDocument(UserRemedyStagingDto staging)
         {
@@ -83,11 +83,14 @@ namespace AstroDeepak.Application.Services
                         if (!string.IsNullOrWhiteSpace(staging.BirthPlace))
                             col.Item().Text($"Birth Place: {staging.BirthPlace}");
 
-                        col.Item().PaddingTop(15).Text($"Remedies for {staging.NavgrahName}")
-                            .FontSize(14).Bold().FontColor(Colors.Orange.Darken1);
+                        foreach (var selection in staging.Selections)
+                        {
+                            col.Item().PaddingTop(15).Text($"Remedies for {selection.NavgrahName}")
+                                .FontSize(14).Bold().FontColor(Colors.Orange.Darken1);
 
-                        foreach (var remedy in staging.SelectedRemedies)
-                            col.Item().PaddingLeft(10).Text($"• {remedy}");
+                            foreach (var remedy in selection.Remedies)
+                                col.Item().PaddingLeft(10).Text($"• {remedy}");
+                        }
                     });
 
                     page.Footer().AlignCenter().Text(t =>
@@ -98,5 +101,5 @@ namespace AstroDeepak.Application.Services
                 });
             });
         }
-    }
+           }
 }

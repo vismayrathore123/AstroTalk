@@ -41,9 +41,13 @@ namespace AstroDeepak.Application.Services
             PhoneNo = s.PhoneNo,
             Address = s.Address,
             Grahan = s.Grahan,
-            NavgrahId = s.NavgrahId,
-            NavgrahName = s.NavgrahName,
-            SelectedRemedies = s.SelectedRemedies
+            CountryCode = s.CountryCode,
+            Selections = s.Selections.Select(sel => new GrahRemedySelectionDto
+            {
+                NavgrahId = sel.NavgrahId,
+                NavgrahName = sel.NavgrahName,
+                Remedies = sel.Remedies
+            }).ToList()
         };
 
         private static UserRemedyStaging ToDomain(UserRemedyStagingDto d) => new()
@@ -59,9 +63,13 @@ namespace AstroDeepak.Application.Services
             PhoneNo = d.PhoneNo,
             Address = d.Address,
             Grahan = d.Grahan,
-            NavgrahId = d.NavgrahId,
-            NavgrahName = d.NavgrahName,
-            SelectedRemedies = d.SelectedRemedies
+            CountryCode = d.CountryCode,
+            Selections = d.Selections.Select(sel => new GrahRemedySelection
+            {
+                NavgrahId = sel.NavgrahId,
+                NavgrahName = sel.NavgrahName,
+                Remedies = sel.Remedies
+            }).ToList()
         };
     }
 }
