@@ -58,19 +58,38 @@ namespace AstroDeepak.Views
                 ResultsList.ItemsSource = await _personService.SearchAsync(SearchEntry.Text);
         }
 
-        async void OnHamburgerClicked(object sender, EventArgs e)
+        // Toggles the dropdown open/closed, and flips the button itself between
+        // ☰ and ✕ so there is only ever one icon - never a hamburger showing
+        // "through" a separate close button.
+        void OnHamburgerClicked(object sender, EventArgs e)
         {
-            var action = await DisplayActionSheet("Menu", "Cancel", null, "Add Remedies", "Contact Us");
+            bool opening = !MenuDropdown.IsVisible;
+            MenuDropdown.IsVisible = opening;
+            MenuOverlayBackground.IsVisible = opening;
+            HamburgerButton.Text = opening ? "✕" : "☰";
+        }
 
-            if (action == "Add Remedies")
-            {
-                var navParams = new Dictionary<string, object> { { "Mode", "Master" } };
-                await Shell.Current.GoToAsync("navgrah", navParams);
-            }
-            else if (action == "Contact Us")
-            {
-                await DisplayAlert("Contact Us", "Contact us feature coming soon.", "OK");
-            }
+        void OnMenuOverlayTapped(object sender, EventArgs e)
+            => CloseMenu();
+
+        async void OnAddRemediesTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            var navParams = new Dictionary<string, object> { { "Mode", "Master" } };
+            await Shell.Current.GoToAsync("navgrah", navParams);
+        }
+
+        async void OnContactUsTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await DisplayAlert("Contact Us", "Contact us feature coming soon.", "OK");
+        }
+
+        void CloseMenu()
+        {
+            MenuDropdown.IsVisible = false;
+            MenuOverlayBackground.IsVisible = false;
+            HamburgerButton.Text = "☰";
         }
     }
 }

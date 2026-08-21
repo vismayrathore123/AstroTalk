@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:views="clr-namespace:AstroDeepak.Views" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+       xmlns:views="clr-namespace:AstroDeepak.Views"
        x:Class="AstroDeepak.AppShell"
        FlyoutBehavior="Disabled"
-       Shell.NavBarIsVisible="True"
-       d:Shell.BackgroundColor="{StaticResource DeepSpace}"
-       Shell.TitleColor="{StaticResource TextPrimary}"
-       Shell.UnselectedColor="{StaticResource TextSecondary}"
-       Shell.TabBarBackgroundColor="{StaticResource CardBackground}"
-       Shell.TabBarTitleColor="{StaticResource Gold}"
-       Shell.TabBarUnselectedColor="{StaticResource TextSecondary}"
+       Shell.NavBarIsVisible="False"
        BackgroundColor="{StaticResource DeepSpace}">
 
     <TabBar>
