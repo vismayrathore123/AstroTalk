@@ -17,6 +17,11 @@ namespace AstroDeepak.Views
         private List<GrahanMaster> _grahanOptions = new();
         private static readonly List<string> AmPmOptions = new() { "AM", "PM" };
 
+        // Holds the originally-loaded record (when editing) so fields the form
+        // itself doesn't expose - like Precautions, which live on the Navgrah
+        // page - aren't wiped out just because this page re-saved the person.
+        private PersonDto? _existingDto;
+
         // 12-hour time like "10:30" or "1:05" - what the Time field must match.
         private static readonly Regex TimeRegex = new(@"^(0?[1-9]|1[0-2]):[0-5][0-9]$");
 
@@ -89,6 +94,7 @@ namespace AstroDeepak.Views
                 var dto = await _personService.GetByIdAsync(_editingId);
                 if (dto != null)
                 {
+                    _existingDto = dto;
                     Populate(dto);
                     return;
                 }
@@ -97,6 +103,7 @@ namespace AstroDeepak.Views
                 _editingId = 0;
             }
 
+            _existingDto = null;
             ClearForm();
         }
 
@@ -143,6 +150,16 @@ namespace AstroDeepak.Views
 
         static CountryCodeOption? DefaultCountry()
             => CountryCodes.All.FirstOrDefault(c => c.CountryName == "India");
+
+        // Clears whatever is currently typed/selected on this page only. Nothing
+        // already saved in the database is touched or deleted - this just wipes
+        // the in-progress, not-yet-submitted form back to a blank "New Kundli".
+        void OnResetClicked(object sender, EventArgs e)
+        {
+            _editingId = 0;
+            _existingDto = null;
+            ClearForm();
+        }
 
         async void OnSubmitClicked(object sender, EventArgs e)
         {
@@ -201,7 +218,13 @@ namespace AstroDeepak.Views
                 CountryCode = selectedCountry?.DialCode ?? string.Empty,
                 PhoneNo = PhoneEntry.Text,
                 Address = AddressEntry.Text,
-                Grahan = selectedGrahan?.Name ?? "None"
+                Grahan = selectedGrahan?.Name ?? "None",
+
+                // This form has no Precautions UI - carry forward whatever this
+                // person already had saved, so submitting here doesn't wipe it.
+                // The real, up-to-date value gets written when Preview is confirmed.
+                Precautions = _existingDto?.Precautions ?? string.Empty,
+                Grah = _existingDto?.Grah ?? "None"
             };
 
             try

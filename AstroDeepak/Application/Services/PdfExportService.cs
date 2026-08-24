@@ -70,50 +70,107 @@ namespace AstroDeepak.Application.Services
                     page.Margin(30);
                     page.DefaultTextStyle(x => x.FontSize(12));
 
-                    page.Header().Text("AstroDeepak - Kundli Remedy Report")
-                        .FontSize(18).Bold().FontColor(Colors.Orange.Darken2);
+                    page.Header()
+                        .Text("AstroDeepak - Kundli Remedy Report")
+                        .FontSize(18)
+                        .Bold()
+                        .FontColor(Colors.Orange.Darken2);
 
-                    page.Content().PaddingTop(15).Column(col =>
-                    {
-                        col.Item().Text($"Name: {staging.Name}").Bold();
-                        col.Item().Text($"Father's Name: {(string.IsNullOrWhiteSpace(staging.FatherName) ? "-" : staging.FatherName)}");
-                        col.Item().Text($"Date of Birth: {staging.DOB:dd MMM yyyy}");
-                        if (!string.IsNullOrWhiteSpace(staging.Time))
-                            col.Item().Text($"Time of Birth: {staging.Time}");
-                        if (!string.IsNullOrWhiteSpace(staging.BirthPlace))
-                            col.Item().Text($"Birth Place: {staging.BirthPlace}");
-
-                        // --- NEW: Precautions section ---
-                        if (staging.SelectedPrecautions != null && staging.SelectedPrecautions.Any())
+                    page.Content()
+                        .PaddingTop(15)
+                        .Column(col =>
                         {
-                            col.Item().PaddingTop(15).Text("Precautions").FontSize(14).Bold().FontColor(Colors.Orange.Darken1);
-                            foreach (var precaution in staging.SelectedPrecautions)
-                                col.Item().PaddingLeft(10).Text($"• {precaution}");
-                        }
+                            // Person Details
+                            col.Item().Text($"Name: {staging.Name}").Bold();
 
-                        foreach (var selection in staging.Selections)
-                        {
-                            col.Item().PaddingTop(15).Text($"Remedies for {selection.NavgrahName}")
-                                .FontSize(14).Bold().FontColor(Colors.Orange.Darken1);
+                            col.Item().Text(
+                                $"Father's Name: {(string.IsNullOrWhiteSpace(staging.FatherName)
+                                    ? "-"
+                                    : staging.FatherName)}");
 
-                            foreach (var remedy in selection.Remedies)
+                            col.Item().Text(
+                                $"Date of Birth: {staging.DOB:dd MMM yyyy}");
+
+                            if (!string.IsNullOrWhiteSpace(staging.Time))
                             {
-                                var tags = new List<string>();
-                                if (remedy.IsPermanent) tags.Add("Permanent");
-                                if (remedy.IsYearly) tags.Add("Yearly");
-                                var suffix = tags.Count > 0 ? $"  ({string.Join(", ", tags)})" : string.Empty;
-
-                                col.Item().PaddingLeft(10).Text($"• {remedy.Name}{suffix}");
+                                col.Item().Text(
+                                    $"Time of Birth: {staging.Time}");
                             }
-                        }
-                    });
 
-                    // Footer – ensure it is always rendered by giving it a reasonable margin
-                    page.Footer().AlignCenter().Text(t =>
-                    {
-                        t.Span("Generated on ").FontSize(9);
-                        t.Span(DateTime.Now.ToString("dd MMM yyyy, hh:mm tt")).FontSize(9);
-                    });
+                            if (!string.IsNullOrWhiteSpace(staging.BirthPlace))
+                            {
+                                col.Item().Text(
+                                    $"Birth Place: {staging.BirthPlace}");
+                            }
+
+
+                            // ============================
+                            // REMEDIES - SHOW FIRST
+                            // ============================
+                            foreach (var selection in staging.Selections)
+                            {
+                                col.Item()
+                                    .PaddingTop(15)
+                                    .Text($"Remedies for {selection.NavgrahName}")
+                                    .FontSize(14)
+                                    .Bold()
+                                    .FontColor(Colors.Orange.Darken1);
+
+                                foreach (var remedy in selection.Remedies)
+                                {
+                                    var tags = new List<string>();
+
+                                    if (remedy.IsPermanent)
+                                        tags.Add("Permanent");
+
+                                    if (remedy.IsYearly)
+                                        tags.Add("Yearly");
+
+                                    var suffix = tags.Count > 0
+                                        ? $"  ({string.Join(", ", tags)})"
+                                        : string.Empty;
+
+                                    col.Item()
+                                        .PaddingLeft(10)
+                                        .Text($"• {remedy.Name}{suffix}");
+                                }
+                            }
+
+
+                            // ============================
+                            // PRECAUTIONS - SHOW AFTER ALL GRAH REMEDIES
+                            // ============================
+                            if (staging.SelectedPrecautions != null &&
+                                staging.SelectedPrecautions.Any())
+                            {
+                                col.Item()
+                                    .PaddingTop(20)
+                                    .Text("Precautions")
+                                    .FontSize(14)
+                                    .Bold()
+                                    .FontColor(Colors.Orange.Darken1);
+
+                                foreach (var precaution in staging.SelectedPrecautions)
+                                {
+                                    col.Item()
+                                        .PaddingLeft(10)
+                                        .Text($"• {precaution}");
+                                }
+                            }
+                        });
+
+
+                    // Footer
+                    page.Footer()
+                        .AlignCenter()
+                        .Text(t =>
+                        {
+                            t.Span("Generated on ").FontSize(9);
+
+                            t.Span(
+                                DateTime.Now.ToString("dd MMM yyyy, hh:mm tt")
+                            ).FontSize(9);
+                        });
                 });
             });
         }

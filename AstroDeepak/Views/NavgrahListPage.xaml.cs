@@ -492,6 +492,37 @@ namespace AstroDeepak.Views
         async void OnBackClicked(object sender, EventArgs e)
             => await Shell.Current.GoToAsync("..");
 
+        // Clears everything the user has picked or typed on THIS page in the
+        // current session - open accordion, per-Grah pending remedy choices,
+        // and precaution checkboxes. Nothing already saved to the database
+        // (e.g. from a previous Confirm) is touched or removed.
+        async void OnResetClicked(object sender, EventArgs e)
+        {
+            if (_mode != "Person")
+            {
+                _selected = null;
+                RefreshTileHighlights();
+                ConfirmButton.IsEnabled = false;
+                return;
+            }
+
+            _selectionsByGrah.Clear();
+            _openOption = null;
+            _currentRemedyItems.Clear();
+            _currentRemedyListHost = null;
+
+            foreach (var slot in _rowSlots.Values.Distinct())
+            {
+                slot.IsVisible = false;
+                slot.Children.Clear();
+            }
+
+            RefreshTileHighlights();
+            ConfirmButton.IsEnabled = false;
+
+            await LoadPrecautionsAsync();
+        }
+
         async void OnConfirmClicked(object sender, EventArgs e)
         {
             if (_mode == "Master")
