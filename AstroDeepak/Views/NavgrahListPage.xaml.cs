@@ -449,14 +449,64 @@ namespace AstroDeepak.Views
                     Margin = new Thickness(8, 0, 0, 0)
                 };
 
-                // Two independent checkboxes - a remedy can be Permanent, Yearly, or both.
                 var permanentCheckBox = new CheckBox();
-                permanentCheckBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsPermanent), source: item));
-                var permanentLabel = new Label { Text = "Permanent", FontSize = 12, VerticalOptions = LayoutOptions.Center };
+
+                permanentCheckBox.SetBinding(
+                    CheckBox.IsCheckedProperty,
+                    new Binding(
+                        nameof(RemedyCheckItem.IsPermanent),
+                        source: item));
+
+                permanentCheckBox.CheckedChanged += (s, e) =>
+                {
+                    // If Permanent is checked, automatically check the left checkbox
+                    if (e.Value)
+                    {
+                        item.IsChecked = true;
+                        includeCheckBox.IsChecked = true;
+                    }
+
+                    ConfirmButton.IsEnabled =
+                        _selectionsByGrah.Values.Any(l => l.Count > 0)
+                        || _currentRemedyItems.Any(i => i.IsChecked);
+                };
+
+                var permanentLabel = new Label
+                {
+                    Text = "Permanent",
+                    FontSize = 12,
+                    VerticalOptions = LayoutOptions.Center
+                };
+
 
                 var yearlyCheckBox = new CheckBox();
-                yearlyCheckBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsYearly), source: item));
-                var yearlyLabel = new Label { Text = "Yearly", FontSize = 12, VerticalOptions = LayoutOptions.Center };
+
+                yearlyCheckBox.SetBinding(
+                    CheckBox.IsCheckedProperty,
+                    new Binding(
+                        nameof(RemedyCheckItem.IsYearly),
+                        source: item));
+
+                yearlyCheckBox.CheckedChanged += (s, e) =>
+                {
+                    // If Yearly is checked, automatically check the left checkbox
+                    if (e.Value)
+                    {
+                        item.IsChecked = true;
+                        includeCheckBox.IsChecked = true;
+                    }
+
+                    ConfirmButton.IsEnabled =
+                        _selectionsByGrah.Values.Any(l => l.Count > 0)
+                        || _currentRemedyItems.Any(i => i.IsChecked);
+                };
+
+                var yearlyLabel = new Label
+                {
+                    Text = "Yearly",
+                    FontSize = 12,
+                    VerticalOptions = LayoutOptions.Center
+                };
 
                 var tagsStack = new HorizontalStackLayout
                 {
