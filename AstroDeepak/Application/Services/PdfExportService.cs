@@ -97,7 +97,14 @@ namespace AstroDeepak.Application.Services
                                 .FontSize(14).Bold().FontColor(Colors.Orange.Darken1);
 
                             foreach (var remedy in selection.Remedies)
-                                col.Item().PaddingLeft(10).Text($"• {remedy}");
+                            {
+                                var tags = new List<string>();
+                                if (remedy.IsPermanent) tags.Add("Permanent");
+                                if (remedy.IsYearly) tags.Add("Yearly");
+                                var suffix = tags.Count > 0 ? $"  ({string.Join(", ", tags)})" : string.Empty;
+
+                                col.Item().PaddingLeft(10).Text($"• {remedy.Name}{suffix}");
+                            }
                         }
                     });
 

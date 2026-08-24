@@ -47,7 +47,12 @@ namespace AstroDeepak.Application.Services
             {
                 NavgrahId = sel.NavgrahId,
                 NavgrahName = sel.NavgrahName,
-                Remedies = sel.Remedies
+                Remedies = sel.Remedies.Select(r => new RemedyChoiceDto
+                {
+                    Name = r.Name,
+                    IsPermanent = r.IsPermanent,
+                    IsYearly = r.IsYearly
+                }).ToList()
             }).ToList()
         };
 
@@ -70,7 +75,12 @@ namespace AstroDeepak.Application.Services
             {
                 NavgrahId = sel.NavgrahId,
                 NavgrahName = sel.NavgrahName,
-                Remedies = sel.Remedies
+                Remedies = sel.Remedies.Select(r => new RemedyChoice
+                {
+                    Name = r.Name,
+                    IsPermanent = r.IsPermanent,
+                    IsYearly = r.IsYearly
+                }).ToList()
             }).ToList()
         };
     }

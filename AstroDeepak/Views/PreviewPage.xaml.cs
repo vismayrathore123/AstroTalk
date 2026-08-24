@@ -19,19 +19,6 @@ namespace AstroDeepak.Views
         private int _stagingId;
         private UserRemedyStagingDto? _staging;
 
-        // Each row on screen: which remedy, which Grah it came from, and the live
-        // checkbox state. Permanent rows start checked; Yearly rows start unchecked.
-        private class RemedyRow
-        {
-            public int NavgrahId;
-            public string RemedyName = string.Empty;
-            public bool WasAlreadyPermanent;
-            public CheckBox CheckBoxControl = null!;
-        }
-
-        private readonly List<RemedyRow> _permanentRows = new();
-        private readonly List<RemedyRow> _yearlyRows = new();
-
         public string StagingId
         {
             set { if (int.TryParse(value, out var id)) _stagingId = id; }
@@ -74,79 +61,39 @@ namespace AstroDeepak.Views
                 ? string.Empty
                 : $"WhatsApp will be sent to {_staging.CountryCode} {_staging.PhoneNo}";
 
-            await BuildRemedySectionsAsync();
+            BuildRemedyDisplay();
             BuildPrecautionsSection();
         }
 
-        async Task BuildRemedySectionsAsync()
+        // Read-only listing - Permanent/Yearly is decided on the Grah-selection
+        // screen (NavgrahListPage), not here. This just shows what was chosen.
+        void BuildRemedyDisplay()
         {
-            PermanentRemedyHost.Children.Clear();
-            YearlyRemedyHost.Children.Clear();
-            _permanentRows.Clear();
-            _yearlyRows.Clear();
+            RemedyHost.Children.Clear();
 
             if (_staging == null) return;
 
             foreach (var selection in _staging.Selections)
             {
-                var permanentForThisGrah = await _permanentRemedyRepository
-                    .GetByPersonAndNavgrahAsync(_staging.PersonId, selection.NavgrahId);
-                var permanentNames = new HashSet<string>(
-                    permanentForThisGrah.Select(p => p.RemedyName), StringComparer.OrdinalIgnoreCase);
-
-                foreach (var remedyName in selection.Remedies)
+                foreach (var choice in selection.Remedies)
                 {
-                    bool isPermanent = permanentNames.Contains(remedyName);
+                    var tags = new List<string>();
+                    if (choice.IsPermanent) tags.Add("Permanent");
+                    if (choice.IsYearly) tags.Add("Yearly");
+                    var suffix = tags.Count > 0 ? $"  ·  {string.Join(" & ", tags)}" : string.Empty;
 
-                    var row = new RemedyRow
+                    var text = $"{choice.Name}  ·  {selection.NavgrahName}{suffix}";
+
+                    RemedyHost.Children.Add(new Border
                     {
-                        NavgrahId = selection.NavgrahId,
-                        RemedyName = remedyName,
-                        WasAlreadyPermanent = isPermanent
-                    };
-
-                    var target = isPermanent ? PermanentRemedyHost : YearlyRemedyHost;
-                    var list = isPermanent ? _permanentRows : _yearlyRows;
-
-                    row.CheckBoxControl = AddRemedyRow(target, $"{remedyName}  ·  {selection.NavgrahName}", isPermanent);
-                    list.Add(row);
+                        Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["CardBorder"],
+                        Padding = 12,
+                        Content = new Label { Text = text, FontSize = 15 }
+                    });
                 }
             }
 
-            NoPermanentLabel.IsVisible = _permanentRows.Count == 0;
-            NoYearlyLabel.IsVisible = _yearlyRows.Count == 0;
-        }
-
-        CheckBox AddRemedyRow(VerticalStackLayout host, string labelText, bool isChecked)
-        {
-            var checkBox = new CheckBox { IsChecked = isChecked };
-            var label = new Label
-            {
-                Text = labelText,
-                FontSize = 15,
-                VerticalOptions = LayoutOptions.Center,
-                Margin = new Thickness(8, 0, 0, 0)
-            };
-
-            var row = new Grid
-            {
-                ColumnDefinitions =
-                {
-                    new ColumnDefinition(GridLength.Auto),
-                    new ColumnDefinition(GridLength.Star)
-                },
-                Children = { checkBox, label }
-            };
-            Grid.SetColumn(label, 1);
-
-            host.Children.Add(new Border
-            {
-                Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["CardBorder"],
-                Padding = 12,
-                Content = row
-            });
-
-            return checkBox;
+            NoRemedyLabel.IsVisible = _staging.Selections.All(s => s.Remedies.Count == 0);
         }
 
         void BuildPrecautionsSection()
@@ -216,8 +163,13 @@ namespace AstroDeepak.Views
 
             try
             {
+                // Only remedies tagged Yearly go through the normal history flow.
                 foreach (var selection in _staging.Selections)
-                    await _userRemedyService.SaveSelectedRemediesAsync(personId, selection.NavgrahId, selection.Remedies);
+                {
+                    var yearlyNames = selection.Remedies.Where(r => r.IsYearly).Select(r => r.Name).ToList();
+                    if (yearlyNames.Count > 0)
+                        await _userRemedyService.SaveSelectedRemediesAsync(personId, selection.NavgrahId, yearlyNames);
+                }
             }
             catch (Exception ex)
             {
@@ -228,13 +180,19 @@ namespace AstroDeepak.Views
 
             try
             {
-                // Yearly rows the user just ticked become permanent.
-                foreach (var row in _yearlyRows.Where(r => r.CheckBoxControl.IsChecked))
-                    await _permanentRemedyRepository.AddAsync(personId, row.NavgrahId, row.RemedyName);
-
-                // Permanent rows the user unticked stop being permanent.
-                foreach (var row in _permanentRows.Where(r => !r.CheckBoxControl.IsChecked))
-                    await _permanentRemedyRepository.RemoveAsync(personId, row.NavgrahId, row.RemedyName);
+                // Independently, remedies tagged Permanent go into (or stay out of) the
+                // PermanentRemedy table - regardless of their Yearly tag. A remedy can
+                // be both, either, or neither.
+                foreach (var selection in _staging.Selections)
+                {
+                    foreach (var remedy in selection.Remedies)
+                    {
+                        if (remedy.IsPermanent)
+                            await _permanentRemedyRepository.AddAsync(personId, selection.NavgrahId, remedy.Name);
+                        else
+                            await _permanentRemedyRepository.RemoveAsync(personId, selection.NavgrahId, remedy.Name);
+                    }
+                }
             }
             catch (Exception ex)
             {

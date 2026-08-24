@@ -31,7 +31,8 @@ namespace AstroDeepak.Views
         private VerticalStackLayout? _currentRemedyListHost;
 
         // Every Grah's chosen remedies for THIS session, keyed by NavgrahId.
-        private readonly Dictionary<int, List<string>> _selectionsByGrah = new();
+        // Each entry keeps Name + independent Permanent/Yearly flags.
+        private readonly Dictionary<int, List<RemedyChoiceDto>> _selectionsByGrah = new();
         private NavgrahOption? _openOption;
 
         // Precaution checkboxes, built once per OnAppearing.
@@ -105,15 +106,10 @@ namespace AstroDeepak.Views
             BuildGrahGrid(options);
             RefreshTileHighlights();
 
-            // --- Show user name if in Person mode ---
             if (_mode == "Person" && _draft != null && !string.IsNullOrWhiteSpace(_draft.Name))
-            {
                 HeaderLabel.Text = $"Choose Grah for {_draft.Name}";
-            }
             else
-            {
                 HeaderLabel.Text = "Choose ONE Grah";
-            }
 
             if (_mode == "Person")
                 await LoadPrecautionsAsync();
@@ -132,8 +128,6 @@ namespace AstroDeepak.Views
 
             var master = await _precautionRepository.GetAllAsync();
 
-            // Pre-check whatever this person already had saved (comma-separated on
-            // Person.Precautions), so editing a person doesn't lose their picks.
             var already = string.IsNullOrWhiteSpace(_draft?.Precautions)
                 ? new HashSet<string>(StringComparer.OrdinalIgnoreCase)
                 : new HashSet<string>(_draft!.Precautions.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries), StringComparer.OrdinalIgnoreCase);
@@ -263,11 +257,23 @@ namespace AstroDeepak.Views
             }
         }
 
+        // Reads the CURRENT on-screen checkbox state for the open Grah and stores
+        // it into _selectionsByGrah, so switching to another Grah (or Confirm)
+        // never loses what was just ticked.
         void CommitCurrentSelectionToMemory()
         {
             if (_openOption == null) return;
 
-            var chosen = _currentRemedyItems.Where(i => i.IsChecked).Select(i => i.Name).ToList();
+            var chosen = _currentRemedyItems
+                .Where(i => i.IsChecked)
+                .Select(i => new RemedyChoiceDto
+                {
+                    Name = i.Name,
+                    IsPermanent = i.IsPermanent,
+                    IsYearly = i.IsYearly
+                })
+                .ToList();
+
             if (chosen.Count > 0)
                 _selectionsByGrah[_openOption.Id] = chosen;
             else
@@ -331,10 +337,18 @@ namespace AstroDeepak.Views
                 Content = searchGrid
             };
 
+            var hintLabel = new Label
+            {
+                Text = "Tick to include. Permanent and Yearly are independent - a remedy can be either or both.",
+                FontSize = 11,
+                Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["SubtitleLabel"]
+            };
+
             var remedyListHost = new VerticalStackLayout { Spacing = 8 };
 
             slot.Children.Add(headerLabel);
             slot.Children.Add(searchBorder);
+            slot.Children.Add(hintLabel);
             slot.Children.Add(remedyListHost);
             slot.IsVisible = true;
 
@@ -342,40 +356,62 @@ namespace AstroDeepak.Views
 
             var remedies = await _remedyRepository.GetRemediesByNavgrahIdAsync(option.Id);
 
-            var checkedNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-            // 1) Anything already picked earlier in THIS session.
+            // Pull prior state for this Grah, in priority order:
+            // 1) still-pending choices from this same editing session (most authoritative -
+            //    reflects exactly what the user last set, incl. unchecked boxes).
+            // 2) otherwise, reconstruct from saved data (CurrentSuggestedRemedy => Yearly,
+            //    PermanentRemedy table => Permanent).
+            Dictionary<string, RemedyChoiceDto>? pendingByName = null;
             if (_selectionsByGrah.TryGetValue(option.Id, out var pending))
             {
-                foreach (var name in pending) checkedNames.Add(name);
+                pendingByName = pending.ToDictionary(r => r.Name, StringComparer.OrdinalIgnoreCase);
             }
-            else if (_draft != null && _draft.Id > 0)
+
+            var yearlyNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var permanentNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            if (pendingByName == null && _draft != null && _draft.Id > 0)
             {
-                // 2) Previously saved remedies for this Grah (from an earlier session).
                 var existing = await _userRemedyService.GetAsync(_draft.Id, option.Id);
                 if (existing != null && !string.IsNullOrWhiteSpace(existing.CurrentSuggestedRemedy))
                 {
                     foreach (var name in existing.CurrentSuggestedRemedy.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
-                        checkedNames.Add(name);
+                        yearlyNames.Add(name);
                 }
             }
 
-            // 3) Anything already marked "permanent" for this person+Grah always
-            // shows pre-checked, regardless of session/history above.
             if (_draft != null && _draft.Id > 0)
             {
                 var permanent = await _permanentRemedyRepository.GetByPersonAndNavgrahAsync(_draft.Id, option.Id);
-                foreach (var p in permanent) checkedNames.Add(p.RemedyName);
+                foreach (var p in permanent) permanentNames.Add(p.RemedyName);
             }
 
             _currentRemedyItems.Clear();
             foreach (var r in remedies)
             {
-                _currentRemedyItems.Add(new RemedyCheckItem
+                if (pendingByName != null && pendingByName.TryGetValue(r.Name, out var pendingChoice))
                 {
-                    Name = r.Name,
-                    IsChecked = checkedNames.Contains(r.Name)
-                });
+                    _currentRemedyItems.Add(new RemedyCheckItem
+                    {
+                        Name = r.Name,
+                        IsChecked = true,
+                        IsPermanent = pendingChoice.IsPermanent,
+                        IsYearly = pendingChoice.IsYearly
+                    });
+                }
+                else
+                {
+                    bool wasYearly = yearlyNames.Contains(r.Name);
+                    bool wasPermanent = permanentNames.Contains(r.Name);
+
+                    _currentRemedyItems.Add(new RemedyCheckItem
+                    {
+                        Name = r.Name,
+                        IsChecked = wasYearly || wasPermanent,
+                        IsPermanent = wasPermanent,
+                        IsYearly = wasYearly
+                    });
+                }
             }
 
             RenderRemedyItems(_currentRemedyItems);
@@ -397,9 +433,9 @@ namespace AstroDeepak.Views
 
             foreach (var item in items)
             {
-                var checkBox = new CheckBox();
-                checkBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsChecked), source: item));
-                checkBox.CheckedChanged += (s, e) =>
+                var includeCheckBox = new CheckBox();
+                includeCheckBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsChecked), source: item));
+                includeCheckBox.CheckedChanged += (s, e) =>
                 {
                     ConfirmButton.IsEnabled = _selectionsByGrah.Values.Any(l => l.Count > 0)
                         || _currentRemedyItems.Any(i => i.IsChecked);
@@ -413,12 +449,34 @@ namespace AstroDeepak.Views
                     Margin = new Thickness(8, 0, 0, 0)
                 };
 
+                // Two independent checkboxes - a remedy can be Permanent, Yearly, or both.
+                var permanentCheckBox = new CheckBox();
+                permanentCheckBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsPermanent), source: item));
+                var permanentLabel = new Label { Text = "Permanent", FontSize = 12, VerticalOptions = LayoutOptions.Center };
+
+                var yearlyCheckBox = new CheckBox();
+                yearlyCheckBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsYearly), source: item));
+                var yearlyLabel = new Label { Text = "Yearly", FontSize = 12, VerticalOptions = LayoutOptions.Center };
+
+                var tagsStack = new HorizontalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center,
+                    Children = { yearlyCheckBox, yearlyLabel, permanentCheckBox, permanentLabel }
+                };
+
                 var row = new Grid
                 {
-                    ColumnDefinitions = { new ColumnDefinition(GridLength.Auto), new ColumnDefinition(GridLength.Star) },
-                    Children = { checkBox, nameLabel }
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition(GridLength.Auto),
+                        new ColumnDefinition(GridLength.Star),
+                        new ColumnDefinition(GridLength.Auto)
+                    },
+                    Children = { includeCheckBox, nameLabel, tagsStack }
                 };
                 Grid.SetColumn(nameLabel, 1);
+                Grid.SetColumn(tagsStack, 2);
 
                 var border = new Border
                 {

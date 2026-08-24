@@ -7,7 +7,18 @@ namespace AstroDeepak.Application.DTOs
     {
         public int NavgrahId { get; set; }
         public string NavgrahName { get; set; } = string.Empty;
-        public List<string> Remedies { get; set; } = new();
+        public List<RemedyChoiceDto> Remedies { get; set; } = new();
+    }
+
+    // A single remedy chosen for a Grah, with independent flags:
+    //  - IsPermanent = true -> also written into the PermanentRemedy table.
+    //  - IsYearly    = true -> goes through the normal remedy-history flow (unchanged).
+    // Both can be true at once.
+    public class RemedyChoiceDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public bool IsPermanent { get; set; }
+        public bool IsYearly { get; set; }
     }
 
     public class UserRemedyStagingDto
