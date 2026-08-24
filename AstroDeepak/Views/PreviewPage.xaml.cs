@@ -1,7 +1,6 @@
 ﻿using AstroDeepak.Application.DTOs;
 using AstroDeepak.Application.Interfaces;
 using AstroDeepak.Domain.Abstractions;
-using AstroDeepak.Helper;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
 
@@ -16,7 +15,6 @@ namespace AstroDeepak.Views
         private readonly IPdfExportService _pdfExportService;
         private readonly IPermanentRemedyRepository _permanentRemedyRepository;
         private readonly IAppLogger _logger;
-
 
         private int _stagingId;
         private UserRemedyStagingDto? _staging;
@@ -45,8 +43,7 @@ namespace AstroDeepak.Views
             IUserRemedyService userRemedyService,
             IPdfExportService pdfExportService,
             IPermanentRemedyRepository permanentRemedyRepository,
-            IAppLogger logger
-          )
+            IAppLogger logger)
         {
             InitializeComponent();
             _stagingService = stagingService;
@@ -55,7 +52,6 @@ namespace AstroDeepak.Views
             _pdfExportService = pdfExportService;
             _permanentRemedyRepository = permanentRemedyRepository;
             _logger = logger;
-          
         }
 
         protected override async void OnAppearing()
@@ -124,11 +120,21 @@ namespace AstroDeepak.Views
         CheckBox AddRemedyRow(VerticalStackLayout host, string labelText, bool isChecked)
         {
             var checkBox = new CheckBox { IsChecked = isChecked };
-            var label = new Label { Text = labelText, FontSize = 15, VerticalOptions = LayoutOptions.Center, Margin = new Thickness(8, 0, 0, 0) };
+            var label = new Label
+            {
+                Text = labelText,
+                FontSize = 15,
+                VerticalOptions = LayoutOptions.Center,
+                Margin = new Thickness(8, 0, 0, 0)
+            };
 
             var row = new Grid
             {
-                ColumnDefinitions = { new ColumnDefinition(GridLength.Auto), new ColumnDefinition(GridLength.Star) },
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition(GridLength.Auto),
+                    new ColumnDefinition(GridLength.Star)
+                },
                 Children = { checkBox, label }
             };
             Grid.SetColumn(label, 1);
@@ -166,7 +172,8 @@ namespace AstroDeepak.Views
         {
             if (_staging != null && string.IsNullOrWhiteSpace(_staging.PhoneNo))
             {
-                await DisplayAlert("No phone number", "This person doesn't have a WhatsApp number on file. Saving without sending.", "OK");
+                await DisplayAlert("No phone number",
+                    "This person doesn't have a WhatsApp number on file. Saving without sending.", "OK");
                 await SaveAsync(sendWhatsApp: false);
                 return;
             }
@@ -215,7 +222,8 @@ namespace AstroDeepak.Views
             catch (Exception ex)
             {
                 _logger.LogError($"Failed saving remedies for PersonId={personId}", ex);
-                await DisplayAlert("Error", "Record saved, but the remedies could not be stored. Please retry from Edit.", "OK");
+                await DisplayAlert("Error",
+                    "Record saved, but the remedies could not be stored. Please retry from Edit.", "OK");
             }
 
             try
@@ -262,43 +270,78 @@ namespace AstroDeepak.Views
 
             var confirmationMessage = sendWhatsApp
                 ? (whatsAppSent
-                    ? "Kundli saved. WhatsApp was opened for this person's number with the PDF ready to attach - finish sending it from there."
-                    : "Kundli saved, but WhatsApp could not be opened.")
+                    ? "Kundli saved.\n\nShare sheet is open with the PDF.\n1. Choose WhatsApp\n2. Select the contact\n3. Tap Send"
+                    : "Kundli saved, but the share sheet could not be opened.")
                 : (savedFilePath != null
-                    ? $"Kundli saved. PDF saved to:\n{savedFilePath}"
+                    ? $"Kundli saved.\nPDF saved to:\n{savedFilePath}"
                     : "Kundli saved, but the PDF could not be written to Downloads.");
 
             await DisplayAlert("Saved", confirmationMessage, "OK");
             await Shell.Current.GoToAsync("//search");
         }
 
+        /// <summary>
+        /// Free + ban-safe flow:
+        /// 1. Generate PDF
+        /// 2. Open system share sheet with the PDF already selected
+        /// 3. User picks WhatsApp → selects contact → taps Send
+        /// </summary>
         async Task<bool> TrySendWhatsAppAsync(UserRemedyStagingDto staging)
         {
             try
             {
+                // 1. Generate PDF into cache
                 var pdfPath = await _pdfExportService.GenerateRemedyReviewPdfAsync(staging);
 
-                var digitsOnly = new string((staging.CountryCode + staging.PhoneNo).Where(char.IsDigit).ToArray());
-                if (!string.IsNullOrWhiteSpace(digitsOnly))
+                if (string.IsNullOrWhiteSpace(pdfPath) || !File.Exists(pdfPath))
                 {
-                    try { await Launcher.Default.OpenAsync(new Uri($"https://wa.me/{digitsOnly}")); }
-                    catch (Exception ex) { _logger.LogWarning($"Could not open wa.me link for {digitsOnly}: {ex.Message}"); }
+                    _logger.LogWarning($"PDF missing after generation. Path={pdfPath}");
+                    await DisplayAlert("Error", "Could not generate the PDF.", "OK");
+                    return false;
                 }
 
+                var fileInfo = new FileInfo(pdfPath);
+                _logger.LogInfo($"PDF ready. Path={pdfPath}, Size={fileInfo.Length} bytes");
+
+                if (fileInfo.Length == 0)
+                {
+                    await DisplayAlert("Error", "Generated PDF is empty.", "OK");
+                    return false;
+                }
+
+                // 2. Clean number (for logging only)
+                var digitsOnly = CleanPhoneNumber(staging.CountryCode, staging.PhoneNo);
+
+                // 3. Share the PDF – this is what actually attaches the file
                 await Share.Default.RequestAsync(new ShareFileRequest
                 {
-                    Title = "Send Kundli Remedy PDF",
-                    File = new ShareFile(pdfPath)
+                    Title = "Kundli Remedy PDF",
+                    File = new ShareFile(pdfPath, "application/pdf")
                 });
 
-                _logger.LogInfo($"WhatsApp flow completed for PersonId={staging.PersonId}, Number={staging.CountryCode}{staging.PhoneNo}");
+                _logger.LogInfo(
+                    $"Share sheet shown successfully. PersonId={staging.PersonId}, Number={digitsOnly}");
+
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"WhatsApp send flow failed for PersonId={staging.PersonId}", ex);
+                _logger.LogError($"WhatsApp/PDF share failed for PersonId={staging.PersonId}", ex);
+                await DisplayAlert("Error", "Could not open the share sheet for the PDF.", "OK");
                 return false;
             }
+        }
+
+        static string CleanPhoneNumber(string? countryCode, string? phoneNo)
+        {
+            var cc = new string((countryCode ?? "").Where(char.IsDigit).ToArray());
+            var local = new string((phoneNo ?? "").Where(char.IsDigit).ToArray());
+
+            // Avoid double country-code if user already typed it in the phone field
+            if (!string.IsNullOrEmpty(cc) && local.StartsWith(cc))
+                return local;
+
+            return cc + local;
         }
 
         void OnHamburgerClicked(object sender, EventArgs e)
