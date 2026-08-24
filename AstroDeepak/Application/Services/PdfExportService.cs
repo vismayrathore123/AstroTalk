@@ -83,6 +83,14 @@ namespace AstroDeepak.Application.Services
                         if (!string.IsNullOrWhiteSpace(staging.BirthPlace))
                             col.Item().Text($"Birth Place: {staging.BirthPlace}");
 
+                        // --- NEW: Precautions section ---
+                        if (staging.SelectedPrecautions != null && staging.SelectedPrecautions.Any())
+                        {
+                            col.Item().PaddingTop(15).Text("Precautions").FontSize(14).Bold().FontColor(Colors.Orange.Darken1);
+                            foreach (var precaution in staging.SelectedPrecautions)
+                                col.Item().PaddingLeft(10).Text($"• {precaution}");
+                        }
+
                         foreach (var selection in staging.Selections)
                         {
                             col.Item().PaddingTop(15).Text($"Remedies for {selection.NavgrahName}")
@@ -93,6 +101,7 @@ namespace AstroDeepak.Application.Services
                         }
                     });
 
+                    // Footer – ensure it is always rendered by giving it a reasonable margin
                     page.Footer().AlignCenter().Text(t =>
                     {
                         t.Span("Generated on ").FontSize(9);
@@ -101,5 +110,5 @@ namespace AstroDeepak.Application.Services
                 });
             });
         }
-           }
+    }
 }

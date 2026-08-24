@@ -14,9 +14,9 @@
             </HorizontalStackLayout>
 
             <VerticalStackLayout Grid.Row="1" Spacing="2">
-                <Label Text="Choose ONE Grah" Style="{StaticResource TitleLabel}" FontSize="22" />
+                <Label x:Name="HeaderLabel" Text="Choose ONE Grah" Style="{StaticResource TitleLabel}" FontSize="22" />
                 <Label Text="Tap a planet below - only a single selection is allowed"
-                       Style="{StaticResource SubtitleLabel}" />
+           Style="{StaticResource SubtitleLabel}" />
             </VerticalStackLayout>
 
             <ScrollView Grid.Row="2">

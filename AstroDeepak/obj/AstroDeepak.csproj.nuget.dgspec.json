@@ -90,6 +90,10 @@
               "target": "Package",
               "version": "[2026.7.3, )"
             },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[114.0.0, )"
+            },
             "sqlite-net-pcl": {
               "target": "Package",
               "version": "[1.11.285, )"
@@ -414,6 +418,10 @@
             "QuestPDF": {
               "target": "Package",
               "version": "[2026.7.3, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[114.0.0, )"
             },
             "sqlite-net-pcl": {
               "target": "Package",
@@ -740,6 +748,10 @@
               "target": "Package",
               "version": "[2026.7.3, )"
             },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[114.0.0, )"
+            },
             "sqlite-net-pcl": {
               "target": "Package",
               "version": "[1.11.285, )"
@@ -1059,6 +1071,10 @@
             "QuestPDF": {
               "target": "Package",
               "version": "[2026.7.3, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[114.0.0, )"
             },
             "sqlite-net-pcl": {
               "target": "Package",

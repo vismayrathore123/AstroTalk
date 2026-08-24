@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OqNWA88StLE=",
+  "dgSpecHash": "YqEQ8BTNWEw=",
   "success": true,
   "projectFilePath": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AstroDeepak.csproj",
   "expectedPackageFiles": [
@@ -43,6 +43,7 @@
     "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsappsdk.widgets\\1.8.251231004\\microsoft.windowsappsdk.widgets.1.8.251231004.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsappsdk.winui\\1.8.260528001\\microsoft.windowsappsdk.winui.1.8.260528001.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\questpdf\\2026.7.3\\questpdf.2026.7.3.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\restsharp\\114.0.0\\restsharp.114.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\sourcegear.sqlite3\\3.53.3\\sourcegear.sqlite3.3.53.3.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\sqlite-net-pcl\\1.11.285\\sqlite-net-pcl.1.11.285.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\sqlitepclraw.core\\3.0.3\\sqlitepclraw.core.3.0.3.nupkg.sha512",

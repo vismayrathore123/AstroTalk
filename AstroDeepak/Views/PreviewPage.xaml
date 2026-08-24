@@ -45,7 +45,7 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Button Text="Confirm" Style="{StaticResource SecondaryButton}"
+                <Button Text="Download PDF" Style="{StaticResource SecondaryButton}"
                         Clicked="OnConfirmClicked" Margin="0,6,0,0" />
 
                 <Label x:Name="WhatsAppTargetLabel" HorizontalOptions="Center" HorizontalTextAlignment="Center"

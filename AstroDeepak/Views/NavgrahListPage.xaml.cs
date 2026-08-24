@@ -105,6 +105,16 @@ namespace AstroDeepak.Views
             BuildGrahGrid(options);
             RefreshTileHighlights();
 
+            // --- Show user name if in Person mode ---
+            if (_mode == "Person" && _draft != null && !string.IsNullOrWhiteSpace(_draft.Name))
+            {
+                HeaderLabel.Text = $"Choose Grah for {_draft.Name}";
+            }
+            else
+            {
+                HeaderLabel.Text = "Choose ONE Grah";
+            }
+
             if (_mode == "Person")
                 await LoadPrecautionsAsync();
             else

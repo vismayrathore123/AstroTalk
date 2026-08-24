@@ -1,6 +1,7 @@
 ﻿using AstroDeepak.Application.DTOs;
 using AstroDeepak.Application.Interfaces;
 using AstroDeepak.Domain.Abstractions;
+using AstroDeepak.Helper;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
 
@@ -15,6 +16,7 @@ namespace AstroDeepak.Views
         private readonly IPdfExportService _pdfExportService;
         private readonly IPermanentRemedyRepository _permanentRemedyRepository;
         private readonly IAppLogger _logger;
+
 
         private int _stagingId;
         private UserRemedyStagingDto? _staging;
@@ -43,7 +45,8 @@ namespace AstroDeepak.Views
             IUserRemedyService userRemedyService,
             IPdfExportService pdfExportService,
             IPermanentRemedyRepository permanentRemedyRepository,
-            IAppLogger logger)
+            IAppLogger logger
+          )
         {
             InitializeComponent();
             _stagingService = stagingService;
@@ -52,6 +55,7 @@ namespace AstroDeepak.Views
             _pdfExportService = pdfExportService;
             _permanentRemedyRepository = permanentRemedyRepository;
             _logger = logger;
+          
         }
 
         protected override async void OnAppearing()

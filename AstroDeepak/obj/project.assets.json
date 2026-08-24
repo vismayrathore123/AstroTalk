@@ -576,6 +576,19 @@
           }
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -3310,6 +3323,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -5869,6 +5895,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -8424,6 +8463,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -10977,6 +11029,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SourceGear.sqlite3/3.53.3": {
@@ -13536,6 +13601,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SourceGear.sqlite3/3.53.3": {
@@ -16130,6 +16208,19 @@
           }
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.11.285": {
         "type": "package",
         "dependencies": {
@@ -16651,6 +16742,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.11.285": {
@@ -17176,6 +17280,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.11.285": {
         "type": "package",
         "dependencies": {
@@ -17695,6 +17812,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.11.285": {
         "type": "package",
         "dependencies": {
@@ -18212,6 +18342,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.11.285": {
@@ -18735,6 +18878,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.11.285": {
@@ -19319,6 +19475,19 @@
           "runtimes/win-x86/native/qpdf.dll": {
             "assetType": "native",
             "rid": "win-x86"
+          }
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -20036,6 +20205,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -20575,6 +20757,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -21110,6 +21305,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -21643,6 +21851,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SourceGear.sqlite3/3.53.3": {
@@ -22182,6 +22403,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SourceGear.sqlite3/3.53.3": {
@@ -23177,6 +23411,19 @@
           "runtimes/win-x86/native/qpdf.dll": {
             "assetType": "native",
             "rid": "win-x86"
+          }
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -24243,6 +24490,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -25131,6 +25391,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -26015,6 +26288,19 @@
           "buildTransitive/QuestPDF.targets": {}
         }
       },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SourceGear.sqlite3/3.53.3": {
         "type": "package",
         "compile": {
@@ -26897,6 +27183,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SourceGear.sqlite3/3.53.3": {
@@ -27795,6 +28094,19 @@
         },
         "build": {
           "buildTransitive/QuestPDF.targets": {}
+        }
+      },
+      "RestSharp/114.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/RestSharp.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SourceGear.sqlite3/3.53.3": {
@@ -31087,6 +31399,31 @@
         "runtimes/win-x86/native/qpdf.dll"
       ]
     },
+    "RestSharp/114.0.0": {
+      "sha512": "8pDO4q+K8nIqXbvGCb9ciKcngj36pCXGRDzOYPEPoS2IvBIL+mejmUMAtSNALt/NkDc9LQmHvM95kdniLSbGtg==",
+      "type": "package",
+      "path": "restsharp/114.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/RestSharp.dll",
+        "lib/net10.0/RestSharp.xml",
+        "lib/net471/RestSharp.dll",
+        "lib/net471/RestSharp.xml",
+        "lib/net48/RestSharp.dll",
+        "lib/net48/RestSharp.xml",
+        "lib/net8.0/RestSharp.dll",
+        "lib/net8.0/RestSharp.xml",
+        "lib/net9.0/RestSharp.dll",
+        "lib/net9.0/RestSharp.xml",
+        "lib/netstandard2.0/RestSharp.dll",
+        "lib/netstandard2.0/RestSharp.xml",
+        "restsharp.114.0.0.nupkg.sha512",
+        "restsharp.nuspec",
+        "restsharp.png"
+      ]
+    },
     "SourceGear.sqlite3/3.53.3": {
       "sha512": "PaDT7JwQ00HmXZT1xSGSC0c24A5lVpJYHMrXBuJATdpB2t0nf4Kq9HyPaZhxVW0elPq4XI1s5BLh7qLuObmzFA==",
       "type": "package",
@@ -33628,6 +33965,7 @@
       "Microsoft.Maui.Controls >= 10.0.100",
       "Microsoft.NET.ILLink.Tasks >= 10.0.11",
       "QuestPDF >= 2026.7.3",
+      "RestSharp >= 114.0.0",
       "sqlite-net-pcl >= 1.11.285"
     ],
     "net10.0-ios": [
@@ -33635,6 +33973,7 @@
       "Microsoft.Maui.Controls >= 10.0.100",
       "Microsoft.NET.ILLink.Tasks >= 10.0.11",
       "QuestPDF >= 2026.7.3",
+      "RestSharp >= 114.0.0",
       "sqlite-net-pcl >= 1.11.285"
     ],
     "net10.0-maccatalyst": [
@@ -33642,12 +33981,14 @@
       "Microsoft.Maui.Controls >= 10.0.100",
       "Microsoft.NET.ILLink.Tasks >= 10.0.11",
       "QuestPDF >= 2026.7.3",
+      "RestSharp >= 114.0.0",
       "sqlite-net-pcl >= 1.11.285"
     ],
     "net10.0-windows10.0.19041.0": [
       "Microsoft.Extensions.Logging.Debug >= 10.0.0",
       "Microsoft.Maui.Controls >= 10.0.100",
       "QuestPDF >= 2026.7.3",
+      "RestSharp >= 114.0.0",
       "sqlite-net-pcl >= 1.11.285"
     ]
   },
@@ -33740,6 +34081,10 @@
           "QuestPDF": {
             "target": "Package",
             "version": "[2026.7.3, )"
+          },
+          "RestSharp": {
+            "target": "Package",
+            "version": "[114.0.0, )"
           },
           "sqlite-net-pcl": {
             "target": "Package",
@@ -34066,6 +34411,10 @@
             "target": "Package",
             "version": "[2026.7.3, )"
           },
+          "RestSharp": {
+            "target": "Package",
+            "version": "[114.0.0, )"
+          },
           "sqlite-net-pcl": {
             "target": "Package",
             "version": "[1.11.285, )"
@@ -34391,6 +34740,10 @@
             "target": "Package",
             "version": "[2026.7.3, )"
           },
+          "RestSharp": {
+            "target": "Package",
+            "version": "[114.0.0, )"
+          },
           "sqlite-net-pcl": {
             "target": "Package",
             "version": "[1.11.285, )"
@@ -34710,6 +35063,10 @@
           "QuestPDF": {
             "target": "Package",
             "version": "[2026.7.3, )"
+          },
+          "RestSharp": {
+            "target": "Package",
+            "version": "[114.0.0, )"
           },
           "sqlite-net-pcl": {
             "target": "Package",
