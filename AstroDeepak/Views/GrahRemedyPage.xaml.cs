@@ -97,7 +97,11 @@ namespace AstroDeepak.Views
             CloseMenu();
             await DisplayAlert("Contact Us", "Contact us feature coming soon.", "OK");
         }
-
+        async void OnPrecautionsTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await Shell.Current.GoToAsync("precautions");
+        }
         void CloseMenu()
         {
             MenuDropdown.IsVisible = false;

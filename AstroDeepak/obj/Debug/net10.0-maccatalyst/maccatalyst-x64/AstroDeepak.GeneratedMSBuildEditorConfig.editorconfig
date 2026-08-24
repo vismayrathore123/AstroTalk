@@ -109,6 +109,16 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
+[C:/Astro/AstroDeepak/AstroDeepak/Views/PrecautionsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AstroDeepak.Views.PrecautionsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\PrecautionsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\PrecautionsPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
 [C:/Astro/AstroDeepak/AstroDeepak/Views/PreviewPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AstroDeepak.Views.PreviewPage.xaml

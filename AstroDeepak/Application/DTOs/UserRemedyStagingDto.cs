@@ -25,6 +25,7 @@ namespace AstroDeepak.Application.DTOs
         public string Address { get; set; }
         public string Grahan { get; set; }
         public string CountryCode { get; set; }
+        public List<string> SelectedPrecautions { get; set; } = new();
 
         public List<GrahRemedySelectionDto> Selections { get; set; } = new();
     }

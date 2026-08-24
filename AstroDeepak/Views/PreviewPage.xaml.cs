@@ -1,5 +1,6 @@
 ﻿using AstroDeepak.Application.DTOs;
 using AstroDeepak.Application.Interfaces;
+using AstroDeepak.Domain.Abstractions;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
 
@@ -12,10 +13,24 @@ namespace AstroDeepak.Views
         private readonly IPersonService _personService;
         private readonly IUserRemedyService _userRemedyService;
         private readonly IPdfExportService _pdfExportService;
+        private readonly IPermanentRemedyRepository _permanentRemedyRepository;
         private readonly IAppLogger _logger;
 
         private int _stagingId;
         private UserRemedyStagingDto? _staging;
+
+        // Each row on screen: which remedy, which Grah it came from, and the live
+        // checkbox state. Permanent rows start checked; Yearly rows start unchecked.
+        private class RemedyRow
+        {
+            public int NavgrahId;
+            public string RemedyName = string.Empty;
+            public bool WasAlreadyPermanent;
+            public CheckBox CheckBoxControl = null!;
+        }
+
+        private readonly List<RemedyRow> _permanentRows = new();
+        private readonly List<RemedyRow> _yearlyRows = new();
 
         public string StagingId
         {
@@ -27,6 +42,7 @@ namespace AstroDeepak.Views
             IPersonService personService,
             IUserRemedyService userRemedyService,
             IPdfExportService pdfExportService,
+            IPermanentRemedyRepository permanentRemedyRepository,
             IAppLogger logger)
         {
             InitializeComponent();
@@ -34,6 +50,7 @@ namespace AstroDeepak.Views
             _personService = personService;
             _userRemedyService = userRemedyService;
             _pdfExportService = pdfExportService;
+            _permanentRemedyRepository = permanentRemedyRepository;
             _logger = logger;
         }
 
@@ -51,26 +68,87 @@ namespace AstroDeepak.Views
             }
 
             NameLabel.Text = _staging.Name;
-            FatherNameLabel.Text = string.IsNullOrWhiteSpace(_staging.FatherName) ? "-" : _staging.FatherName;
             DobLabel.Text = _staging.DOB.ToString("dd MMM yyyy");
-            PhoneLabel.Text = string.IsNullOrWhiteSpace(_staging.PhoneNo)
-                ? "Not provided"
-                : $"{_staging.CountryCode} {_staging.PhoneNo}";
 
-            SelectionsHost.Children.Clear();
+            WhatsAppTargetLabel.Text = string.IsNullOrWhiteSpace(_staging.PhoneNo)
+                ? string.Empty
+                : $"WhatsApp will be sent to {_staging.CountryCode} {_staging.PhoneNo}";
+
+            await BuildRemedySectionsAsync();
+            BuildPrecautionsSection();
+        }
+
+        async Task BuildRemedySectionsAsync()
+        {
+            PermanentRemedyHost.Children.Clear();
+            YearlyRemedyHost.Children.Clear();
+            _permanentRows.Clear();
+            _yearlyRows.Clear();
+
+            if (_staging == null) return;
+
             foreach (var selection in _staging.Selections)
             {
-                var header = new Label
+                var permanentForThisGrah = await _permanentRemedyRepository
+                    .GetByPersonAndNavgrahAsync(_staging.PersonId, selection.NavgrahId);
+                var permanentNames = new HashSet<string>(
+                    permanentForThisGrah.Select(p => p.RemedyName), StringComparer.OrdinalIgnoreCase);
+
+                foreach (var remedyName in selection.Remedies)
                 {
-                    Text = $"REMEDIES FOR {selection.NavgrahName?.ToUpperInvariant()}",
-                    Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["SubtitleLabel"]
-                };
-                var remediesLabel = new Label
-                {
-                    Text = string.Join(", ", selection.Remedies),
-                    FontSize = 16
-                };
-                SelectionsHost.Children.Add(new VerticalStackLayout { Spacing = 2, Children = { header, remediesLabel } });
+                    bool isPermanent = permanentNames.Contains(remedyName);
+
+                    var row = new RemedyRow
+                    {
+                        NavgrahId = selection.NavgrahId,
+                        RemedyName = remedyName,
+                        WasAlreadyPermanent = isPermanent
+                    };
+
+                    var target = isPermanent ? PermanentRemedyHost : YearlyRemedyHost;
+                    var list = isPermanent ? _permanentRows : _yearlyRows;
+
+                    row.CheckBoxControl = AddRemedyRow(target, $"{remedyName}  ·  {selection.NavgrahName}", isPermanent);
+                    list.Add(row);
+                }
+            }
+
+            NoPermanentLabel.IsVisible = _permanentRows.Count == 0;
+            NoYearlyLabel.IsVisible = _yearlyRows.Count == 0;
+        }
+
+        CheckBox AddRemedyRow(VerticalStackLayout host, string labelText, bool isChecked)
+        {
+            var checkBox = new CheckBox { IsChecked = isChecked };
+            var label = new Label { Text = labelText, FontSize = 15, VerticalOptions = LayoutOptions.Center, Margin = new Thickness(8, 0, 0, 0) };
+
+            var row = new Grid
+            {
+                ColumnDefinitions = { new ColumnDefinition(GridLength.Auto), new ColumnDefinition(GridLength.Star) },
+                Children = { checkBox, label }
+            };
+            Grid.SetColumn(label, 1);
+
+            host.Children.Add(new Border
+            {
+                Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["CardBorder"],
+                Padding = 12,
+                Content = row
+            });
+
+            return checkBox;
+        }
+
+        void BuildPrecautionsSection()
+        {
+            PrecautionsHost.Children.Clear();
+
+            var precautions = _staging?.SelectedPrecautions ?? new List<string>();
+            PrecautionsCard.IsVisible = precautions.Count > 0;
+
+            foreach (var text in precautions)
+            {
+                PrecautionsHost.Children.Add(new Label { Text = $"• {text}", FontSize = 14 });
             }
         }
 
@@ -109,7 +187,8 @@ namespace AstroDeepak.Views
                 PhoneNo = _staging.PhoneNo,
                 Address = _staging.Address,
                 Grahan = _staging.Grahan,
-                Grah = string.Join(", ", _staging.Selections.Select(s => s.NavgrahName))
+                Grah = string.Join(", ", _staging.Selections.Select(s => s.NavgrahName)),
+                Precautions = string.Join(",", _staging.SelectedPrecautions)
             };
 
             int personId;
@@ -126,20 +205,28 @@ namespace AstroDeepak.Views
 
             try
             {
-                // All Grahs picked in this session are saved together here - no more
-                // looping back through "add another Grah".
                 foreach (var selection in _staging.Selections)
-                {
-                    await _userRemedyService.SaveSelectedRemediesAsync(
-                        personId,
-                        selection.NavgrahId,
-                        selection.Remedies);
-                }
+                    await _userRemedyService.SaveSelectedRemediesAsync(personId, selection.NavgrahId, selection.Remedies);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Failed saving remedies for PersonId={personId}", ex);
                 await DisplayAlert("Error", "Record saved, but the remedies could not be stored. Please retry from Edit.", "OK");
+            }
+
+            try
+            {
+                // Yearly rows the user just ticked become permanent.
+                foreach (var row in _yearlyRows.Where(r => r.CheckBoxControl.IsChecked))
+                    await _permanentRemedyRepository.AddAsync(personId, row.NavgrahId, row.RemedyName);
+
+                // Permanent rows the user unticked stop being permanent.
+                foreach (var row in _permanentRows.Where(r => !r.CheckBoxControl.IsChecked))
+                    await _permanentRemedyRepository.RemoveAsync(personId, row.NavgrahId, row.RemedyName);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed updating permanent remedies for PersonId={personId}", ex);
             }
 
             string? savedFilePath = null;
@@ -178,9 +265,6 @@ namespace AstroDeepak.Views
                     : "Kundli saved, but the PDF could not be written to Downloads.");
 
             await DisplayAlert("Saved", confirmationMessage, "OK");
-
-            // No more "Add another Grah?" prompt - every Grah selected on the previous
-            // screen is already saved above, so we just go back to the list.
             await Shell.Current.GoToAsync("//search");
         }
 
@@ -212,6 +296,7 @@ namespace AstroDeepak.Views
                 return false;
             }
         }
+
         void OnHamburgerClicked(object sender, EventArgs e)
         {
             bool opening = !MenuDropdown.IsVisible;
@@ -228,6 +313,12 @@ namespace AstroDeepak.Views
             CloseMenu();
             var navParams = new Dictionary<string, object> { { "Mode", "Master" } };
             await Shell.Current.GoToAsync("navgrah", navParams);
+        }
+
+        async void OnPrecautionsTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await Shell.Current.GoToAsync("precautions");
         }
 
         async void OnContactUsTapped(object sender, EventArgs e)

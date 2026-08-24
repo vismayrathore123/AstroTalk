@@ -45,6 +45,8 @@ namespace AstroDeepak
             builder.Services.AddSingleton<IUserRemedyStagingRepository, UserRemedyStagingRepository>();
             builder.Services.AddSingleton<IUserRemedyStagingService, UserRemedyStagingService>();
             builder.Services.AddSingleton<IPdfExportService, PdfExportService>();
+            builder.Services.AddSingleton<IPrecautionRepository, PrecautionRepository>();
+            builder.Services.AddSingleton<IPermanentRemedyRepository, PermanentRemedyRepository>();
 
             // ---- Pages ----
             builder.Services.AddTransient<SearchPage>();
@@ -52,6 +54,7 @@ namespace AstroDeepak
             builder.Services.AddTransient<NavgrahListPage>();
             builder.Services.AddTransient<PreviewPage>();
             builder.Services.AddTransient<GrahRemedyPage>();
+            builder.Services.AddTransient<PrecautionsPage>();
 
             var app = builder.Build();
 

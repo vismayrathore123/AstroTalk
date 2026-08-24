@@ -14,7 +14,7 @@ namespace AstroDeepak.Application.DTOs
         public string CountryCode { get; set; } = string.Empty;
         public string PhoneNo { get; set; }
         public string Address { get; set; }
-
+        public string Precautions { get; set; } = string.Empty;
         public string Grah { get; set; } = "None";
         public string Grahan { get; set; } = "None";
 

@@ -42,6 +42,7 @@ namespace AstroDeepak.Application.Services
             Address = s.Address,
             Grahan = s.Grahan,
             CountryCode = s.CountryCode,
+            SelectedPrecautions = s.SelectedPrecautions,
             Selections = s.Selections.Select(sel => new GrahRemedySelectionDto
             {
                 NavgrahId = sel.NavgrahId,
@@ -60,6 +61,7 @@ namespace AstroDeepak.Application.Services
             DOB = d.DOB,
             Time = d.Time,
             BirthPlace = d.BirthPlace,
+            SelectedPrecautions = d.SelectedPrecautions,
             PhoneNo = d.PhoneNo,
             Address = d.Address,
             Grahan = d.Grahan,

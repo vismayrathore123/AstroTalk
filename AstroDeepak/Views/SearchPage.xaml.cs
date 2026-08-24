@@ -91,5 +91,11 @@ namespace AstroDeepak.Views
             MenuOverlayBackground.IsVisible = false;
             HamburgerButton.Text = "☰";
         }
+        async void OnPrecautionsTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await Shell.Current.GoToAsync("precautions");
+        }
+
     }
 }

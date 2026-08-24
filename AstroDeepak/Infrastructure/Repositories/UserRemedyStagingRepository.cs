@@ -60,7 +60,10 @@ namespace AstroDeepak.Infrastructure.Repositories
             Selections = string.IsNullOrWhiteSpace(e.SelectionsJson)
                 ? new List<GrahRemedySelection>()
                 : (JsonSerializer.Deserialize<List<GrahRemedySelection>>(e.SelectionsJson) ?? new List<GrahRemedySelection>()),
-            CreatedAt = e.CreatedAt
+            CreatedAt = e.CreatedAt,
+            SelectedPrecautions = string.IsNullOrWhiteSpace(e.SelectedPrecautionsJson)
+    ? new List<string>()
+    : (JsonSerializer.Deserialize<List<string>>(e.SelectedPrecautionsJson) ?? new List<string>())
         };
 
         private static UserRemedyStagingEntity ToEntity(UserRemedyStaging s) => new()
@@ -78,7 +81,8 @@ namespace AstroDeepak.Infrastructure.Repositories
             Grahan = s.Grahan,
             CountryCode = s.CountryCode,
             SelectionsJson = JsonSerializer.Serialize(s.Selections),
-            CreatedAt = s.CreatedAt
+            CreatedAt = s.CreatedAt,
+            SelectedPrecautionsJson = JsonSerializer.Serialize(s.SelectedPrecautions)
         };
     }
 }

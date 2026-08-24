@@ -17,7 +17,7 @@ namespace AstroDeepak.Infrastructure.Persistence
         public string CountryCode { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
-
+        public string Precautions { get; set; }
         public string Grah { get; set; }
         public string Grahan { get; set; }
 

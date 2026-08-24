@@ -29,6 +29,7 @@ namespace AstroDeepak.Domain.Entities
         // One staging row now carries every Grah + remedies picked in this session,
         // instead of a single Grah at a time.
         public List<GrahRemedySelection> Selections { get; set; } = new();
+        public List<string> SelectedPrecautions { get; set; } = new();
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
     }

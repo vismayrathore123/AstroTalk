@@ -171,8 +171,8 @@ namespace AstroDeepak.Views
                 var digits = PhoneEntry.Text.Trim();
                 if (!digits.All(char.IsDigit))
                     errors.Add("Phone number can only contain digits.");
-                else if (digits.Length < 6 || digits.Length > 15)
-                    errors.Add("Phone number length looks invalid.");
+                else if (digits.Length != 10)
+                    errors.Add("Phone number must be exactly 10 digits.");
 
                 if (CountryCodePicker.SelectedItem == null)
                     errors.Add("Please select a country code for the phone number.");
@@ -249,6 +249,11 @@ namespace AstroDeepak.Views
             MenuDropdown.IsVisible = false;
             MenuOverlayBackground.IsVisible = false;
             HamburgerButton.Text = "☰";
+        }
+        async void OnPrecautionsTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await Shell.Current.GoToAsync("precautions");
         }
     }
 }

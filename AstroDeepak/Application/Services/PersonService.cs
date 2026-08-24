@@ -89,6 +89,7 @@ namespace AstroDeepak.Application.Services
             Grah = p.Grah,
             Grahan = p.Grahan,
             CreatedAt = p.CreatedAt,
+            Precautions = p.Precautions,
             UpdatedAt = p.UpdatedAt
         };
 
@@ -104,6 +105,7 @@ namespace AstroDeepak.Application.Services
             CountryCode = d.CountryCode,
             PhoneNo = d.PhoneNo,
             Address = d.Address,
+            Precautions = d.Precautions,
             Grah = d.Grah,
             Grahan = d.Grahan
             // CreatedAt/UpdatedAt are set by the repository based on insert vs update.

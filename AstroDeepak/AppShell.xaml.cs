@@ -11,6 +11,7 @@ namespace AstroDeepak
             Routing.RegisterRoute("navgrah", typeof(NavgrahListPage));
             Routing.RegisterRoute("preview", typeof(PreviewPage));
             Routing.RegisterRoute("masterremedies", typeof(GrahRemedyPage));
+            Routing.RegisterRoute("precautions", typeof(PrecautionsPage));
         }
     }
 }

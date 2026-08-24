@@ -18,6 +18,8 @@ namespace AstroDeepak.Views
         private readonly IRemedyRepository _remedyRepository;
         private readonly IUserRemedyService _userRemedyService;
         private readonly IUserRemedyStagingService _stagingService;
+        private readonly IPrecautionRepository _precautionRepository;
+        private readonly IPermanentRemedyRepository _permanentRemedyRepository;
 
         private const int ColumnsPerRow = 3;
 
@@ -25,19 +27,18 @@ namespace AstroDeepak.Views
         private readonly Dictionary<NavgrahOption, Label> _statusLabels = new();
         private readonly Dictionary<NavgrahOption, VerticalStackLayout> _rowSlots = new();
 
-        // Remedies checked for whichever Grah's accordion is currently open.
         private readonly List<RemedyCheckItem> _currentRemedyItems = new();
         private VerticalStackLayout? _currentRemedyListHost;
 
-        // Every Grah's chosen remedies for THIS session, keyed by NavgrahId. This is
-        // what makes checkboxes stay ticked when you switch tiles or come back from
-        // Preview via Edit, and it's what lets you pick remedies for more than one
-        // Grah before finally hitting Save.
+        // Every Grah's chosen remedies for THIS session, keyed by NavgrahId.
         private readonly Dictionary<int, List<string>> _selectionsByGrah = new();
         private NavgrahOption? _openOption;
 
+        // Precaution checkboxes, built once per OnAppearing.
+        private readonly List<RemedyCheckItem> _precautionItems = new();
+
         private PersonDto? _draft;
-        private NavgrahOption? _selected; // Master mode only (single Grah, unchanged)
+        private NavgrahOption? _selected; // Master mode only
         private string _mode = "Person";
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -55,7 +56,9 @@ namespace AstroDeepak.Views
             IUsersRemedyRepository usersRemedyRepository,
             IRemedyRepository remedyRepository,
             IUserRemedyService userRemedyService,
-            IUserRemedyStagingService stagingService)
+            IUserRemedyStagingService stagingService,
+            IPrecautionRepository precautionRepository,
+            IPermanentRemedyRepository permanentRemedyRepository)
         {
             InitializeComponent();
             _masterDataRepository = masterDataRepository;
@@ -63,6 +66,8 @@ namespace AstroDeepak.Views
             _remedyRepository = remedyRepository;
             _userRemedyService = userRemedyService;
             _stagingService = stagingService;
+            _precautionRepository = precautionRepository;
+            _permanentRemedyRepository = permanentRemedyRepository;
         }
 
         protected override async void OnAppearing()
@@ -78,10 +83,6 @@ namespace AstroDeepak.Views
             _currentRemedyItems.Clear();
             _currentRemedyListHost = null;
             GrahGridHost.Children.Clear();
-
-            // NOTE: _selectionsByGrah is intentionally NOT cleared here. It's the
-            // in-session memory of what's been checked, and it must survive Edit ->
-            // back navigation from PreviewPage.
 
             var navgrahs = await _masterDataRepository.GetNavgrahsAsync();
 
@@ -104,9 +105,53 @@ namespace AstroDeepak.Views
             BuildGrahGrid(options);
             RefreshTileHighlights();
 
+            if (_mode == "Person")
+                await LoadPrecautionsAsync();
+            else
+                PrecautionsHost.Children.Clear();
+
             ConfirmButton.IsEnabled = _mode == "Master"
                 ? false
                 : _selectionsByGrah.Values.Any(list => list.Count > 0);
+        }
+
+        async Task LoadPrecautionsAsync()
+        {
+            PrecautionsHost.Children.Clear();
+            _precautionItems.Clear();
+
+            var master = await _precautionRepository.GetAllAsync();
+
+            // Pre-check whatever this person already had saved (comma-separated on
+            // Person.Precautions), so editing a person doesn't lose their picks.
+            var already = string.IsNullOrWhiteSpace(_draft?.Precautions)
+                ? new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                : new HashSet<string>(_draft!.Precautions.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries), StringComparer.OrdinalIgnoreCase);
+
+            foreach (var p in master)
+            {
+                var item = new RemedyCheckItem { Name = p.Text, IsChecked = already.Contains(p.Text) };
+                _precautionItems.Add(item);
+
+                var checkBox = new CheckBox();
+                checkBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsChecked), source: item));
+
+                var label = new Label { Text = item.Name, FontSize = 15, VerticalOptions = LayoutOptions.Center, Margin = new Thickness(8, 0, 0, 0) };
+
+                var row = new Grid
+                {
+                    ColumnDefinitions = { new ColumnDefinition(GridLength.Auto), new ColumnDefinition(GridLength.Star) },
+                    Children = { checkBox, label }
+                };
+                Grid.SetColumn(label, 1);
+
+                PrecautionsHost.Children.Add(new Border
+                {
+                    Style = (Style)Microsoft.Maui.Controls.Application.Current!.Resources["CardBorder"],
+                    Padding = 12,
+                    Content = row
+                });
+            }
         }
 
         void BuildGrahGrid(List<NavgrahOption> options)
@@ -208,8 +253,6 @@ namespace AstroDeepak.Views
             }
         }
 
-        // Saves whatever is currently ticked in the open accordion into
-        // _selectionsByGrah, so it isn't lost when you switch to another Grah tile.
         void CommitCurrentSelectionToMemory()
         {
             if (_openOption == null) return;
@@ -225,7 +268,6 @@ namespace AstroDeepak.Views
         {
             if (_mode != "Person")
             {
-                // Master mode: unchanged single-select, just navigates on Confirm.
                 _selected = option;
                 RefreshTileHighlights();
                 ConfirmButton.IsEnabled = true;
@@ -290,26 +332,30 @@ namespace AstroDeepak.Views
 
             var remedies = await _remedyRepository.GetRemediesByNavgrahIdAsync(option.Id);
 
-            // Prefer anything already picked earlier in THIS session (fixes the
-            // "checkboxes forget themselves" bug). Only fall back to the database
-            // for Grahs that were confirmed in an earlier, separate session.
-            HashSet<string> checkedNames;
+            var checkedNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            // 1) Anything already picked earlier in THIS session.
             if (_selectionsByGrah.TryGetValue(option.Id, out var pending))
             {
-                checkedNames = new HashSet<string>(pending, StringComparer.OrdinalIgnoreCase);
+                foreach (var name in pending) checkedNames.Add(name);
             }
-            else
+            else if (_draft != null && _draft.Id > 0)
             {
-                checkedNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-                if (_draft != null && _draft.Id > 0)
+                // 2) Previously saved remedies for this Grah (from an earlier session).
+                var existing = await _userRemedyService.GetAsync(_draft.Id, option.Id);
+                if (existing != null && !string.IsNullOrWhiteSpace(existing.CurrentSuggestedRemedy))
                 {
-                    var existing = await _userRemedyService.GetAsync(_draft.Id, option.Id);
-                    if (existing != null && !string.IsNullOrWhiteSpace(existing.CurrentSuggestedRemedy))
-                    {
-                        foreach (var name in existing.CurrentSuggestedRemedy.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
-                            checkedNames.Add(name);
-                    }
+                    foreach (var name in existing.CurrentSuggestedRemedy.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+                        checkedNames.Add(name);
                 }
+            }
+
+            // 3) Anything already marked "permanent" for this person+Grah always
+            // shows pre-checked, regardless of session/history above.
+            if (_draft != null && _draft.Id > 0)
+            {
+                var permanent = await _permanentRemedyRepository.GetByPersonAndNavgrahAsync(_draft.Id, option.Id);
+                foreach (var p in permanent) checkedNames.Add(p.RemedyName);
             }
 
             _currentRemedyItems.Clear();
@@ -345,8 +391,6 @@ namespace AstroDeepak.Views
                 checkBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(RemedyCheckItem.IsChecked), source: item));
                 checkBox.CheckedChanged += (s, e) =>
                 {
-                    // Live-enable Save the moment anything gets ticked, without
-                    // waiting for the user to switch tiles first.
                     ConfirmButton.IsEnabled = _selectionsByGrah.Values.Any(l => l.Count > 0)
                         || _currentRemedyItems.Any(i => i.IsChecked);
                 };
@@ -420,6 +464,8 @@ namespace AstroDeepak.Views
                 return;
             }
 
+            var selectedPrecautions = _precautionItems.Where(i => i.IsChecked).Select(i => i.Name).ToList();
+
             var stagingDto = new UserRemedyStagingDto
             {
                 PersonId = _draft.Id,
@@ -433,7 +479,8 @@ namespace AstroDeepak.Views
                 PhoneNo = _draft.PhoneNo,
                 Address = _draft.Address,
                 Grahan = _draft.Grahan,
-                Selections = selections
+                Selections = selections,
+                SelectedPrecautions = selectedPrecautions
             };
 
             var stagingId = await _stagingService.SaveAsync(stagingDto);
@@ -456,6 +503,12 @@ namespace AstroDeepak.Views
             CloseMenu();
             var navParams = new Dictionary<string, object> { { "Mode", "Master" } };
             await Shell.Current.GoToAsync("navgrah", navParams);
+        }
+
+        async void OnPrecautionsTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await Shell.Current.GoToAsync("precautions");
         }
 
         async void OnContactUsTapped(object sender, EventArgs e)

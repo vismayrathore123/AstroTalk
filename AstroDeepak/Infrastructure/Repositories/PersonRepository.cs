@@ -95,6 +95,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             Grah = e.Grah ?? "None",
             Grahan = e.Grahan ?? "None",
             CreatedAt = e.CreatedAt,
+            Precautions = e.Precautions ?? string.Empty,  // in ToDomain
             UpdatedAt = e.UpdatedAt
         };
 
@@ -103,6 +104,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             Id = p.Id,
             Name = p.Name,
             FatherName = p.FatherName,
+            Precautions = p.Precautions,   // in ToEntity
             Gotra = p.Gotra,
             DOB = p.DOB,
             Time = p.Time,

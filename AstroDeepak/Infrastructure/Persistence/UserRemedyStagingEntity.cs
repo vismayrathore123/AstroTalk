@@ -21,7 +21,7 @@ namespace AstroDeepak.Infrastructure.Persistence
         public string PhoneNo { get; set; }
         public string Address { get; set; }
         public string Grahan { get; set; }
-
+        public string SelectedPrecautionsJson { get; set; }
         // JSON-serialized List<GrahRemedySelection> - one entry per Grah picked in
         // this session, each with its own remedy list.
         public string SelectionsJson { get; set; }

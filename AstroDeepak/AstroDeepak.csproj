@@ -89,6 +89,10 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
 
+    <MauiXaml Update="Views\PrecautionsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+
     <MauiXaml Update="Views\PreviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

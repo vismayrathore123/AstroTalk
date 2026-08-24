@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:entities="clr-namespace:AstroDeepak.Domain.Entities"
+             x:Class="AstroDeepak.Views.PrecautionsPage"
+             Title="Precautions">
+
+    <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,*">
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Start" Margin="0,0,0,8">
+            <Button Text="←" Style="{StaticResource IconButton}" Clicked="OnBackClicked" />
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="2" Margin="0,0,0,14">
+            <Label Text="Precautions" Style="{StaticResource TitleLabel}" FontSize="22" />
+            <Label Text="Add, edit, or remove master precautions" Style="{StaticResource SubtitleLabel}" />
+        </VerticalStackLayout>
+
+        <Border Grid.Row="2" Style="{StaticResource CardBorder}" Margin="0,0,0,12" Padding="10">
+            <Grid ColumnDefinitions="*,Auto">
+                <Entry x:Name="NewPrecautionEntry" Grid.Column="0" Placeholder="Add a new precaution..." />
+                <Button Grid.Column="1" Text="+ Add" Clicked="OnAddPrecautionClicked"
+                        BackgroundColor="Transparent" TextColor="{StaticResource Gold}"
+                        FontAttributes="Bold" />
+            </Grid>
+        </Border>
+
+        <CollectionView Grid.Row="3" x:Name="PrecautionList" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="entities:PrecautionMaster">
+                    <Border Style="{StaticResource CardBorder}" Margin="0,0,0,8" Padding="12">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <Label Grid.Column="0" Text="{Binding Text}" VerticalOptions="Center" FontSize="15" />
+                            <Button Grid.Column="1" Text="✏️" FontSize="16"
+                                    BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" Padding="0"
+                                    Clicked="OnEditClicked" CommandParameter="{Binding .}" />
+                            <Button Grid.Column="2" Text="🗑️" FontSize="16"
+                                    BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" Padding="0"
+                                    Clicked="OnDeleteClicked" CommandParameter="{Binding Id}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>
