@@ -123,4 +123,20 @@
 
   </ItemGroup>
 
+
+  <!-- Fonts (fixes "Font asset not found" on Android) -->
+  <ItemGroup>
+
+    <MauiFont Include="Resources\Fonts\*" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Remove="Platforms\Android\Resources\values\styles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <MauiXaml Include="Platforms\Android\Resources\values\styles.xml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+
 </Project>

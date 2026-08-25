@@ -4,19 +4,23 @@
        xmlns:views="clr-namespace:AstroDeepak.Views"
        x:Class="AstroDeepak.AppShell"
        FlyoutBehavior="Disabled"
-       Shell.NavBarIsVisible="False"
-       BackgroundColor="{StaticResource DeepSpace}">
+     Shell.NavBarIsVisible="False"
+Shell.TabBarBackgroundColor="Black"
+Shell.TabBarTitleColor="{StaticResource Gold}"
+Shell.TabBarUnselectedColor="{StaticResource TextSecondary}"
+BackgroundColor="Black">
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem">
+        <Tab>
+            <ShellContent
+                Title="Open Kundli"
+                Route="search"
+                ContentTemplate="{DataTemplate views:SearchPage}" />
 
-    <TabBar>
-        <ShellContent
-            Title="Open Kundli"
-            Route="search"
-            ContentTemplate="{DataTemplate views:SearchPage}" />
-
-        <ShellContent
-            Title="New Kundli"
-            Route="form"
-            ContentTemplate="{DataTemplate views:PersonFormPage}" />
-    </TabBar>
+            <ShellContent
+                Title="New Kundli"
+                Route="form"
+                ContentTemplate="{DataTemplate views:PersonFormPage}" />
+        </Tab>
+    </FlyoutItem>
 
 </Shell>

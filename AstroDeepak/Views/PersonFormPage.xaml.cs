@@ -57,19 +57,24 @@ namespace AstroDeepak.Views
         // (letters, symbols, a second colon) is silently dropped.
         void OnTimeTextChanged(object sender, TextChangedEventArgs e)
         {
-            var text = e.NewTextValue ?? string.Empty;
-            var cleaned = new string(text.Where(c => char.IsDigit(c) || c == ':').ToArray());
+            var entry = (Entry)sender;
+            var newText = e.NewTextValue ?? string.Empty;
 
-            var firstColon = cleaned.IndexOf(':');
-            if (firstColon >= 0)
+            // Only allow digits and a single colon
+            var allowed = new string(newText.Where(c => char.IsDigit(c) || c == ':').ToArray());
+
+            // Ensure only one colon
+            var parts = allowed.Split(':');
+            if (parts.Length > 2)
+                allowed = parts[0] + ":" + string.Join("", parts.Skip(1));
+
+            if (allowed != newText)
             {
-                var before = cleaned[..(firstColon + 1)];
-                var after = cleaned[(firstColon + 1)..].Replace(":", "");
-                cleaned = before + after;
+                // Preserve cursor position
+                var selectionStart = entry.CursorPosition;
+                entry.Text = allowed;
+                entry.CursorPosition = Math.Min(selectionStart, allowed.Length);
             }
-
-            if (cleaned != text)
-                TimeEntry.Text = cleaned;
         }
 
         // Digits only for phone number - letters and symbols are dropped as typed.

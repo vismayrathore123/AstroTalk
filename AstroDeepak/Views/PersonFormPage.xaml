@@ -31,7 +31,7 @@
                         <Label Text="TIME OF BIRTH *" Style="{StaticResource SubtitleLabel}" />
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
                             <Entry x:Name="TimeEntry" Grid.Column="0" Placeholder="e.g. 10:30"
-                                   Keyboard="Numeric" MaxLength="5" />
+       Keyboard="Default" MaxLength="5" />
                             <Picker x:Name="AmPmPicker" Grid.Column="1" WidthRequest="100" Title="AM/PM" />
                         </Grid>
 

@@ -16,7 +16,7 @@ namespace AstroDeepak
     {
         public static MauiApp CreateMauiApp()
         {
-            QuestPDF.Settings.License = LicenseType.Community; // required once at startup
+            //QuestPDF.Settings.License = LicenseType.Community; // required once at startup
 
             var builder = MauiApp.CreateBuilder();
             builder.UseMauiApp<App>()
