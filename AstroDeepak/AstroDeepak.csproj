@@ -25,6 +25,9 @@
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
 
+    <!-- Android -->
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+
     <!-- Windows -->
     <WindowsPackageType>None</WindowsPackageType>
 
@@ -130,13 +133,13 @@
     <MauiFont Include="Resources\Fonts\*" />
 
   </ItemGroup>
-  <ItemGroup>
+  <!--<ItemGroup>
     <AndroidResource Remove="Platforms\Android\Resources\values\styles.xml" />
-  </ItemGroup>
-  <ItemGroup>
+  </ItemGroup>-->
+  <!--<ItemGroup>
     <MauiXaml Include="Platforms\Android\Resources\values\styles.xml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>

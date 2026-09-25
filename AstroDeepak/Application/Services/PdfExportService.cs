@@ -58,7 +58,11 @@ namespace AstroDeepak.Application.Services
         }
 
         private static string BuildFileName(UserRemedyStagingDto staging)
-    => $"Kundli_{staging.Name?.Replace(" ", "_")}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+        {
+            var safeName = string.Join("_", (staging.Name ?? "Unknown")
+                .Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries));
+            return $"Kundli_{safeName}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+        }
 
         private static IDocument BuildDocument(UserRemedyStagingDto staging)
         {
