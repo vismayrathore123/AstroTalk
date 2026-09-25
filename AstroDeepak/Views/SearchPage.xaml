@@ -79,6 +79,12 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <BoxView HeightRequest="1" Color="#E5E5E5" />
+                <Label Text="New Kundli" Padding="16,12" FontSize="15" TextColor="Black">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNewKundliTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView HeightRequest="1" Color="#E5E5E5" />
                 <Label Text="Precautions" Padding="16,12" FontSize="15" TextColor="Black">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnPrecautionsTapped" />

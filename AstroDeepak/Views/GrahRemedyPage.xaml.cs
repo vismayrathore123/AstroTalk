@@ -92,6 +92,12 @@ namespace AstroDeepak.Views
             await Shell.Current.GoToAsync("navgrah", navParams);
         }
 
+        async void OnNewKundliTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await Shell.Current.GoToAsync("//form?PersonId=0");
+        }
+
         async void OnContactUsTapped(object sender, EventArgs e)
         {
             CloseMenu();

@@ -653,6 +653,11 @@ namespace AstroDeepak.Views
             var navParams = new Dictionary<string, object> { { "Mode", "Master" } };
             await Shell.Current.GoToAsync("navgrah", navParams);
         }
+        async void OnNewKundliTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await Shell.Current.GoToAsync("//form?PersonId=0");
+        }
 
         async void OnPrecautionsTapped(object sender, EventArgs e)
         {

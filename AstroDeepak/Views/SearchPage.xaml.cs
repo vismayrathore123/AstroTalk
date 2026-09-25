@@ -71,14 +71,19 @@ namespace AstroDeepak.Views
 
         void OnMenuOverlayTapped(object sender, EventArgs e)
             => CloseMenu();
-
         async void OnAddRemediesTapped(object sender, EventArgs e)
         {
             CloseMenu();
             var navParams = new Dictionary<string, object> { { "Mode", "Master" } };
             await Shell.Current.GoToAsync("navgrah", navParams);
         }
-
+        async void OnNewKundliTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+            await Shell.Current.GoToAsync("//form?PersonId=0");
+        }
+       
+        
         async void OnContactUsTapped(object sender, EventArgs e)
         {
             CloseMenu();
