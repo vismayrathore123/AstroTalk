@@ -46,8 +46,8 @@
                 <Label x:Name="WhatsAppTargetLabel" HorizontalOptions="Center" HorizontalTextAlignment="Center"
                        Style="{StaticResource SubtitleLabel}" FontSize="12" />
 
-                <Button Text="Confirm &amp; WhatsApp" Style="{StaticResource PrimaryButton}"
-                        Clicked="OnConfirmAndWhatsAppClicked" />
+                <Button Text="Confirm &amp; Share" Style="{StaticResource PrimaryButton}"
+        Clicked="OnConfirmAndWhatsAppClicked" />
 
                 <Button Text="Edit" Style="{StaticResource SecondaryButton}"
                         Clicked="OnEditClicked" />

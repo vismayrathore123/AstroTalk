@@ -227,12 +227,12 @@ namespace AstroDeepak.Views
             await _stagingService.DeleteAsync(_staging.Id);
 
             var confirmationMessage = sendWhatsApp
-                ? (whatsAppSent
-                    ? "Kundli saved.\n\nShare sheet is open with the PDF.\n1. Choose WhatsApp\n2. Select the contact\n3. Tap Send"
-                    : "Kundli saved, but the share sheet could not be opened.")
-                : (savedFilePath != null
-                    ? $"Kundli saved.\nPDF saved to:\n{savedFilePath}"
-                    : "Kundli saved, but the PDF could not be written to Downloads.");
+     ? (whatsAppSent
+         ? "Kundli saved.\n\nWhatsApp opened for this contact, and the share sheet has the PDF ready.\n1. Choose WhatsApp\n2. Confirm the contact\n3. Tap Send"
+         : "Kundli saved, but WhatsApp/share could not be opened.")
+     : (savedFilePath != null
+         ? $"Kundli saved.\nPDF saved to:\n{savedFilePath}"
+         : "Kundli saved, but the PDF could not be written to Downloads.");
 
             await DisplayAlert("Saved", confirmationMessage, "OK");
             await Shell.Current.GoToAsync("//search");
@@ -267,10 +267,28 @@ namespace AstroDeepak.Views
                     return false;
                 }
 
-                // 2. Clean number (for logging only)
+                // 2. Build the full number (country code + local number)
                 var digitsOnly = CleanPhoneNumber(staging.CountryCode, staging.PhoneNo);
 
-                // 3. Share the PDF – this is what actually attaches the file
+                // 3. Open WhatsApp directly on this person's chat first, so it
+                //    shows up as the top "Recent" option in the share sheet next.
+                if (!string.IsNullOrWhiteSpace(digitsOnly))
+                {
+                    try
+                    {
+                        var waUri = new Uri($"https://wa.me/{digitsOnly}");
+                        if (await Launcher.Default.CanOpenAsync(waUri))
+                            await Launcher.Default.OpenAsync(waUri);
+                    }
+                    catch (Exception waEx)
+                    {
+                        _logger.LogWarning($"Could not open WhatsApp chat directly for {digitsOnly}: {waEx.Message}");
+                        // Not fatal - still fall through to the share sheet below.
+                    }
+                }
+
+                // 4. Share the PDF – user picks WhatsApp (now showing this chat
+                //    as Recent), taps it, and sends.
                 await Share.Default.RequestAsync(new ShareFileRequest
                 {
                     Title = "Kundli Remedy PDF",
