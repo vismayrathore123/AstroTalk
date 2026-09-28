@@ -94,6 +94,10 @@
               "target": "Package",
               "version": "[114.0.0, )"
             },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[4.152.1, )"
+            },
             "sqlite-net-pcl": {
               "target": "Package",
               "version": "[1.11.285, )"
@@ -422,6 +426,10 @@
             "RestSharp": {
               "target": "Package",
               "version": "[114.0.0, )"
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[4.152.1, )"
             },
             "sqlite-net-pcl": {
               "target": "Package",
@@ -752,6 +760,10 @@
               "target": "Package",
               "version": "[114.0.0, )"
             },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[4.152.1, )"
+            },
             "sqlite-net-pcl": {
               "target": "Package",
               "version": "[1.11.285, )"
@@ -1075,6 +1087,10 @@
             "RestSharp": {
               "target": "Package",
               "version": "[114.0.0, )"
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[4.152.1, )"
             },
             "sqlite-net-pcl": {
               "target": "Package",

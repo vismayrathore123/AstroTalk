@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YqEQ8BTNWEw=",
+  "dgSpecHash": "zGJHT7Ot4Qw=",
   "success": true,
   "projectFilePath": "C:\\Astro\\AstroDeepak\\AstroDeepak\\AstroDeepak.csproj",
   "expectedPackageFiles": [
@@ -44,6 +44,11 @@
     "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsappsdk.winui\\1.8.260528001\\microsoft.windowsappsdk.winui.1.8.260528001.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\questpdf\\2026.7.3\\questpdf.2026.7.3.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\restsharp\\114.0.0\\restsharp.114.0.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\skiasharp\\4.152.1\\skiasharp.4.152.1.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\skiasharp.nativeassets.android\\4.152.1\\skiasharp.nativeassets.android.4.152.1.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\skiasharp.nativeassets.ios\\4.152.1\\skiasharp.nativeassets.ios.4.152.1.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\skiasharp.nativeassets.maccatalyst\\4.152.1\\skiasharp.nativeassets.maccatalyst.4.152.1.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\skiasharp.nativeassets.win32\\4.152.1\\skiasharp.nativeassets.win32.4.152.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\sourcegear.sqlite3\\3.53.3\\sourcegear.sqlite3.3.53.3.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\sqlite-net-pcl\\1.11.285\\sqlite-net-pcl.1.11.285.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\sqlitepclraw.core\\3.0.3\\sqlitepclraw.core.3.0.3.nupkg.sha512",
