@@ -16,7 +16,7 @@ namespace AstroDeepak
     {
         public static MauiApp CreateMauiApp()
         {
-            QuestPDF.Settings.License = LicenseType.Community; // required once at startup
+            QuestPDF.Settings.License = LicenseType.Community; 
 
             var builder = MauiApp.CreateBuilder();
             builder.UseMauiApp<App>()
@@ -30,11 +30,9 @@ namespace AstroDeepak
             builder.Logging.AddDebug();
 #endif
 
-            // ---- Cross-cutting infrastructure ----
             builder.Services.AddSingleton<IAppLogger, FileAppLogger>();
             builder.Services.AddSingleton<IDownloadsPathProvider, DownloadsPathProvider>();
 
-            // ---- Data layer ----
             builder.Services.AddSingleton<SqliteDbContext>();
             builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
             builder.Services.AddSingleton<IPersonService, PersonService>();
@@ -48,7 +46,6 @@ namespace AstroDeepak
             builder.Services.AddSingleton<IPrecautionRepository, PrecautionRepository>();
             builder.Services.AddSingleton<IPermanentRemedyRepository, PermanentRemedyRepository>();
 
-            // ---- Pages ----
             builder.Services.AddTransient<SearchPage>();
             builder.Services.AddTransient<PersonFormPage>();
             builder.Services.AddTransient<NavgrahListPage>();
@@ -58,8 +55,6 @@ namespace AstroDeepak
 
             var app = builder.Build();
 
-            // Catch-all logging: anything that slips past try/catch in the app still
-            // lands in the same daily log file instead of disappearing silently.
             var logger = app.Services.GetRequiredService<IAppLogger>();
 
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>

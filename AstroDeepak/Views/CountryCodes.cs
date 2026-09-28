@@ -3,7 +3,7 @@
     public class CountryCodeOption
     {
         public string CountryName { get; set; } = string.Empty;
-        public string DialCode { get; set; } = string.Empty; // e.g. "+91"
+        public string DialCode { get; set; } = string.Empty;
         public string Display => $"{CountryName} ({DialCode})";
     }
 

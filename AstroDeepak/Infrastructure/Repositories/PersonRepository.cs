@@ -26,9 +26,6 @@ namespace AstroDeepak.Infrastructure.Repositories
             var entity = await db.Table<PersonEntity>().Where(p => p.Id == id).FirstOrDefaultAsync();
             return entity == null ? null : ToDomain(entity);
         }
-
-        // Returns the Id of the inserted/updated row (used by callers that need
-        // the real PersonId right after saving, e.g. to attach UsersRemedies).
         public async Task<int> SaveAsync(Person person)
         {
             var db = await _context.GetConnectionAsync();
@@ -46,7 +43,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             {
                 entity.CreatedAt = now;
                 entity.UpdatedAt = now;
-                await db.InsertAsync(entity); // sqlite-net populates entity.Id after insert
+                await db.InsertAsync(entity); 
             }
 
             return entity.Id;
@@ -95,7 +92,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             Grah = e.Grah ?? "None",
             Grahan = e.Grahan ?? "None",
             CreatedAt = e.CreatedAt,
-            Precautions = e.Precautions ?? string.Empty,  // in ToDomain
+            Precautions = e.Precautions ?? string.Empty,  
             UpdatedAt = e.UpdatedAt
         };
 
@@ -104,7 +101,7 @@ namespace AstroDeepak.Infrastructure.Repositories
             Id = p.Id,
             Name = p.Name,
             FatherName = p.FatherName,
-            Precautions = p.Precautions,   // in ToEntity
+            Precautions = p.Precautions,   
             Gotra = p.Gotra,
             DOB = p.DOB,
             Time = p.Time,

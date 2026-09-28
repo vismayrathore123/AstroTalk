@@ -13,13 +13,11 @@ namespace AstroDeepak.Domain.Entities
         public string BirthPlace { get; set; }
         public string PhoneNo { get; set; }
         public string Address { get; set; }
-
-        // Renamed: SelectedGrah -> Grah, SelectedGrahan -> Grahan
         public string Grah { get; set; } = "None";
         public string Grahan { get; set; } = "None";
         public string CountryCode { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-        public string Precautions { get; set; } = string.Empty; // comma-separated precaution texts
+        public string Precautions { get; set; } = string.Empty; 
     }
 }

@@ -29,17 +29,13 @@ namespace AstroDeepak.Views
 
         private readonly List<RemedyCheckItem> _currentRemedyItems = new();
         private VerticalStackLayout? _currentRemedyListHost;
-
-        // Every Grah's chosen remedies for THIS session, keyed by NavgrahId.
-        // Each entry keeps Name + independent Permanent/Yearly flags.
         private readonly Dictionary<int, List<RemedyChoiceDto>> _selectionsByGrah = new();
         private NavgrahOption? _openOption;
 
-        // Precaution checkboxes, built once per OnAppearing.
         private readonly List<RemedyCheckItem> _precautionItems = new();
 
         private PersonDto? _draft;
-        private NavgrahOption? _selected; // Master mode only
+        private NavgrahOption? _selected;
         private string _mode = "Person";
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -256,10 +252,6 @@ namespace AstroDeepak.Views
                 }
             }
         }
-
-        // Reads the CURRENT on-screen checkbox state for the open Grah and stores
-        // it into _selectionsByGrah, so switching to another Grah (or Confirm)
-        // never loses what was just ticked.
         void CommitCurrentSelectionToMemory()
         {
             if (_openOption == null) return;
@@ -356,11 +348,6 @@ namespace AstroDeepak.Views
 
             var remedies = await _remedyRepository.GetRemediesByNavgrahIdAsync(option.Id);
 
-            // Pull prior state for this Grah, in priority order:
-            // 1) still-pending choices from this same editing session (most authoritative -
-            //    reflects exactly what the user last set, incl. unchecked boxes).
-            // 2) otherwise, reconstruct from saved data (CurrentSuggestedRemedy => Yearly,
-            //    PermanentRemedy table => Permanent).
             Dictionary<string, RemedyChoiceDto>? pendingByName = null;
             if (_selectionsByGrah.TryGetValue(option.Id, out var pending))
             {
@@ -459,7 +446,6 @@ namespace AstroDeepak.Views
 
                 permanentCheckBox.CheckedChanged += (s, e) =>
                 {
-                    // If Permanent is checked, automatically check the left checkbox
                     if (e.Value)
                     {
                         item.IsChecked = true;
@@ -489,7 +475,6 @@ namespace AstroDeepak.Views
 
                 yearlyCheckBox.CheckedChanged += (s, e) =>
                 {
-                    // If Yearly is checked, automatically check the left checkbox
                     if (e.Value)
                     {
                         item.IsChecked = true;
@@ -541,11 +526,6 @@ namespace AstroDeepak.Views
 
         async void OnBackClicked(object sender, EventArgs e)
             => await Shell.Current.GoToAsync("..");
-
-        // Clears everything the user has picked or typed on THIS page in the
-        // current session - open accordion, per-Grah pending remedy choices,
-        // and precaution checkboxes. Nothing already saved to the database
-        // (e.g. from a previous Confirm) is touched or removed.
         async void OnResetClicked(object sender, EventArgs e)
         {
             if (_mode != "Person")

@@ -17,11 +17,7 @@ namespace AstroDeepak.Infrastructure.Platform
             string folder;
             try
             {
-                // Best effort: the real, public "Downloads" folder that shows up in the
-                // Files app / a file manager. Requires WRITE_EXTERNAL_STORAGE with
-                // android:maxSdkVersion="28" declared in AndroidManifest.xml for older
-                // OS versions (see notes). On API 29+ writing our own new file here
-                // generally still works without extra runtime permission.
+               
                 var publicDownloads = global::Android.OS.Environment
                     .GetExternalStoragePublicDirectory(global::Android.OS.Environment.DirectoryDownloads)!
                     .AbsolutePath;
@@ -30,9 +26,7 @@ namespace AstroDeepak.Infrastructure.Platform
             }
             catch
             {
-                // Fallback: app-private external "Download" folder. Always writable,
-                // needs no permission at all, but is only visible via a file manager
-                // with "show app data" turned on - not the public Downloads app.
+                
                 var context = global::Android.App.Application.Context;
                 var appDownloads = context.GetExternalFilesDir(global::Android.OS.Environment.DirectoryDownloads)!.AbsolutePath;
                 Directory.CreateDirectory(appDownloads);

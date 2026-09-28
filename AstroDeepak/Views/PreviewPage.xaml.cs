@@ -64,9 +64,6 @@ namespace AstroDeepak.Views
             BuildRemedyDisplay();
             BuildPrecautionsSection();
         }
-
-        // Read-only listing - Permanent/Yearly is decided on the Grah-selection
-        // screen (NavgrahListPage), not here. This just shows what was chosen.
         void BuildRemedyDisplay()
         {
             RemedyHost.Children.Clear();
@@ -163,7 +160,6 @@ namespace AstroDeepak.Views
 
             try
             {
-                // Only remedies tagged Yearly go through the normal history flow.
                 foreach (var selection in _staging.Selections)
                 {
                     var yearlyNames = selection.Remedies.Where(r => r.IsYearly).Select(r => r.Name).ToList();
@@ -180,9 +176,6 @@ namespace AstroDeepak.Views
 
             try
             {
-                // Independently, remedies tagged Permanent go into (or stay out of) the
-                // PermanentRemedy table - regardless of their Yearly tag. A remedy can
-                // be both, either, or neither.
                 foreach (var selection in _staging.Selections)
                 {
                     foreach (var remedy in selection.Remedies)
@@ -238,17 +231,10 @@ namespace AstroDeepak.Views
             await Shell.Current.GoToAsync("//search");
         }
 
-        /// <summary>
-        /// Free + ban-safe flow:
-        /// 1. Generate PDF
-        /// 2. Open system share sheet with the PDF already selected
-        /// 3. User picks WhatsApp → selects contact → taps Send
-        /// </summary>
         async Task<bool> TrySendWhatsAppAsync(UserRemedyStagingDto staging)
         {
             try
             {
-                // 1. Generate PDF into cache
                 var pdfPath = await _pdfExportService.GenerateRemedyReviewPdfAsync(staging);
 
                 if (string.IsNullOrWhiteSpace(pdfPath) || !File.Exists(pdfPath))
@@ -267,11 +253,9 @@ namespace AstroDeepak.Views
                     return false;
                 }
 
-                // 2. Build the full number (country code + local number)
                 var digitsOnly = CleanPhoneNumber(staging.CountryCode, staging.PhoneNo);
 
-                // 3. Open WhatsApp directly on this person's chat first, so it
-                //    shows up as the top "Recent" option in the share sheet next.
+                
                 if (!string.IsNullOrWhiteSpace(digitsOnly))
                 {
                     try
@@ -283,12 +267,9 @@ namespace AstroDeepak.Views
                     catch (Exception waEx)
                     {
                         _logger.LogWarning($"Could not open WhatsApp chat directly for {digitsOnly}: {waEx.Message}");
-                        // Not fatal - still fall through to the share sheet below.
+                        
                     }
                 }
-
-                // 4. Share the PDF – user picks WhatsApp (now showing this chat
-                //    as Recent), taps it, and sends.
                 await Share.Default.RequestAsync(new ShareFileRequest
                 {
                     Title = "Kundli Remedy PDF",
@@ -313,7 +294,6 @@ namespace AstroDeepak.Views
             var cc = new string((countryCode ?? "").Where(char.IsDigit).ToArray());
             var local = new string((phoneNo ?? "").Where(char.IsDigit).ToArray());
 
-            // Avoid double country-code if user already typed it in the phone field
             if (!string.IsNullOrEmpty(cc) && local.StartsWith(cc))
                 return local;
 

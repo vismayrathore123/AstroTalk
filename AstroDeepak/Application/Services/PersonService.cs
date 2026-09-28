@@ -27,10 +27,6 @@ namespace AstroDeepak.Application.Services
             var person = await _repository.GetByIdAsync(id);
             return person == null ? null : ToDto(person);
         }
-
-        // Returns the saved person's Id. This is also used to persist the "New Kundli"
-        // form as a real row the moment the user hits Submit, so that navigating back
-        // from the Grah-selection screen reloads real data instead of a blank form.
         public async Task<int> SaveAsync(PersonDto dto)
         {
             try
@@ -108,7 +104,6 @@ namespace AstroDeepak.Application.Services
             Precautions = d.Precautions,
             Grah = d.Grah,
             Grahan = d.Grahan
-            // CreatedAt/UpdatedAt are set by the repository based on insert vs update.
         };
     }
 }

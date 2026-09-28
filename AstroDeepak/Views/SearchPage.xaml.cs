@@ -57,10 +57,6 @@ namespace AstroDeepak.Views
             else
                 ResultsList.ItemsSource = await _personService.SearchAsync(SearchEntry.Text);
         }
-
-        // Toggles the dropdown open/closed, and flips the button itself between
-        // ☰ and ✕ so there is only ever one icon - never a hamburger showing
-        // "through" a separate close button.
         void OnHamburgerClicked(object sender, EventArgs e)
         {
             bool opening = !MenuDropdown.IsVisible;

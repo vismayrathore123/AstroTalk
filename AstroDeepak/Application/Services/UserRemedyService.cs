@@ -42,7 +42,6 @@ namespace AstroDeepak.Application.Services
                 var entity = existing ?? new UserRemedy { PersonId = personId, NavgrahId = navgrahId };
                 entity.CurrentSuggestedRemedy = string.Join(", ", selectedRemedyNames);
                 entity.RemediesJson = JsonSerializer.Serialize(history);
-                // WhatsApp flag untouched here - set separately via MarkWhatsAppStatusAsync.
 
                 await _repository.SaveAsync(entity);
 

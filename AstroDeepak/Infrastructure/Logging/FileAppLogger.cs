@@ -3,17 +3,6 @@
 
     namespace AstroDeepak.Infrastructure.Logging
     {
-        /// <summary>
-        /// Writes one log file per day: log-yyyy-MM-dd.txt
-        ///
-        /// Path resolution:
-        ///  - Windows : C:\astrotalk\astrotalkdeepak\Logs   (exactly what was asked for)
-        ///  - Android/iOS : there is no C:\ drive and apps cannot write outside their own
-        ///    sandbox, so we fall back to the app's private data folder
-        ///    (FileSystem.AppDataDirectory)\astrotalkdeepak\Logs. This keeps the same
-        ///    "one file per day" behaviour and the same folder name on every platform,
-        ///    it just lives in a location each OS actually allows.
-        /// </summary>
         public class FileAppLogger : IAppLogger
         {
             private static readonly object _lock = new();
@@ -28,8 +17,7 @@
                 }
                 catch
                 {
-                    // If even the folder can't be created, logging silently becomes a no-op
-                    // instead of crashing the app.
+                   
                 }
             }
 
@@ -78,7 +66,6 @@
                 }
                 catch
                 {
-                    // Logging must never throw and take the app down with it.
                 }
             }
         }

@@ -20,7 +20,7 @@ namespace AstroDeepak.Infrastructure.Persistence
             await _db.CreateTableAsync<GrahanMasterEntity>();
             await _db.CreateTableAsync<RemedyMasterEntity>();
             await _db.CreateTableAsync<UsersRemedyEntity>();
-            await _db.CreateTableAsync<UserRemedyStagingEntity>(); // temp table
+            await _db.CreateTableAsync<UserRemedyStagingEntity>(); 
             await _db.CreateTableAsync<PrecautionMasterEntity>();
             await _db.CreateTableAsync<PermanentRemedyEntity>();
 
