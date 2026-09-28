@@ -133,6 +133,9 @@
     <MauiFont Include="Resources\Fonts\*" />
 
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Application\Assets\" />
+  </ItemGroup>
   <!--<ItemGroup>
     <AndroidResource Remove="Platforms\Android\Resources\values\styles.xml" />
   </ItemGroup>-->

@@ -64,6 +64,7 @@ namespace AstroDeepak.Application.Services
             return $"Kundli_{safeName}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
         }
 
+
         private static IDocument BuildDocument(UserRemedyStagingDto staging)
         {
             return Document.Create(container =>
@@ -72,109 +73,193 @@ namespace AstroDeepak.Application.Services
                 {
                     page.Size(PageSizes.A4);
                     page.Margin(30);
-                    page.DefaultTextStyle(x => x.FontSize(12));
+                    page.DefaultTextStyle(x => x.FontSize(11).FontColor(Colors.Grey.Darken3));
 
-                    page.Header()
-                        .Text("AstroDeepak - Kundli Remedy Report")
-                        .FontSize(18)
-                        .Bold()
-                        .FontColor(Colors.Orange.Darken2);
-
-                    page.Content()
-                        .PaddingTop(15)
-                        .Column(col =>
+                    // ============================
+                    // HEADER
+                    // ============================
+                    page.Header().Column(header =>
+                    {
+                        header.Item().Row(row =>
                         {
-                            // Person Details
-                            col.Item().Text($"Name: {staging.Name}").Bold();
-
-                            col.Item().Text(
-                                $"Father's Name: {(string.IsNullOrWhiteSpace(staging.FatherName)
-                                    ? "-"
-                                    : staging.FatherName)}");
-
-                            col.Item().Text(
-                                $"Date of Birth: {staging.DOB:dd MMM yyyy}");
-
-                            if (!string.IsNullOrWhiteSpace(staging.Time))
+                            row.RelativeItem().Column(c =>
                             {
-                                col.Item().Text(
-                                    $"Time of Birth: {staging.Time}");
-                            }
+                                c.Item().Text("Deepak Jaiswal").FontSize(22).Bold().FontColor(Colors.Orange.Darken3);
+                                c.Item().Text("Kundli Remedy Report").FontSize(11).FontColor(Colors.Grey.Darken1);
+                            });
 
-                            if (!string.IsNullOrWhiteSpace(staging.BirthPlace))
+                            row.ConstantItem(100).AlignRight().AlignBottom()
+                                .Text(DateTime.Now.ToString("dd MMM yyyy"))
+                                .FontSize(9).FontColor(Colors.Grey.Medium);
+                        });
+
+                        header.Item().PaddingTop(10).LineHorizontal(1.5f).LineColor(Colors.Orange.Lighten2);
+                    });
+
+                    // ============================
+                    // CONTENT
+                    // ============================
+                    page.Content().PaddingTop(18).Column(col =>
+                    {
+                        col.Spacing(16);
+
+                        // ---- Person details card ----
+                        col.Item()
+                            .Background(Colors.Grey.Lighten5)
+                            .Border(1).BorderColor(Colors.Grey.Lighten2)
+                            .CornerRadius(6)
+                            .Padding(14)
+                            .Column(person =>
                             {
-                                col.Item().Text(
-                                    $"Birth Place: {staging.BirthPlace}");
-                            }
+                                person.Spacing(6);
 
+                                person.Item().Text(staging.Name).FontSize(16).Bold().FontColor(Colors.Black);
 
-                            // ============================
-                            // REMEDIES - SHOW FIRST
-                            // ============================
-                            foreach (var selection in staging.Selections)
+                                person.Item().Row(r =>
+                                {
+                                    r.RelativeItem().Text(t =>
+                                    {
+                                        t.DefaultTextStyle(x => x.FontSize(10.5f));
+                                        t.Span("Father's Name: ").SemiBold().FontColor(Colors.Grey.Darken2);
+                                        t.Span(string.IsNullOrWhiteSpace(staging.FatherName) ? "-" : staging.FatherName)
+                                            .FontColor(Colors.Grey.Darken1);
+                                    });
+
+                                    r.RelativeItem().Text(t =>
+                                    {
+                                        t.DefaultTextStyle(x => x.FontSize(10.5f));
+                                        t.Span("Date of Birth: ").SemiBold().FontColor(Colors.Grey.Darken2);
+                                        t.Span($"{staging.DOB:dd MMM yyyy}").FontColor(Colors.Grey.Darken1);
+                                    });
+                                });
+
+                                if (!string.IsNullOrWhiteSpace(staging.Time) || !string.IsNullOrWhiteSpace(staging.BirthPlace))
+                                {
+                                    person.Item().Row(r =>
+                                    {
+                                        r.RelativeItem().Text(t =>
+                                        {
+                                            t.DefaultTextStyle(x => x.FontSize(10.5f));
+                                            t.Span("Time of Birth: ").SemiBold().FontColor(Colors.Grey.Darken2);
+                                            t.Span(string.IsNullOrWhiteSpace(staging.Time) ? "-" : staging.Time)
+                                                .FontColor(Colors.Grey.Darken1);
+                                        });
+
+                                        r.RelativeItem().Text(t =>
+                                        {
+                                            t.DefaultTextStyle(x => x.FontSize(10.5f));
+                                            t.Span("Birth Place: ").SemiBold().FontColor(Colors.Grey.Darken2);
+                                            t.Span(string.IsNullOrWhiteSpace(staging.BirthPlace) ? "-" : staging.BirthPlace)
+                                                .FontColor(Colors.Grey.Darken1);
+                                        });
+                                    });
+                                }
+                            });
+
+                        // ---- Remedies, grouped by Grah ----
+                        foreach (var selection in staging.Selections)
+                        {
+                            if (selection.Remedies.Count == 0) continue;
+
+                            col.Item().Column(sec =>
                             {
-                                col.Item()
-                                    .PaddingTop(15)
-                                    .Text($"Remedies for {selection.NavgrahName}")
-                                    .FontSize(14)
-                                    .Bold()
-                                    .FontColor(Colors.Orange.Darken1);
+                                sec.Spacing(6);
+
+                                sec.Item().Row(r =>
+                                {
+                                    r.AutoItem().Width(4).Height(16).Background(Colors.Orange.Darken1);
+                                    r.RelativeItem().PaddingLeft(8).AlignMiddle()
+                                        .Text($"Remedies for {selection.NavgrahName}")
+                                        .FontSize(13).Bold().FontColor(Colors.Orange.Darken2);
+                                });
 
                                 foreach (var remedy in selection.Remedies)
                                 {
-                                    var tags = new List<string>();
+                                    sec.Item()
+                                        .Border(1).BorderColor(Colors.Grey.Lighten3)
+                                        .CornerRadius(4)
+                                        .Padding(10)
+                                        .Row(rr =>
+                                        {
+                                            rr.AutoItem().AlignMiddle().Width(6).Height(6)
+                                                .Background(Colors.Orange.Medium);
 
-                                    if (remedy.IsPermanent)
-                                        tags.Add("Permanent");
+                                            rr.RelativeItem().PaddingLeft(10).AlignMiddle()
+                                                .Text(remedy.Name).FontSize(11.5f).FontColor(Colors.Grey.Darken4);
 
-                                    if (remedy.IsYearly)
-                                        tags.Add("Yearly");
-
-                                    var suffix = tags.Count > 0
-                                        ? $"  ({string.Join(", ", tags)})"
-                                        : string.Empty;
-
-                                    col.Item()
-                                        .PaddingLeft(10)
-                                        .Text($"• {remedy.Name}{suffix}");
+                                            rr.AutoItem().Row(tags =>
+                                            {
+                                                if (remedy.IsYearly)
+                                                {
+                                                    tags.AutoItem().PaddingLeft(4)
+                                                        .Background(Colors.Blue.Lighten4).CornerRadius(3).Padding(4)
+                                                        .Text("Yearly").FontSize(8).FontColor(Colors.Blue.Darken2);
+                                                }
+                                                if (remedy.IsPermanent)
+                                                {
+                                                    tags.AutoItem().PaddingLeft(4)
+                                                        .Background(Colors.Orange.Lighten4).CornerRadius(3).Padding(4)
+                                                        .Text("Permanent").FontSize(8).FontColor(Colors.Orange.Darken2);
+                                                }
+                                            });
+                                        });
                                 }
-                            }
+                            });
+                        }
 
-
-                            // ============================
-                            // PRECAUTIONS - SHOW AFTER ALL GRAH REMEDIES
-                            // ============================
-                            if (staging.SelectedPrecautions != null &&
-                                staging.SelectedPrecautions.Any())
+                        // ---- Precautions ----
+                        if (staging.SelectedPrecautions != null && staging.SelectedPrecautions.Any())
+                        {
+                            col.Item().Column(sec =>
                             {
-                                col.Item()
-                                    .PaddingTop(20)
-                                    .Text("Precautions")
-                                    .FontSize(14)
-                                    .Bold()
-                                    .FontColor(Colors.Orange.Darken1);
+                                sec.Spacing(6);
+
+                                sec.Item().Row(r =>
+                                {
+                                    r.AutoItem().Width(4).Height(16).Background(Colors.Orange.Darken1);
+                                    r.RelativeItem().PaddingLeft(8).AlignMiddle()
+                                        .Text("Precautions").FontSize(13).Bold().FontColor(Colors.Orange.Darken2);
+                                });
 
                                 foreach (var precaution in staging.SelectedPrecautions)
                                 {
-                                    col.Item()
-                                        .PaddingLeft(10)
-                                        .Text($"• {precaution}");
+                                    sec.Item().Row(rr =>
+                                    {
+                                        rr.AutoItem().PaddingRight(8)
+                                            .Text("•").FontSize(12).FontColor(Colors.Orange.Medium);
+                                        rr.RelativeItem()
+                                            .Text(precaution).FontSize(11).FontColor(Colors.Grey.Darken2);
+                                    });
                                 }
-                            }
-                        });
+                            });
+                        }
+                    });
 
+                    // ============================
+                    // FOOTER
+                    // ============================
+                    page.Footer().Column(footer =>
+                    {
+                        footer.Item().PaddingBottom(6).LineHorizontal(0.75f).LineColor(Colors.Grey.Lighten2);
 
-                    // Footer
-                    page.Footer()
-                        .AlignCenter()
-                        .Text(t =>
+                        footer.Item().Row(row =>
                         {
-                            t.Span("Generated on ").FontSize(9);
+                            row.RelativeItem().Text(t =>
+                            {
+                                t.Span("Generated on ").FontSize(9).FontColor(Colors.Grey.Medium);
+                                t.Span(DateTime.Now.ToString("dd MMM yyyy, hh:mm tt"))
+                                    .FontSize(9).FontColor(Colors.Grey.Medium);
+                            });
 
-                            t.Span(
-                                DateTime.Now.ToString("dd MMM yyyy, hh:mm tt")
-                            ).FontSize(9);
+                            row.RelativeItem().AlignRight().Text(t =>
+                            {
+                                t.Span("Page ").FontSize(9).FontColor(Colors.Grey.Medium);
+                                t.CurrentPageNumber().FontSize(9).FontColor(Colors.Grey.Medium);
+                                t.Span(" of ").FontSize(9).FontColor(Colors.Grey.Medium);
+                                t.TotalPages().FontSize(9).FontColor(Colors.Grey.Medium);
+                            });
                         });
+                    });
                 });
             });
         }
