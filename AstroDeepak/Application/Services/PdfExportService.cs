@@ -17,7 +17,7 @@ namespace AstroDeepak.Application.Services
        private static byte[]? _logoBytes;
 
         private static readonly object _watermarkLock = new();
-        private const float WatermarkOpacity = 0.20f;
+        private const float WatermarkOpacity = 0.05f;
 
         private const bool ClipWatermarkToCircle = false;
         public PdfExportService(
